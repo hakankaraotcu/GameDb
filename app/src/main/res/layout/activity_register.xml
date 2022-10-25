@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#14181C"
+    tools:context=".RegisterActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:id="@+id/backgroundEffect">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background1"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shadoweffect"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Join GameDb"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:layout_marginLeft="20dp"/>
+    </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backgroundEffect"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:hint="Email Address"
+        android:textColor="@color/white"
+        android:textColorHint="#99AABB"
+        android:backgroundTint="#99AABB" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/email"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Username"
+        android:textColor="@color/white"
+        android:textColorHint="#99AABB"
+        android:backgroundTint="#99AABB" />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Password"
+        android:textColor="@color/white"
+        android:textColorHint="#99AABB"
+        android:backgroundTint="#99AABB" />
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="I'm at least 16 years old and accept the Terms of Use"
+        android:textColor="#99AABB"/>
+
+    <CheckBox
+        android:id="@+id/ageCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/age"/>
+
+    <TextView
+        android:id="@+id/privacy"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/age"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="I accept the Privacy Policy and consent to the processing of my personal information in accordance with it"
+        android:textColor="#99AABB"/>
+
+    <CheckBox
+        android:id="@+id/privacyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/age"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@id/privacy"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/signInBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/privacy"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#445566"
+        android:text="SIGN IN"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/privacy"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/signInBtn"
+        android:backgroundTint="#445566"
+        android:text="GO"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        android:onClick="btnRegister"/>
+</RelativeLayout>
