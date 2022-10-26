@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_activity_drawerLayout"
     tools:context=".MainActivity">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/main_activity_toolBar"
+            android:background="#445566"
+            android:layout_alignParentTop="true"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_activity_frameLayout"
+            android:layout_below="@id/main_activity_toolBar">
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/main_activity_gridView"
+                    android:columnWidth="96dp"
+                    android:paddingTop="3dp"
+                    android:paddingRight="3dp"
+                    android:numColumns="4"
+                    android:stretchMode="spacingWidthUniform"
+                    android:horizontalSpacing="3dp"
+                    android:verticalSpacing="3dp"
+                    android:background="#14181C"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/main_activity_navigationView"
+        android:layout_gravity="start"
+        android:background="#14181C"
+        app:menu="@menu/nav_menu"
+        app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/white"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

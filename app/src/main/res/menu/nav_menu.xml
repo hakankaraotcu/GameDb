@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu_popular"
+            android:icon="@drawable/popular_selector"
+            android:title="Popular"/>
+        <item
+            android:id="@+id/nav_menu_search"
+            android:icon="@drawable/search_selector"
+            android:title="Search"/>
+        <item
+            android:id="@+id/nav_menu_signIn"
+            android:icon="@drawable/sign_in_selector"
+            android:title="Sign in"/>
+        <item
+            android:id="@+id/nav_menu_createAccount"
+            android:icon="@drawable/create_account_selector"
+            android:title="Create Account"/>
+        <item
+            android:id="@+id/nav_menu_openTour"
+            android:icon="@drawable/open_tour_selector"
+            android:title="Open Tour"/>
+    </group>
+</menu>
