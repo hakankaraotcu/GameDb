@@ -16,27 +16,29 @@
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/main_activity_toolBar"
             android:background="#445566"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true">
 
-        <FrameLayout
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_search_white"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
+        </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/main_activity_tabLayout"
+                android:layout_below="@id/main_activity_toolBar"
+                android:background="#445566"
+                app:tabIndicatorColor="#15BB32"
+                app:tabTextColor="@color/white"/>
+        <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/main_activity_frameLayout"
-            android:layout_below="@id/main_activity_toolBar">
-
-                <GridView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/main_activity_gridView"
-                    android:columnWidth="96dp"
-                    android:paddingTop="3dp"
-                    android:paddingRight="3dp"
-                    android:numColumns="4"
-                    android:stretchMode="spacingWidthUniform"
-                    android:horizontalSpacing="3dp"
-                    android:verticalSpacing="3dp"
-                    android:background="#14181C"/>
-        </FrameLayout>
+            android:id="@+id/main_activity_viewPager2"
+            android:layout_below="@id/main_activity_tabLayout"/>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

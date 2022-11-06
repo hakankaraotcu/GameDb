@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GamesFragment">
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/popular_gridView"
+        android:columnWidth="90dp"
+        android:paddingTop="3dp"
+        android:paddingRight="3dp"
+        android:numColumns="4"
+        android:stretchMode="spacingWidthUniform"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="5dp"
+        android:background="#14181C"/>
+
+</RelativeLayout>

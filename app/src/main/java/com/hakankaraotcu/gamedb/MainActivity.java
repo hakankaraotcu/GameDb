@@ -8,55 +8,54 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ViewPager2 mViewPager2;
+    private ViewPagerFragmentAdapter mViewPagerFragmentAdapter;
+    private TabLayout mTablayout;
+
+    private String[] titles = new String[] {"GAMES", "REVIEWS", "NEWS", "JOURNAL"};
 
     private DrawerLayout mDrawer;
     private NavigationView mNav;
     private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
-    private GridView mGridView;
-    private String[] games = {"","","","","","","","","","","","","","","","","","","",""};
-    private int[] pictures = {R.drawable.spiderman, R.drawable.cuphead, R.drawable.monsterhunter, R.drawable.monkeyisland,
-            R.drawable.batmanarkhamcity, R.drawable.bioshock, R.drawable.discoelysium, R.drawable.eldenring,
-            R.drawable.gta4, R.drawable.halflife, R.drawable.halo, R.drawable.persona5,
-            R.drawable.rdr, R.drawable.re4, R.drawable.darksiders2, R.drawable.metalgearsolid,
-            R.drawable.skyrim, R.drawable.thelastofus, R.drawable.thephantompain, R.drawable.portal};
-    private GameAdapter adapter;
 
     private SignInFragment signInFragment;
     private CreateAccountFragment createAccountFragment;
+
+    private void init(){
+        mViewPager2 = findViewById(R.id.main_activity_viewPager2);
+        mTablayout = findViewById(R.id.main_activity_tabLayout);
+
+        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
+
+        mViewPager2.setAdapter(mViewPagerFragmentAdapter);
+
+        new TabLayoutMediator(mTablayout, mViewPager2,((tab, position) -> tab.setText(titles[position]))).attach();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
 
         mDrawer = (DrawerLayout) findViewById(R.id.main_activity_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.main_activity_navigationView);
         mToolbar = (Toolbar) findViewById(R.id.main_activity_toolBar);
-        mGridView = (GridView) findViewById(R.id.main_activity_gridView);
 
         signInFragment = new SignInFragment();
         createAccountFragment = new CreateAccountFragment();
-
-        adapter = new GameAdapter(games, pictures, this);
-        mGridView.setAdapter(adapter);
-
-        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-        });
 
         setSupportActionBar(mToolbar);
         mNav.getMenu().findItem(R.id.nav_menu_popular).setChecked(true);
