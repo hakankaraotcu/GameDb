@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPagerFragmentAdapter mViewPagerFragmentAdapter;
     private TabLayout mTablayout;
 
-    private String[] titles = new String[] {"GAMES", "REVIEWS", "NEWS", "JOURNAL"};
+    private String[] titles = new String[] {"GAMES", "REVIEWS", "LISTS", "NEWS"};
 
     private DrawerLayout mDrawer;
     private NavigationView mNav;

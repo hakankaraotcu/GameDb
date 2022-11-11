@@ -51,4 +51,7 @@ dependencies {
 
     //  Cardview
     implementation "androidx.cardview:cardview:1.0.0"
+
+    // CircularImage
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
 }

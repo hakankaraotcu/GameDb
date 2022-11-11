@@ -41,7 +41,7 @@ public class Journals {
 
     static public ArrayList<Journals> getData(){
         ArrayList<Journals> journalsList = new ArrayList<Journals>();
-        String[] titles = {"Journal1", "Journal2", "Journal3", "Journal4", "Journal5", "Journal6", "Journal7"};
+        String[] titles = {"News1", "News2", "News3", "News4", "News5", "News6", "News7"};
         String[] contents = {"Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra"};
         int[] images = {R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal,};
 
