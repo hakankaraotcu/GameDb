@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_menu_popular"
+            android:icon="@drawable/popular_selector"
+            android:title="Popular"/>
+        <item
+            android:id="@+id/nav_menu_search"
+            android:icon="@drawable/search_selector"
+            android:title="Search"/>
+        <item
+            android:id="@+id/nav_menu_profile"
+            android:icon="@drawable/sign_in_selector"
+            android:title="Profile"/>
+        <item
+            android:id="@+id/nav_menu_toPlayList"
+            android:icon="@drawable/create_account_selector"
+            android:title="To-PlayList"/>
+        <item
+            android:id="@+id/nav_menu_lists"
+            android:icon="@drawable/open_tour_selector"
+            android:title="Lists"/>
+        <item
+            android:id="@+id/nav_menu_diary"
+            android:icon="@drawable/sign_in_selector"
+            android:title="Diary"/>
+        <item
+            android:id="@+id/nav_menu_reviews"
+            android:icon="@drawable/create_account_selector"
+            android:title="Reviews"/>
+        <item
+            android:id="@+id/nav_menu_activity"
+            android:icon="@drawable/open_tour_selector"
+            android:title="Activity"/>
+        <item
+            android:id="@+id/nav_menu_settings"
+            android:icon="@drawable/open_tour_selector"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/nav_menu_signOut"
+            android:icon="@drawable/sign_in_selector"
+            android:title="Sign out"/>
+    </group>
+</menu>

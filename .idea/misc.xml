@@ -16,9 +16,10 @@
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_test.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_user_popular.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_create_account.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_journal.xml" value="0.35260416666666666" />
-        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_lists.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_lists.xml" value="0.264" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_popular.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_reviews.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_sign_in.xml" value="0.36666666666666664" />
@@ -27,7 +28,9 @@
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/journals_item.xml" value="0.33" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/nav_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/reviews_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/user_nav_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/menu/nav_menu.xml" value="0.365625" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/menu/user_nav_menu.xml" value="0.365625" />
       </map>
     </option>
   </component>
