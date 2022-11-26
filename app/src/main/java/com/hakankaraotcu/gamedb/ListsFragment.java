@@ -29,6 +29,7 @@ public class ListsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listAdapter = new ListAdapter(Lists.getData(), getContext());
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);

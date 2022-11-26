@@ -18,7 +18,6 @@ public class GameAdapter extends ArrayAdapter<String> {
     private int[] pictures;
     private Context context;
     private ImageView gamePicture;
-    private TextView gameName;
 
     public GameAdapter(String[] games, int[] pictures, Context context){
         super(context, R.layout.game_item, games);
@@ -34,9 +33,7 @@ public class GameAdapter extends ArrayAdapter<String> {
 
         if(v != null){
             gamePicture = v.findViewById(R.id.game_item_imageView);
-            gameName = v.findViewById(R.id.deneme);
 
-            gameName.setText(games[position]);
             gamePicture.setBackgroundResource(pictures[position]);
         }
         return v;
