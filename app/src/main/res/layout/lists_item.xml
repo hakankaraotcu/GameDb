@@ -67,7 +67,6 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@id/lists_item_linearLayout"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginStart="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

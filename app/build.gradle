@@ -54,4 +54,7 @@ dependencies {
 
     // CircularImage
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+    // Expandable TextView
+    implementation 'com.ms-square:expandableTextView:0.1.4'
 }

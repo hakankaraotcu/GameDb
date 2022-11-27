@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 public class GamesFragment extends Fragment {
+    private GameFragment gameFragment;
 
     private GridView mGridView;
     private String[] games = {"","","","","","","","","","","","","","","","","","","",""};
@@ -38,10 +40,12 @@ public class GamesFragment extends Fragment {
         adapter = new GameAdapter(games, pictures, getActivity());
         mGridView.setAdapter(adapter);
 
+        gameFragment = new GameFragment();
+
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, gameFragment).commit();
             }
         });
     }
