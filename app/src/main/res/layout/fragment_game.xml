@@ -144,6 +144,7 @@
                 android:background="@android:color/transparent"
                 android:layout_marginTop="5dp"/>
         </com.ms.square.android.expandabletextview.ExpandableTextView>
+
         <View
             android:id="@+id/game_line"
             android:layout_width="match_parent"
@@ -287,4 +288,60 @@
             </androidx.cardview.widget.CardView>
         </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/averageRatingText"
+                android:text="4.9"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:paddingTop="6dp"/>
+            <RatingBar
+                android:id="@+id/averageRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_gravity="center"
+                android:rating="4"/>
+        </LinearLayout>
+
+        <com.taufiqrahman.reviewratings.RatingReviews
+            xmlns:bar="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ratingChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            bar:show_raters="true"
+            bar:animation="true"
+            bar:show_label="true"
+            bar:spaces="2dp"
+            bar:text_color="@color/white"
+            bar:text_size="10sp"
+            bar:width="15dp" />
+    </LinearLayout>
+
+
 </LinearLayout>
