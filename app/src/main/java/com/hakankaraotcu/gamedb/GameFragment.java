@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class GameFragment extends Fragment {
     ExpandableTextView expTv;
     Button backButton;
     RatingBar averageRatingBar;
-    TextView averageRatingText;
+    TextView averageRatingText, trailerText;
 
     String text ="This isn't the Spider-Man you've known before, or seen in a movie. This is an experienced Peter Parker who is more masterful in fighting major crimes in New York City. At the same time he is struggling to balance his tumultuous personal life and career while the fate of nine million New Yorkers rests upon his shoulders.";
 
@@ -36,6 +37,7 @@ public class GameFragment extends Fragment {
         RatingReviews ratingReviews = (RatingReviews) view.findViewById(R.id.ratingChart);
         averageRatingBar = (RatingBar) view.findViewById(R.id.averageRatingBar);
         averageRatingText = (TextView) view.findViewById(R.id.averageRatingText);
+        trailerText = (TextView) view.findViewById(R.id.game_trailer);
 
         int colors[] = new int[]{
                 Color.parseColor("#0e9d58"),
@@ -53,9 +55,13 @@ public class GameFragment extends Fragment {
         };
 
         double avg = Math.round(avgValue(raters) * 10) / 10.0;
+
         averageRatingText.setText(Double.toString(avg));
         averageRatingBar.setRating((float) avg);
+
         ratingReviews.createRatingBars(maxValue(raters), BarLabels.STYPE1, colors, raters);
+
+        trailerText.setMovementMethod(LinkMovementMethod.getInstance());
         return view;
     }
 

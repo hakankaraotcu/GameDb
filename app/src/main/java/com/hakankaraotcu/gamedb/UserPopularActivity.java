@@ -33,7 +33,9 @@ public class UserPopularActivity extends AppCompatActivity {
 
     /*
     private SearchFragment searchFragment;
+    */
     private ProfileFragment profileFragment;
+    /*
     private ToPlayListFragment toPlayListFragment;
     private ListsFragment listsFragment;
     private DiaryFragment diaryFragment;
@@ -64,7 +66,9 @@ public class UserPopularActivity extends AppCompatActivity {
 
         /*
         searchFragment = new SearchFragment();
+        */
         profileFragment = new ProfileFragment();
+        /*
         toPlayListFragment = new ToPlayListFragment();
         listsFragment = new ListsFragment();
         diaryFragment = new DiaryFragment();
@@ -92,11 +96,12 @@ public class UserPopularActivity extends AppCompatActivity {
                     case R.id.nav_menu_search:
                         setFragment(searchFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
-                        return true;
+                        return true;*/
                     case R.id.nav_menu_profile:
                         setFragment(profileFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                    /*
                     case R.id.nav_menu_toPlayList:
                         setFragment(toPlayListFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
@@ -131,7 +136,7 @@ public class UserPopularActivity extends AppCompatActivity {
 
     private void setFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_activity_drawerLayout, fragment);
+        transaction.replace(R.id.user_popular_drawerLayout, fragment);
         transaction.commit();
     }
 

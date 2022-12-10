@@ -100,8 +100,8 @@
             android:id="@+id/game_trailer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TRAILER"
-            android:textColor="@color/white"
+            android:text="@string/hyperlink"
+            android:textColorLink="@color/white"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@+id/game_releaseDate"
             app:layout_constraintEnd_toStartOf="@+id/game_image"
@@ -217,7 +217,7 @@
                 expandableTextView:cardElevation="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="#93A1AE">
+                android:backgroundTint="#FF8000">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
