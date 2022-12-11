@@ -9,8 +9,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 public class UserToPlayListFragment extends Fragment {
+    private GameFragment gameFragment;
+
+    private GridView mGridView;
+    private String[] games = {"","","","","","","","","","","","","","",""};
+    private int[] pictures = {R.drawable.spiderman, R.drawable.cuphead, R.drawable.monsterhunter, R.drawable.monkeyisland,
+            R.drawable.batmanarkhamcity, R.drawable.bioshock, R.drawable.discoelysium, R.drawable.eldenring,
+            R.drawable.gta4, R.drawable.halflife, R.drawable.halo, R.drawable.persona5,
+            R.drawable.rdr, R.drawable.re4, R.drawable.darksiders2};
+    private GameAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -22,5 +33,18 @@ public class UserToPlayListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mGridView = (GridView) view.findViewById(R.id.userToPlayList_gridView);
+
+        adapter = new GameAdapter(games, pictures, getActivity());
+        mGridView.setAdapter(adapter);
+
+        gameFragment = new GameFragment();
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, gameFragment, null).addToBackStack(null).commit();
+            }
+        });
     }
 }

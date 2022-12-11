@@ -35,8 +35,8 @@ public class UserPopularActivity extends AppCompatActivity {
     private SearchFragment searchFragment;
     */
     private ProfileFragment profileFragment;
+    private UserToPlayListFragment usertoPlayListFragment;
     /*
-    private ToPlayListFragment toPlayListFragment;
     private ListsFragment listsFragment;
     private DiaryFragment diaryFragment;
     private ReviewsFragment reviewsFragment;
@@ -68,8 +68,8 @@ public class UserPopularActivity extends AppCompatActivity {
         searchFragment = new SearchFragment();
         */
         profileFragment = new ProfileFragment();
+        usertoPlayListFragment = new UserToPlayListFragment();
         /*
-        toPlayListFragment = new ToPlayListFragment();
         listsFragment = new ListsFragment();
         diaryFragment = new DiaryFragment();
         reviewsFragment = new ReviewsFragment();
@@ -101,11 +101,11 @@ public class UserPopularActivity extends AppCompatActivity {
                         setFragment(profileFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
-                    /*
                     case R.id.nav_menu_toPlayList:
-                        setFragment(toPlayListFragment);
+                        setFragment(usertoPlayListFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                    /*
                     case R.id.nav_menu_lists:
                         setFragment(listsFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
