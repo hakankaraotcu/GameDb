@@ -47,7 +47,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -57,18 +58,10 @@
 
                 <ImageView
                     android:id="@+id/recentGame1"
-                    android:layout_width="90dp"
-                    android:layout_height="128dp"
+                    android:layout_width="78dp"
+                    android:layout_height="118dp"
                     android:background="@drawable/re4"
                     android:scaleType="fitXY"/>
-
-                <RatingBar
-                    android:id="@+id/recentRatingBar1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_gravity="center"
-                    android:rating="4"/>
 
             </LinearLayout>
             <LinearLayout
@@ -79,18 +72,10 @@
 
                 <ImageView
                     android:id="@+id/recentGame2"
-                    android:layout_width="90dp"
-                    android:layout_height="128dp"
+                    android:layout_width="78dp"
+                    android:layout_height="118dp"
                     android:background="@drawable/batmanarkhamcity"
                     android:scaleType="fitXY"/>
-
-                <RatingBar
-                    android:id="@+id/recentRatingBar2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_gravity="center"
-                    android:rating="3"/>
 
             </LinearLayout>
             <LinearLayout
@@ -101,18 +86,10 @@
 
                 <ImageView
                     android:id="@+id/recentGame3"
-                    android:layout_width="90dp"
-                    android:layout_height="128dp"
+                    android:layout_width="78dp"
+                    android:layout_height="118dp"
                     android:background="@drawable/rdr"
                     android:scaleType="fitXY"/>
-
-                <RatingBar
-                    android:id="@+id/recentRatingBar3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_gravity="center"
-                    android:rating="5"/>
 
             </LinearLayout>
             <LinearLayout
@@ -123,18 +100,10 @@
 
                 <ImageView
                     android:id="@+id/recentGame4"
-                    android:layout_width="90dp"
-                    android:layout_height="128dp"
+                    android:layout_width="78dp"
+                    android:layout_height="118dp"
                     android:background="@drawable/thephantompain"
                     android:scaleType="fitXY"/>
-
-                <RatingBar
-                    android:id="@+id/recentRatingBar4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:layout_gravity="center"
-                    android:rating="2"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -9,13 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/popular_gridView"
-        android:columnWidth="90dp"
-        android:paddingTop="3dp"
-        android:paddingRight="3dp"
+        android:columnWidth="86dp"
+        android:paddingTop="2dp"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="4dp"
         android:numColumns="4"
         android:stretchMode="spacingWidthUniform"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="5dp"
         android:background="#14181C"/>
 
 </RelativeLayout>
