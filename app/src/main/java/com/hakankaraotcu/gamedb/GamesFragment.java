@@ -45,7 +45,7 @@ public class GamesFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, gameFragment).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, gameFragment, null).addToBackStack(null).commit();
             }
         });
     }

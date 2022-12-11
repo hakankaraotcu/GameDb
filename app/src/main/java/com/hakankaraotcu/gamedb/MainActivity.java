@@ -95,14 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.main_activity_drawerLayout, fragment);
+        transaction.replace(R.id.main_activity_drawerLayout, fragment, null);
+        transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if(mDrawer.isDrawerOpen(GravityCompat.START)){
-            mDrawer.closeDrawer(GravityCompat.START);
-        }
     }
 }

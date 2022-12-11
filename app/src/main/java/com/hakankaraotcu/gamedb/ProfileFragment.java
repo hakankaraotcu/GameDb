@@ -44,31 +44,31 @@ public class ProfileFragment extends Fragment {
                 switch (titles[i]) {
                     case "Games":
                         UserGamesFragment userGamesFragment = new UserGamesFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userGamesFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userGamesFragment, null).addToBackStack(null).commit();
                         break;
                     case "Diary":
                         UserDiaryFragment userDiaryFragment = new UserDiaryFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userDiaryFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userDiaryFragment, null).addToBackStack(null).commit();
                         break;
                     case "Lists":
                         UserListsFragment userListsFragment = new UserListsFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userListsFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userListsFragment, null).addToBackStack(null).commit();
                         break;
                     case "Reviews":
                         UserReviewsFragment userReviewsFragment = new UserReviewsFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userReviewsFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userReviewsFragment, null).addToBackStack(null).commit();
                         break;
                     case "To-Play List":
                         UserToPlayListFragment userToPlayListFragment = new UserToPlayListFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userToPlayListFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userToPlayListFragment, null).addToBackStack(null).commit();
                         break;
                     case "Following":
                         UserFollowingFragment userFollowingFragment = new UserFollowingFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userFollowingFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userFollowingFragment, null).addToBackStack(null).commit();
                         break;
                     case "Followers":
                         UserFollowersFragment userFollowersFragment = new UserFollowersFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, userFollowersFragment).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userFollowersFragment, null).addToBackStack(null).commit();
                         break;
                 }
             }
