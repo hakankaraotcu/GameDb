@@ -17,7 +17,7 @@ public class UserFollowingFragment extends Fragment {
     private ListView listView;
     private FollowingFollowersAdapter adapter;
     private int[] images = {R.drawable.discoelysium, R.drawable.monsterhunter, R.drawable.halflife, R.drawable.cuphead, R.drawable.darksiders2};
-    private String[] usernames = {"John", "Mike", "Kelly", "Ashe", "Joke"};
+    private String[] usernames = {"John", "Mike", "Kelly", "Ashe", "Jake"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -30,11 +30,22 @@
             android:layout_toRightOf="@+id/follower_image"/>
 
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/check"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_check"
             app:civ_border="false"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="visible"/>
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/add"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_add"
+            app:civ_border="false"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 

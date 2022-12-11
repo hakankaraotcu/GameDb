@@ -9,18 +9,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 public class UserFollowersFragment extends Fragment {
+    private ListView listView;
+    private FollowingFollowersAdapter adapter;
+    private int[] images = {R.drawable.discoelysium, R.drawable.monsterhunter, R.drawable.halflife, R.drawable.skyrim, R.drawable.darksiders2, R.drawable.cuphead, R.drawable.halo, R.drawable.bioshock};
+    private String[] usernames = {"John", "Mike", "Kelly", "Harry", "Jake", "Ashe", "Kobe", "Castle"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_followers, container, false);
+        listView = view.findViewById(R.id.userFollowers_listView);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        adapter = new FollowingFollowersAdapter(usernames, images, getContext());
+        listView.setAdapter(adapter);
     }
 }
