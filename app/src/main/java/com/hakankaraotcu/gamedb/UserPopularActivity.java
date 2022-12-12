@@ -39,7 +39,9 @@ public class UserPopularActivity extends AppCompatActivity {
     private UserListsFragment userListsFragment;
     /*
     private UserDiaryFragment userDiaryFragment;
+    */
     private UserReviewsFragment userReviewsFragment;
+    /*
     private ActivityFragment activityFragment;
     private SettingsFragment settingsFragment;
     */
@@ -72,7 +74,9 @@ public class UserPopularActivity extends AppCompatActivity {
         userListsFragment = new UserListsFragment();
         /*
         userDiaryFragment = new UserDiaryFragment();
+        */
         userReviewsFragment = new UserReviewsFragment();
+        /*
         activityFragment = new ActivityFragment();
         settingsFragment = new SettingsFragment();
         */
@@ -114,10 +118,12 @@ public class UserPopularActivity extends AppCompatActivity {
                         setFragment(userDiaryFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                    */
                     case R.id.nav_menu_reviews:
                         setFragment(userReviewsFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                    /*
                     case R.id.nav_menu_activity:
                         setFragment(activityFragment);
                         mDrawer.closeDrawer(GravityCompat.START);

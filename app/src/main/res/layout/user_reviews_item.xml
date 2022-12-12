@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/reviews_item_textViewGameName"
+        android:id="@+id/userReviews_item_textViewGameName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Name"
@@ -18,7 +18,7 @@
         android:layout_marginStart="16dp"/>
 
     <TextView
-        android:id="@+id/reviews_item_textViewGameDate"
+        android:id="@+id/userReviews_item_textViewGameDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -26,67 +26,43 @@
         android:text="2022"
         android:textColor="#99AABB"
         android:textSize="12dp"
-        app:layout_constraintStart_toEndOf="@+id/reviews_item_textViewGameName"
-        app:layout_constraintBottom_toBottomOf="@+id/reviews_item_textViewGameName" />
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username"
-        android:textColor="#99AABB"
-        app:layout_constraintEnd_toStartOf="@id/userName"
-        app:layout_constraintTop_toTopOf="@id/reviews_item_textViewGameName"
-        app:layout_constraintBottom_toBottomOf="@+id/reviews_item_textViewGameName"/>
-
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/userCircularImage"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:civ_border="false"
-        app:layout_constraintStart_toEndOf="@id/userName"
-        app:layout_constraintTop_toTopOf="@id/reviews_item_textViewGameName"
-        app:layout_constraintBottom_toBottomOf="@+id/reviews_item_textViewGameName"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/spiderman"/>
+        app:layout_constraintStart_toEndOf="@+id/userReviews_item_textViewGameName"
+        app:layout_constraintBottom_toBottomOf="@+id/userReviews_item_textViewGameName" />
 
     <RatingBar
-        android:id="@+id/reviews_RatingBar"
+        android:id="@+id/userReviews_RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
-        app:layout_constraintTop_toBottomOf="@id/reviews_item_textViewGameName"
-        app:layout_constraintLeft_toLeftOf="@id/reviews_item_textViewGameName"
+        app:layout_constraintTop_toBottomOf="@id/userReviews_item_textViewGameName"
+        app:layout_constraintLeft_toLeftOf="@id/userReviews_item_textViewGameName"
         android:layout_marginTop="4dp"
         android:rating="4"/>
 
     <LinearLayout
-        android:id="@+id/reviews_item_linearLayout"
+        android:id="@+id/userReviews_item_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/reviews_RatingBar"
-        app:layout_constraintLeft_toLeftOf="@id/reviews_RatingBar"
+        app:layout_constraintTop_toBottomOf="@id/userReviews_RatingBar"
+        app:layout_constraintLeft_toLeftOf="@id/userReviews_RatingBar"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp">
 
         <ImageView
-            android:id="@+id/reviews_item_GameImageViewImage"
+            android:id="@+id/userReviews_item_GameImageViewImage"
             android:layout_width="78dp"
             android:layout_height="118dp"/>
 
         <TextView
-            android:id="@+id/reviews_item_textViewContent"
+            android:id="@+id/userReviews_item_textViewContent"
             android:layout_width="match_parent"
             android:layout_height="118dp"
             android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
             android:textColor="#99AABB"
-            app:layout_constraintStart_toEndOf="@id/reviews_item_GameImageViewImage"
-            app:layout_constraintTop_toTopOf="@id/reviews_item_GameImageViewImage"
-            app:layout_constraintEnd_toEndOf="@id/userCircularImage"
+            app:layout_constraintStart_toEndOf="@id/userReviews_item_GameImageViewImage"
+            app:layout_constraintTop_toTopOf="@id/userReviews_item_GameImageViewImage"
             android:layout_marginStart="4dp"/>
     </LinearLayout>
 
@@ -95,7 +71,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="#2C3440"
-        app:layout_constraintTop_toBottomOf="@id/reviews_item_linearLayout"
+        app:layout_constraintTop_toBottomOf="@id/userReviews_item_linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>

@@ -49,10 +49,10 @@ public class Reviews {
 
     static public ArrayList<Reviews> getData(){
         ArrayList<Reviews> reviewsList = new ArrayList<Reviews>();
-        String[] names = {"Spider-Man", "Spider-Man", "Spider-Man", "Spider-Man", "Spider-Man", "Spider-Man", "Spider-Man"};
-        String[] dates = {"2022", "2022", "2022", "2022", "2022", "2022", "2022"};
+        String[] names = {"Spider-Man", "Batman Arkham City", "Grand Theft Auto IV", "Darksiders II", "The Elder Scrools V: Skyrim", "Portal 2", "Elden Ring"};
+        String[] dates = {"2018", "2011", "2008", "2012", "2011", "2011", "2022"};
         String[] contents = {"Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra"};
-        int[] images = {R.drawable.spiderman, R.drawable.spiderman, R.drawable.spiderman, R.drawable.spiderman, R.drawable.spiderman, R.drawable.spiderman, R.drawable.spiderman,};
+        int[] images = {R.drawable.spiderman, R.drawable.batmanarkhamcity, R.drawable.gta4, R.drawable.darksiders2, R.drawable.skyrim, R.drawable.portal, R.drawable.eldenring,};
 
         for(int i = 0;i < names.length;i++){
             Reviews review = new Reviews();

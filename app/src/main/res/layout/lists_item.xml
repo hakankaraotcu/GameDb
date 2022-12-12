@@ -43,7 +43,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/lists_userCircularImage"
-        app:layout_constraintLeft_toLeftOf="@id/ratingBar"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp">
 
