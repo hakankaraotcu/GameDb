@@ -36,10 +36,10 @@ public class UserPopularActivity extends AppCompatActivity {
     */
     private ProfileFragment profileFragment;
     private UserToPlayListFragment usertoPlayListFragment;
+    private UserListsFragment userListsFragment;
     /*
-    private ListsFragment listsFragment;
-    private DiaryFragment diaryFragment;
-    private ReviewsFragment reviewsFragment;
+    private UserDiaryFragment userDiaryFragment;
+    private UserReviewsFragment userReviewsFragment;
     private ActivityFragment activityFragment;
     private SettingsFragment settingsFragment;
     */
@@ -69,10 +69,10 @@ public class UserPopularActivity extends AppCompatActivity {
         */
         profileFragment = new ProfileFragment();
         usertoPlayListFragment = new UserToPlayListFragment();
+        userListsFragment = new UserListsFragment();
         /*
-        listsFragment = new ListsFragment();
-        diaryFragment = new DiaryFragment();
-        reviewsFragment = new ReviewsFragment();
+        userDiaryFragment = new UserDiaryFragment();
+        userReviewsFragment = new UserReviewsFragment();
         activityFragment = new ActivityFragment();
         settingsFragment = new SettingsFragment();
         */
@@ -105,17 +105,17 @@ public class UserPopularActivity extends AppCompatActivity {
                         setFragment(usertoPlayListFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
-                    /*
                     case R.id.nav_menu_lists:
-                        setFragment(listsFragment);
+                        setFragment(userListsFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                    /*
                     case R.id.nav_menu_diary:
-                        setFragment(diaryFragment);
+                        setFragment(userDiaryFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_menu_reviews:
-                        setFragment(reviewsFragment);
+                        setFragment(userReviewsFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_menu_activity:
