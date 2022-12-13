@@ -3,16 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_activity.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_add.xml" value="0.3245" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_back.xml" value="0.333" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_check.xml" value="0.333" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_create_account.xml" value="0.3245" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_create_accountWhite.xml" value="0.3305" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_create_account_white.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_filter.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_open_tour.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_open_tour_white.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_profile.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_search.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_search_white.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_settings.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_slider.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable-anydpi/ic_star.xml" value="0.3245" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/activity_selector.xml" value="0.3245" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/create_account_selector.xml" value="0.3305" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/create_account_white.xml" value="0.196" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/ic_check.xml" value="0.333" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/open_tour_selector.xml" value="0.3305" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/popular_selector.xml" value="0.3305" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/profile_selector.xml" value="0.3245" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/search_selector.xml" value="0.3305" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/selected.xml" value="0.3255" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/settings_selector.xml" value="0.3245" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/shadoweffect.xml" value="0.3255" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/drawable/sign_in_selector.xml" value="0.3305" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_login.xml" value="0.35260416666666666" />

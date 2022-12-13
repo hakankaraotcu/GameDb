@@ -15,8 +15,8 @@
         android:id="@+id/backgroundEffect">
 
         <Button
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:id="@+id/game_backButton"
             android:background="@drawable/ic_back"
             android:layout_marginTop="16dp"

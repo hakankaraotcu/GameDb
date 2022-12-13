@@ -11,7 +11,7 @@
             android:title="Search"/>
         <item
             android:id="@+id/nav_menu_profile"
-            android:icon="@drawable/sign_in_selector"
+            android:icon="@drawable/profile_selector"
             android:title="Profile"/>
         <item
             android:id="@+id/nav_menu_toPlayList"
@@ -31,11 +31,11 @@
             android:title="Reviews"/>
         <item
             android:id="@+id/nav_menu_activity"
-            android:icon="@drawable/open_tour_selector"
+            android:icon="@drawable/activity_selector"
             android:title="Activity"/>
         <item
             android:id="@+id/nav_menu_settings"
-            android:icon="@drawable/open_tour_selector"
+            android:icon="@drawable/settings_selector"
             android:title="Settings"/>
         <item
             android:id="@+id/nav_menu_signOut"

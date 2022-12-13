@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".UserToPlayListFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/user_games_toolBar"
+        android:background="#445566"
+        android:layout_alignParentTop="true">
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/user_toPlayList_backButton"
+            android:background="@drawable/ic_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username's to-Playlist"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/user_to_PlayList_filterButton"
+            android:background="@drawable/ic_filter"
+            android:layout_gravity="right"
+            android:layout_marginEnd="16dp"/>
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/user_toPlayList_sliderButton"
+            android:background="@drawable/ic_slider"
+            android:layout_gravity="right"
+            android:layout_marginEnd="16dp"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <GridView
         android:layout_width="match_parent"
@@ -17,4 +57,4 @@
         android:stretchMode="spacingWidthUniform"
         android:background="#14181C"/>
 
-</FrameLayout>
+</LinearLayout>
