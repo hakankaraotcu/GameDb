@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/userReviews_item_textViewGameName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Game Name"
         android:textColor="#99AABB"
@@ -14,6 +14,7 @@
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"/>
 
@@ -21,21 +22,20 @@
         android:id="@+id/userReviews_item_textViewGameDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginBottom="1dp"
         android:text="2022"
         android:textColor="#99AABB"
         android:textSize="12dp"
-        app:layout_constraintStart_toEndOf="@+id/userReviews_item_textViewGameName"
-        app:layout_constraintBottom_toBottomOf="@+id/userReviews_item_textViewGameName" />
+        app:layout_constraintStart_toStartOf="@+id/userReviews_item_textViewGameName"
+        app:layout_constraintTop_toBottomOf="@+id/userReviews_item_textViewGameName" />
 
     <RatingBar
         android:id="@+id/userReviews_RatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/ratingBarStyleSmall"
-        app:layout_constraintTop_toBottomOf="@id/userReviews_item_textViewGameName"
-        app:layout_constraintLeft_toLeftOf="@id/userReviews_item_textViewGameName"
+        app:layout_constraintTop_toBottomOf="@id/userReviews_item_textViewGameDate"
+        app:layout_constraintLeft_toLeftOf="@id/userReviews_item_textViewGameDate"
         android:layout_marginTop="4dp"
         android:rating="4"/>
 
@@ -73,7 +73,6 @@
         android:background="#2C3440"
         app:layout_constraintTop_toBottomOf="@id/userReviews_item_linearLayout"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginStart="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
