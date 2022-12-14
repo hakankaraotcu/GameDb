@@ -35,23 +35,21 @@
             app:layout_constraintStart_toEndOf="@+id/follower_image"
             app:layout_constraintEnd_toStartOf="@+id/check"/>
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/check"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_check"
-            app:civ_border="false"
             android:layout_alignParentRight="true"
             android:visibility="visible"
             app:layout_constraintTop_toTopOf="@id/follower_username"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/add"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_add"
-            app:civ_border="false"
             android:layout_alignParentRight="true"
             android:visibility="invisible"
             app:layout_constraintTop_toTopOf="@id/follower_username"

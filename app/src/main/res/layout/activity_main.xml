@@ -12,18 +12,18 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_activity_toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/main_activity_toolBar"
-            android:background="#445566"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:background="#445566">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/ic_search_white"
                 android:layout_gravity="right"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_search_white" />
         </androidx.appcompat.widget.Toolbar>
 
             <com.google.android.material.tabs.TabLayout

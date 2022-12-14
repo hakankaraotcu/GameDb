@@ -15,19 +15,19 @@
             android:title="Profile"/>
         <item
             android:id="@+id/nav_menu_toPlayList"
-            android:icon="@drawable/create_account_selector"
+            android:icon="@drawable/to_playlist_selector"
             android:title="To-PlayList"/>
         <item
             android:id="@+id/nav_menu_lists"
-            android:icon="@drawable/open_tour_selector"
+            android:icon="@drawable/lists_selector"
             android:title="Lists"/>
         <item
             android:id="@+id/nav_menu_diary"
-            android:icon="@drawable/sign_in_selector"
+            android:icon="@drawable/diary_selector"
             android:title="Diary"/>
         <item
             android:id="@+id/nav_menu_reviews"
-            android:icon="@drawable/create_account_selector"
+            android:icon="@drawable/reviews_selector"
             android:title="Reviews"/>
         <item
             android:id="@+id/nav_menu_activity"
@@ -39,7 +39,7 @@
             android:title="Settings"/>
         <item
             android:id="@+id/nav_menu_signOut"
-            android:icon="@drawable/sign_in_selector"
+            android:icon="@drawable/sign_out_selector"
             android:title="Sign out"/>
     </group>
 </menu>
