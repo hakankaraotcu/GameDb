@@ -43,7 +43,7 @@ public class UserToPlayListFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, gameFragment, null).addToBackStack(null).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
             }
         });
     }

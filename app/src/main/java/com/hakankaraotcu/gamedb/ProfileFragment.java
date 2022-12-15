@@ -44,31 +44,31 @@ public class ProfileFragment extends Fragment {
                 switch (titles[i]) {
                     case "Games":
                         UserGamesFragment userGamesFragment = new UserGamesFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userGamesFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userGamesFragment, null).addToBackStack(null).commit();
                         break;
                     case "Diary":
                         UserDiaryFragment userDiaryFragment = new UserDiaryFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userDiaryFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userDiaryFragment, null).addToBackStack(null).commit();
                         break;
                     case "Lists":
                         UserListsFragment userListsFragment = new UserListsFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userListsFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userListsFragment, null).addToBackStack(null).commit();
                         break;
                     case "Reviews":
                         UserReviewsFragment userReviewsFragment = new UserReviewsFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userReviewsFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userReviewsFragment, null).addToBackStack(null).commit();
                         break;
                     case "To-Play List":
                         UserToPlayListFragment userToPlayListFragment = new UserToPlayListFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userToPlayListFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userToPlayListFragment, null).addToBackStack(null).commit();
                         break;
                     case "Following":
                         UserFollowingFragment userFollowingFragment = new UserFollowingFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userFollowingFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userFollowingFragment, null).addToBackStack(null).commit();
                         break;
                     case "Followers":
                         UserFollowersFragment userFollowersFragment = new UserFollowersFragment();
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_drawerLayout, userFollowersFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userFollowersFragment, null).addToBackStack(null).commit();
                         break;
                 }
             }

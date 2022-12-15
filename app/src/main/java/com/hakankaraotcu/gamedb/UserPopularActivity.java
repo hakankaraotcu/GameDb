@@ -142,7 +142,7 @@ public class UserPopularActivity extends AppCompatActivity {
 
     private void setFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.user_popular_drawerLayout, fragment, null);
+        transaction.replace(R.id.user_popular_RelativeLayout, fragment, null);
         transaction.addToBackStack(null);
         transaction.commit();
     }
