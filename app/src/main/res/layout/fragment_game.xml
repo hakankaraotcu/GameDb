@@ -196,7 +196,8 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/play"/>
+                        android:src="@drawable/ic_play"
+                        app:tint="@color/black"/>
                     <TextView
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
@@ -365,7 +366,7 @@
         android:layout_height="64dp"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_circle"
         expandableTextView:layout_constraintEnd_toEndOf="parent"
         expandableTextView:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"

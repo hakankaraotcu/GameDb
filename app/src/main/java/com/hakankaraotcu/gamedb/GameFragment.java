@@ -1,6 +1,7 @@
 package com.hakankaraotcu.gamedb;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -27,10 +28,12 @@ import java.util.Random;
 
 public class GameFragment extends Fragment {
     ExpandableTextView expTv;
-    ImageButton activityButton;
+    ImageButton activityButton, playButton, likeButton, toPlayButton;
     Button backButton;
     RatingBar averageRatingBar;
-    TextView averageRatingText, trailerText;
+    TextView averageRatingText, trailerText, playDescription, likeDescription;
+
+    private Boolean toPlayCheck = false;
 
     String text ="This isn't the Spider-Man you've known before, or seen in a movie. This is an experienced Peter Parker who is more masterful in fighting major crimes in New York City. At the same time he is struggling to balance his tumultuous personal life and career while the fate of nine million New Yorkers rests upon his shoulders.";
 
@@ -94,8 +97,56 @@ public class GameFragment extends Fragment {
                 View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.bottom_sheet, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
+                playButton = bottomSheetView.findViewById(R.id.play_button);
+                likeButton = bottomSheetView.findViewById(R.id.like_button);
+                toPlayButton = bottomSheetView.findViewById(R.id.toPlay_button);
+                playDescription = bottomSheetView.findViewById(R.id.play_description);
+                likeDescription = bottomSheetView.findViewById(R.id.like_description);
+
+                playButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(playDescription.getText().toString().equals("Play")){
+                            playButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 21, 187, 50)));
+                            playDescription.setText("Played");
+                        }
+                        else if(playDescription.getText().toString().equals("Played")){
+                            playButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                            playDescription.setText("Play");
+                        }
+                    }
+                });
+
+                likeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(likeDescription.getText().toString().equals("Like")){
+                            likeButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 255, 128, 0)));
+                            likeDescription.setText("Liked");
+                        }
+                        else if(likeDescription.getText().toString().equals("Liked")){
+                            likeButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                            likeDescription.setText("Like");
+                        }
+                    }
+                });
+
+                toPlayButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!toPlayCheck){
+                            toPlayButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 64, 188, 244)));
+                        }
+                        else{
+                            toPlayButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                        }
+                        toPlayCheck = !toPlayCheck;
+                    }
+                });
             }
         });
+
+
     }
 
     private int maxValue(int[] raters){
