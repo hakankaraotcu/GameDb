@@ -7,15 +7,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,7 +34,12 @@ public class GameFragment extends Fragment {
     ImageButton activityButton, playButton, likeButton, toPlayButton;
     Button backButton;
     RatingBar averageRatingBar;
-    TextView averageRatingText, trailerText, playDescription, likeDescription;
+    TextView averageRatingText, trailerText, playDescription, likeDescription, addReview, addToLists;
+    CardView gamePlayersCardView, gameReviewsCardView, gameListsCardView;
+    private ListView listView;
+    private GameActivityAdapter adapter;
+    private String[] titles = {"Review", "Add to lists"};
+    private int[] images = {R.drawable.ic_add_circle, R.drawable.ic_addtolist};
 
     private Boolean toPlayCheck = false;
 
@@ -82,11 +90,38 @@ public class GameFragment extends Fragment {
 
         backButton = view.findViewById(R.id.game_backButton);
         activityButton = view.findViewById(R.id.game_activityButton);
+        gamePlayersCardView = view.findViewById(R.id.game_players);
+        gameReviewsCardView = view.findViewById(R.id.game_reviews);
+        gameListsCardView = view.findViewById(R.id.game_lists);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), MainActivity.class));
+            }
+        });
+
+        gamePlayersCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GamePlayersFragment gamePlayersFragment = new GamePlayersFragment();
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
+            }
+        });
+
+        gameReviewsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameReviewsFragment gameReviewsFragment = new GameReviewsFragment();
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+            }
+        });
+
+        gameListsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameListsFragment gameListsFragment = new GameListsFragment();
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
             }
         });
 
@@ -97,11 +132,15 @@ public class GameFragment extends Fragment {
                 View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.bottom_sheet, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
+                listView = bottomSheetView.findViewById(R.id.game_activity_listView);
                 playButton = bottomSheetView.findViewById(R.id.play_button);
                 likeButton = bottomSheetView.findViewById(R.id.like_button);
                 toPlayButton = bottomSheetView.findViewById(R.id.toPlay_button);
                 playDescription = bottomSheetView.findViewById(R.id.play_description);
                 likeDescription = bottomSheetView.findViewById(R.id.like_description);
+
+                adapter = new GameActivityAdapter(titles, images, getContext());
+                listView.setAdapter(adapter);
 
                 playButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -143,10 +182,26 @@ public class GameFragment extends Fragment {
                         toPlayCheck = !toPlayCheck;
                     }
                 });
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        switch (titles[i]) {
+                            case "Review":
+                                AddReviewFragment addReviewFragment = new AddReviewFragment();
+                                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
+                                bottomSheetDialog.hide();
+                                break;
+                            case "Add to lists":
+                                AddtoListsFragment addtoListsFragment = new AddtoListsFragment();
+                                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
+                                bottomSheetDialog.hide();
+                                break;
+                        }
+                    }
+                });
             }
         });
-
-
     }
 
     private int maxValue(int[] raters){

@@ -4,51 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UserListsFragment"
-    android:background="#14181C">
+    tools:context=".GameReviewsFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/user_lists_toolBar"
+        android:id="@+id/game_reviews_toolBar"
         android:background="#445566"
         android:layout_alignParentTop="true">
 
         <Button
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_lists_backButton"
+            android:id="@+id/game_reviews_backButton"
             android:background="@drawable/ic_back"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username's Lists"
+            android:text="Reviews of Game Name"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="center"/>
-
-        <Button
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:id="@+id/user_lists_filterButton"
-            android:background="@drawable/ic_filter"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
-
-        <Button
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:id="@+id/user_lists_createButton"
-            android:background="@drawable/ic_add"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
+        android:id="@+id/gameReviews_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/userLists_recyclerView"/>
+        android:divider="@android:color/transparent"
+        android:background="#14181C"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
 
 </LinearLayout>

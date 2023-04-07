@@ -11,18 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ListView;
 
-public class UserListsFragment extends Fragment {
-    private UserListAdapter userListAdapter;
+public class GameListsFragment extends Fragment {
+    private ListAdapter listAdapter;
     private RecyclerView recyclerView;
-    private Button createButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_lists, container, false);
-        recyclerView = view.findViewById(R.id.userLists_recyclerView);
+        View view = inflater.inflate(R.layout.fragment_game_lists, container, false);
+        recyclerView = view.findViewById(R.id.gameLists_recyclerView);
         return view;
     }
 
@@ -30,22 +29,12 @@ public class UserListsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        userListAdapter = new UserListAdapter(Lists.getData(), getContext());
+        listAdapter = new ListAdapter(Lists.getData(), getContext());
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(userListAdapter);
+        recyclerView.setAdapter(listAdapter);
         recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-
-        createButton = view.findViewById(R.id.user_lists_createButton);
-
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CreateListFragment createListFragment = new CreateListFragment();
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, createListFragment, null).addToBackStack(null).commit();
-            }
-        });
     }
 }

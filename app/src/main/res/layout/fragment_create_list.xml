@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateListFragment"
+    android:background="#14181C">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/create_list_toolBar"
+        android:background="#445566"
+        android:layout_alignParentTop="true">
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/create_list_cancel"
+            android:background="@drawable/ic_cancel"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit List"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/create_list_confirm"
+            android:background="@drawable/ic_confirm"
+            android:layout_gravity="right"
+            android:layout_marginEnd="16dp"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="List name"
+        android:backgroundTint="#2C3440"
+        android:textColorHint="#99AABB"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Add description..."
+        android:backgroundTint="#2C3440"
+        android:textColorHint="#99AABB"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Add games..."
+        android:backgroundTint="#2C3440"
+        android:textColorHint="#99AABB"
+        android:textSize="16dp"/>
+
+</LinearLayout>
