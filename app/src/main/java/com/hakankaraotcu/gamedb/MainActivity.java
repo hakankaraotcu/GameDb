@@ -10,14 +10,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     private ViewPager2 mViewPager2;
     private ViewPagerFragmentAdapter mViewPagerFragmentAdapter;
@@ -49,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+
+        assert mUser != null;
+        startActivity(new Intent(this, UserPopularActivity.class));
+        finish();
 
         mDrawer = (DrawerLayout) findViewById(R.id.main_activity_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.main_activity_navigationView);

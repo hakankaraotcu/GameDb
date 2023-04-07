@@ -43,7 +43,7 @@
     </androidx.cardview.widget.CardView>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/signIn_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/backgroundEffect"
@@ -57,11 +57,11 @@
         android:backgroundTint="#99AABB"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/signIn_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_email"
+        app:layout_constraintStart_toStartOf="@+id/signIn_email"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Password"
@@ -73,8 +73,8 @@
         android:id="@+id/joinBtn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/signIn_password"
+        app:layout_constraintStart_toStartOf="@+id/signIn_email"
         app:layout_constraintEnd_toStartOf="@+id/resetPasswordBtn"
         android:layout_marginTop="10dp"
         android:backgroundTint="#445566"
@@ -83,9 +83,9 @@
         app:cornerRadius="10dp"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/resetPasswordBtn"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
-        android:id="@+id/resetPasswordBtn"
         app:layout_constraintTop_toTopOf="@+id/joinBtn"
         app:layout_constraintStart_toEndOf="@+id/joinBtn"
         app:layout_constraintEnd_toStartOf="@+id/loginBtn"
@@ -102,7 +102,7 @@
         android:id="@+id/loginBtn"
         app:layout_constraintTop_toTopOf="@+id/resetPasswordBtn"
         app:layout_constraintStart_toEndOf="@+id/resetPasswordBtn"
-        app:layout_constraintEnd_toEndOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="@+id/signIn_password"
         android:text="go"
         android:textStyle="bold"
         android:backgroundTint="#15BB32"

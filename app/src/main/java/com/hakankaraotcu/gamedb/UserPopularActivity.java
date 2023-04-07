@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class UserPopularActivity extends AppCompatActivity {
 
@@ -30,6 +32,8 @@ public class UserPopularActivity extends AppCompatActivity {
     private NavigationView mNav;
     private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
+
+    private FirebaseAuth mAuth;
 
     /*
     private SearchFragment searchFragment;
@@ -133,6 +137,12 @@ public class UserPopularActivity extends AppCompatActivity {
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                      */
+                    case R.id.nav_menu_signOut:
+                        mAuth.signOut();
+                        Intent intent = new Intent(UserPopularActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        return true;
                     default:
                         return false;
                 }
