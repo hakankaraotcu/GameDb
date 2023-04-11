@@ -39,6 +39,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
+        android:id="@+id/create_list_listName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -49,6 +50,7 @@
         android:textSize="16dp"/>
 
     <EditText
+        android:id="@+id/create_list_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Patterns;
@@ -18,26 +19,51 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateAccountFragment extends Fragment {
 
+    private User user;
     private EditText editEmail, editUsername, editPassword;
     private CheckBox checkAge, checkPrivacy;
     private String txtEmail, txtUsername, txtPassword;
     private Button backButton, registerButton;
-    private DatabaseReference mReference;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
-    private FirebaseFirestore mFirestore;
-    private HashMap<String, Object> mData;
+    private FirebaseFirestore db;
+    private ConstraintLayout mConstraint;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db.collection("Users").document(mUser.getUid()).addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    Toast.makeText(getActivity(), "Error while loading", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(value.exists()){
+                    Toast.makeText(getActivity(), "Load is complete", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,9 +82,10 @@ public class CreateAccountFragment extends Fragment {
         checkAge = view.findViewById(R.id.register_ageCheckBox);
         checkPrivacy = view.findViewById(R.id.register_privacyCheckBox);
 
+        mConstraint = view.findViewById(R.id.create_account_constraint);
+
         mAuth = FirebaseAuth.getInstance();
-        mReference = FirebaseDatabase.getInstance().getReference();
-        mFirestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         backButton = view.findViewById(R.id.backBtn);
         registerButton = view.findViewById(R.id.registerBtn);
@@ -125,26 +152,25 @@ public class CreateAccountFragment extends Fragment {
                 if(task.isSuccessful()){
                     mUser = mAuth.getCurrentUser();
 
-                    mData = new HashMap<>();
-                    mData.put("id", mUser.getUid());
-                    mData.put("username", txtUsername);
-                    mData.put("email", txtEmail);
-                    mData.put("password", txtPassword);
+                    if(mUser != null){
+                        user = new User(mUser.getUid(), txtUsername, txtEmail, txtPassword);
 
-                    mFirestore.collection("Users").document(mUser.getUid()).set(mData).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getActivity(), "Kayıt işlemi başarılı", Toast.LENGTH_SHORT).show();
+                        db.collection("Users").document(mUser.getUid()).set(user).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    getActivity().finish();
+                                    startActivity(new Intent(getActivity(), UserPopularActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                                }
+                                else{
+                                    Snackbar.make(mConstraint, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
+                                }
                             }
-                            else{
-                                Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
                 else{
-                    Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mConstraint, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
             }
         });

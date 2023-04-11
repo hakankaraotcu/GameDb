@@ -3,36 +3,47 @@ package com.hakankaraotcu.gamedb;
 import java.util.ArrayList;
 
 public class Lists {
-    private String listName;
-    private String content;
+    private String id, name, description,username;
     private String userName;
     private int count;
 
     public Lists(){
 
     }
+    public Lists(String name, String description){
+        this.name = name;
+        this.description = description;
+    }
 
-    public Lists(String listName, String content, String userName, int count){
-        this.listName = listName;
-        this.content = content;
+    public Lists(String name, String description, String userName, int count){
+        this.name = name;
+        this.description = description;
         this.userName = userName;
         this.count = count;
     }
 
-    public String getListName() {
-        return listName;
+    public String getId(){
+        return id;
     }
 
-    public void setListName(String listName) {
-        this.listName = listName;
+    public void setId(String id){
+        this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getName() {
+        return name;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String content) {
+        this.description = content;
     }
 
     public String getUserName() {
@@ -54,14 +65,14 @@ public class Lists {
     static public ArrayList<Lists> getData(){
         ArrayList<Lists> lists = new ArrayList<>();
         String[] titles = {"Horror", "Adventure", "Action", "RPG", "Strategy"};
-        String[] contents = {"The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested."};
+        String[] descriptions = {"The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.", "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested."};
         String[] userNames = {"Luke", "Marilyn", "Jake", "Mike", "Angel"};
         int[] counts = {70, 120, 14, 25, 230};
 
         for(int i = 0;i < titles.length;i++){
             Lists list = new Lists();
-            list.setListName(titles[i]);
-            list.setContent(contents[i]);
+            list.setName(titles[i]);
+            list.setDescription(descriptions[i]);
             list.setUserName(userNames[i]);
             list.setCount(counts[i]);
 

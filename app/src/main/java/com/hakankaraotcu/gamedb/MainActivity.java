@@ -19,6 +19,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.hakankaraotcu.gamedb.Model.User;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        assert mUser != null;
-        startActivity(new Intent(this, UserPopularActivity.class));
-        finish();
+        if(mUser != null){
+            finish();
+            startActivity(new Intent(this, UserPopularActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        }
+
 
         mDrawer = (DrawerLayout) findViewById(R.id.main_activity_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.main_activity_navigationView);

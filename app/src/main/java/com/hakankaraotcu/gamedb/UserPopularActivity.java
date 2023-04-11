@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -47,8 +48,9 @@ public class UserPopularActivity extends AppCompatActivity {
     private UserReviewsFragment userReviewsFragment;
     /*
     private ActivityFragment activityFragment;
-    private SettingsFragment settingsFragment;
     */
+    private SettingsFragment settingsFragment;
+
     private void init(){
         mViewPager2 = findViewById(R.id.user_popular_viewPager2);
         mTablayout = findViewById(R.id.user_popular_tabLayout);
@@ -75,15 +77,15 @@ public class UserPopularActivity extends AppCompatActivity {
         */
         profileFragment = new ProfileFragment();
         usertoPlayListFragment = new UserToPlayListFragment();
-        userListsFragment = new UserListsFragment();
+        //userListsFragment = new UserListsFragment();
         /*
         userDiaryFragment = new UserDiaryFragment();
         */
         userReviewsFragment = new UserReviewsFragment();
         /*
         activityFragment = new ActivityFragment();
-        settingsFragment = new SettingsFragment();
         */
+        settingsFragment = new SettingsFragment();
 
         setSupportActionBar(mToolbar);
         mNav.getMenu().findItem(R.id.nav_menu_popular).setChecked(true);
@@ -132,16 +134,15 @@ public class UserPopularActivity extends AppCompatActivity {
                         setFragment(activityFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
+                     */
                     case R.id.nav_menu_settings:
                         setFragment(settingsFragment);
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
-                     */
                     case R.id.nav_menu_signOut:
                         mAuth.signOut();
-                        Intent intent = new Intent(UserPopularActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+                        finish();
+                        startActivity(new Intent(UserPopularActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         return true;
                     default:
                         return false;

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#14181C"
+    android:id="@+id/signIn_constraint"
     tools:context=".SignInFragment">
 
     <androidx.cardview.widget.CardView
@@ -51,7 +52,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
-        android:hint="Username or Email"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
         android:backgroundTint="#99AABB"/>
@@ -65,6 +67,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
         android:backgroundTint="#99AABB"/>

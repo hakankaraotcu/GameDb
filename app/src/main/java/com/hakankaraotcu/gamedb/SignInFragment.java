@@ -1,10 +1,12 @@
 package com.hakankaraotcu.gamedb;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +32,7 @@ import java.util.Map;
 
 public class SignInFragment extends Fragment {
 
+    private ProgressDialog mProgress;
     private EditText editEmail, editPassword;
     private String txtEmail, txtPassword;
     private Button backButton, joinButton, goButton;
@@ -37,6 +41,7 @@ public class SignInFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private DocumentReference mReference;
     private HashMap<String, Object> mData;
+    private ConstraintLayout mConstraint;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +56,8 @@ public class SignInFragment extends Fragment {
 
         editEmail = view.findViewById(R.id.signIn_email);
         editPassword = view.findViewById(R.id.signIn_password);
+
+        mConstraint = view.findViewById(R.id.signIn_constraint);
 
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
@@ -71,7 +78,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CreateAccountFragment createAccountFragment = new CreateAccountFragment();
-                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, createAccountFragment).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_drawerLayout, createAccountFragment, null).addToBackStack(null).commit();
             }
         });
 
@@ -98,9 +105,14 @@ public class SignInFragment extends Fragment {
             return;
         }
 
+        mProgress = new ProgressDialog(getContext());
+        mProgress.setTitle("Sign in...");
+        mProgress.show();
+
         mAuth.signInWithEmailAndPassword(txtEmail, txtPassword).addOnSuccessListener(getActivity(), new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
+                progressSet();
                 mUser = mAuth.getCurrentUser();
 
                 assert mUser != null;
@@ -109,7 +121,8 @@ public class SignInFragment extends Fragment {
         }).addOnFailureListener(getActivity(), new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                progressSet();
+                Snackbar.make(mConstraint, e.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,6 +133,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
+                    progressSet();
                     mData = (HashMap)documentSnapshot.getData();
 
                     for(Map.Entry data: mData.entrySet()){
@@ -131,8 +145,15 @@ public class SignInFragment extends Fragment {
         }).addOnFailureListener(getActivity(), new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                progressSet();
+                Snackbar.make(mConstraint, e.getMessage(), Snackbar.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void progressSet(){
+        if(mProgress.isShowing()){
+            mProgress.dismiss();
+        }
     }
 }

@@ -57,9 +57,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
         }
 
         public void setData(Lists list){
-            this.listName.setText(list.getListName());
+            this.listName.setText(list.getName());
             this.count.setText(String.valueOf(list.getCount()));
-            this.content.setText(list.getContent());
+            this.content.setText(list.getDescription());
         }
     }
 }

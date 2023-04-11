@@ -57,8 +57,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         }
 
         public void setData(Lists list){
-            this.listName.setText(list.getListName());
-            this.content.setText(list.getContent());
+            this.listName.setText(list.getName());
+            this.content.setText(list.getDescription());
             this.userName.setText(list.getUserName());
         }
     }
