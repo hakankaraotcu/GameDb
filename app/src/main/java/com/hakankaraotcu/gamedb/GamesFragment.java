@@ -13,17 +13,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import java.util.ArrayList;
+
 public class GamesFragment extends Fragment {
     private GameFragment gameFragment;
-
     private GridView mGridView;
-    private String[] games = {"","","","","","","","","","","","","","","","","","","",""};
+    private GameAdapter adapter;
+    private ArrayList<Games> games;
+
+    private String[] names = {"","","","","","","","","","","","","","","","","","","",""};
     private int[] pictures = {R.drawable.spiderman, R.drawable.cuphead, R.drawable.monsterhunter, R.drawable.monkeyisland,
             R.drawable.batmanarkhamcity, R.drawable.bioshock, R.drawable.discoelysium, R.drawable.eldenring,
             R.drawable.gta4, R.drawable.halflife, R.drawable.halo, R.drawable.persona5,
             R.drawable.rdr, R.drawable.re4, R.drawable.darksiders2, R.drawable.metalgearsolid,
             R.drawable.skyrim, R.drawable.thelastofus, R.drawable.thephantompain, R.drawable.portal};
-    private GameAdapter adapter;
+
+
+    public GamesFragment(ArrayList<Games> games){
+        this.games = games;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +45,7 @@ public class GamesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mGridView = (GridView) view.findViewById(R.id.popular_gridView);
 
-        adapter = new GameAdapter(games, pictures, getActivity());
+        adapter = new GameAdapter(games, getActivity());
         mGridView.setAdapter(adapter);
 
         gameFragment = new GameFragment();
@@ -45,7 +53,10 @@ public class GamesFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                //from main activity
+                //getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                //from popular activity
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
             }
         });
     }
