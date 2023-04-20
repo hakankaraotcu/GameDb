@@ -42,7 +42,7 @@
         android:id="@+id/create_list_listName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:hint="List name"
         android:backgroundTint="#2C3440"
@@ -53,21 +53,41 @@
         android:id="@+id/create_list_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:hint="Add description..."
         android:backgroundTint="#2C3440"
         android:textColorHint="#99AABB"
         android:textSize="16dp"/>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="match_parent"
+        android:id="@+id/create_list_linearLayout"
+        android:orientation="vertical"
         android:layout_marginTop="16dp"
-        android:hint="Add games..."
-        android:backgroundTint="#2C3440"
-        android:textColorHint="#99AABB"
-        android:textSize="16dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add games..."
+            android:textColorHint="@color/white"
+            android:textSize="16dp"
+            android:layout_marginStart="3dp"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/create_list_gridView"
+            android:columnWidth="80dp"
+            android:paddingTop="2dp"
+            android:verticalSpacing="4dp"
+            android:numColumns="4"
+            android:gravity="center"
+            android:stretchMode="spacingWidthUniform"/>
+
+    </LinearLayout>
 
 </LinearLayout>

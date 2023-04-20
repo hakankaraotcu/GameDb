@@ -56,6 +56,9 @@ public class GamesFragment extends Fragment {
                 //from main activity
                 //getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
                 //from popular activity
+                Bundle args = new Bundle();
+                args.putString("id", games.get(i).getId());
+                gameFragment.setArguments(args);
                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
             }
         });

@@ -33,7 +33,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
         Lists list = lists.get(position);
         holder.setData(list);
         ImageAdapter imageAdapter;
-        imageAdapter = new ImageAdapter(Games.getData(), context);
+        imageAdapter = new ImageAdapter(list.getGames(), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setAdapter(imageAdapter);
         holder.recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);

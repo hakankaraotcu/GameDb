@@ -46,7 +46,7 @@
             android:id="@+id/game_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="MARVEL'S SPIDER-MAN"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -70,7 +70,7 @@
             android:id="@+id/game_releaseDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Sep 7, 2018"
+            android:text=""
             android:textColor="#99AABB"
             app:layout_constraintTop_toBottomOf="@+id/game_developer"
             app:layout_constraintStart_toStartOf="@+id/game_developer"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="87"
+            android:text=""
             android:textColor="#99AABB"
             app:layout_constraintTop_toTopOf="@+id/game_metacritic"
             app:layout_constraintStart_toEndOf="@+id/game_metacritic" />
@@ -109,10 +109,10 @@
             android:id="@+id/game_image"
             android:layout_width="99dp"
             android:layout_height="147dp"
-            android:background="@drawable/spiderman"
             app:layout_constraintTop_toTopOf="@+id/game_name"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/game_trailer"

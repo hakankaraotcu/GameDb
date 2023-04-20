@@ -3,16 +3,19 @@ package com.hakankaraotcu.gamedb;
 import java.util.ArrayList;
 
 public class Lists {
-    private String id, name, description,username;
+    private String id, name, description, username;
     private String userName;
     private int count;
+    private ArrayList<Games> games;
 
     public Lists(){
 
     }
-    public Lists(String name, String description){
+    public Lists(String name, String description, ArrayList<Games> games, int count){
         this.name = name;
         this.description = description;
+        this.games = games;
+        this.count = count;
     }
 
     public Lists(String name, String description, String userName, int count){
@@ -60,6 +63,14 @@ public class Lists {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public ArrayList<Games> getGames() {
+        return games;
+    }
+
+    public void setGames(ArrayList<Games> games) {
+        this.games = games;
     }
 
     static public ArrayList<Lists> getData(){

@@ -39,31 +39,21 @@ public class ProfileFragment extends Fragment {
     private CollectionReference listsReference;
     private ArrayList<Lists> lists = new ArrayList<>();
 
+    public ProfileFragment(){
+
+    }
+
+    public ProfileFragment(ArrayList<Lists> lists){
+        this.lists = lists;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
-        listsReference = db.collection("Users").document(mUser.getUid()).collection("Lists");
 
-        listsReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    return;
-                }
-                int index = 0;
-                for(QueryDocumentSnapshot documentSnapshot : value){
-                    Lists list = documentSnapshot.toObject(Lists.class);
-                    list.setId(documentSnapshot.getId());
-                    if(index > lists.size()){
-                        lists.add(list);
-                    }
-                    index++;
-                }
-            }
-        });
     }
 
     @Override
@@ -97,7 +87,7 @@ public class ProfileFragment extends Fragment {
                         break;
                     case "Lists":
                         UserListsFragment userListsFragment = new UserListsFragment(lists);
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userListsFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userListsFragment, "userListsFragment").addToBackStack(null).commit();
                         break;
                     case "Reviews":
                         UserReviewsFragment userReviewsFragment = new UserReviewsFragment();

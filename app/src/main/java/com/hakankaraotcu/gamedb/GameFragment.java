@@ -17,33 +17,45 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.taufiqrahman.reviewratings.BarLabels;
 import com.taufiqrahman.reviewratings.RatingReviews;
 
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 public class GameFragment extends Fragment {
-    ExpandableTextView expTv;
-    ImageButton activityButton, playButton, likeButton, toPlayButton;
-    Button backButton;
-    RatingBar averageRatingBar;
-    TextView averageRatingText, trailerText, playDescription, likeDescription, addReview, addToLists;
-    CardView gamePlayersCardView, gameReviewsCardView, gameListsCardView;
+    private ImageButton activityButton, playButton, likeButton, toPlayButton;
+    private Button backButton;
+    private RatingBar averageRatingBar;
+    private TextView averageRatingText, trailerText, playDescription, likeDescription, addReview, addToLists;
+    private TextView gameName, gameDeveloper, gameReleaseDate, gameMetacritic, gameGenres;
+    private ExpandableTextView gameContent;
+    private ImageView gameImage;
+    private CardView gamePlayersCardView, gameReviewsCardView, gameListsCardView;
     private ListView listView;
     private GameActivityAdapter adapter;
     private String[] titles = {"Review", "Add to lists"};
     private int[] images = {R.drawable.ic_add_circle, R.drawable.ic_addtolist};
+    private String id;
+    private FirebaseFirestore mFirestore;
 
     private Boolean toPlayCheck = false;
-
-    String text ="This isn't the Spider-Man you've known before, or seen in a movie. This is an experienced Peter Parker who is more masterful in fighting major crimes in New York City. At the same time he is struggling to balance his tumultuous personal life and career while the fate of nine million New Yorkers rests upon his shoulders.";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +65,26 @@ public class GameFragment extends Fragment {
         averageRatingBar = (RatingBar) view.findViewById(R.id.averageRatingBar);
         averageRatingText = (TextView) view.findViewById(R.id.averageRatingText);
         trailerText = (TextView) view.findViewById(R.id.game_trailer);
+
+        gameName = view.findViewById(R.id.game_name);
+        gameDeveloper = view.findViewById(R.id.game_developer);
+        gameReleaseDate = view.findViewById(R.id.game_releaseDate);
+        gameMetacritic = view.findViewById(R.id.game_metacritic_description);
+        gameGenres = view.findViewById(R.id.game_genres);
+        gameImage = view.findViewById(R.id.game_image);
+        gameContent = (ExpandableTextView) view.findViewById(R.id.expand_text_view);
+
+        mFirestore = FirebaseFirestore.getInstance();
+
+        id = getArguments().getString("id");
+
+        fetchData();
+
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         int colors[] = new int[]{
                 Color.parseColor("#0e9d58"),
@@ -83,10 +115,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        expTv = (ExpandableTextView) view.findViewById(R.id.expand_text_view);
-
-        expTv.setText(text);
 
         backButton = view.findViewById(R.id.game_backButton);
         activityButton = view.findViewById(R.id.game_activityButton);
@@ -132,6 +160,7 @@ public class GameFragment extends Fragment {
                 View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.bottom_sheet, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
+
                 listView = bottomSheetView.findViewById(R.id.game_activity_listView);
                 playButton = bottomSheetView.findViewById(R.id.play_button);
                 likeButton = bottomSheetView.findViewById(R.id.like_button);
@@ -189,17 +218,39 @@ public class GameFragment extends Fragment {
                         switch (titles[i]) {
                             case "Review":
                                 AddReviewFragment addReviewFragment = new AddReviewFragment();
-                                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
+                                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
                             case "Add to lists":
                                 AddtoListsFragment addtoListsFragment = new AddtoListsFragment();
-                                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
+                                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
                         }
                     }
                 });
+            }
+        });
+    }
+
+    private void fetchData(){
+        DocumentReference documentReference = mFirestore.collection("Games").document(id);
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    System.out.println(documentSnapshot.getString("name"));
+                    gameName.setText(documentSnapshot.getString("name"));
+                    gameMetacritic.setText(documentSnapshot.get("metacritic").toString());
+                    gameReleaseDate.setText(documentSnapshot.getString("releaseDate"));
+                    gameContent.setText(documentSnapshot.getString("content"));
+                    Glide.with(getView().getContext()).load(documentSnapshot.getString("img")).into(gameImage);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Failed to fetch data", Toast.LENGTH_LONG).show();
             }
         });
     }

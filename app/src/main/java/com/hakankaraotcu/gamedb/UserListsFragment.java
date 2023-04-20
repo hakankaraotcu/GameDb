@@ -61,8 +61,16 @@ public class UserListsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 CreateListFragment createListFragment = new CreateListFragment();
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, createListFragment, null).addToBackStack(null).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, createListFragment, "createListFragment").addToBackStack(null).commit();
             }
         });
+    }
+
+    public void setLists(ArrayList<Lists> lists){
+        this.lists = lists;
+    }
+
+    public ArrayList<Lists> getLists(){
+        return lists;
     }
 }
