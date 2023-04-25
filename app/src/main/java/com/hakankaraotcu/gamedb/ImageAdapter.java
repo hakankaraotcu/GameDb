@@ -50,7 +50,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         }
 
         public void setData(Games game){
-            Glide.with(itemView.getContext()).load(game.getImg()).into(gameImage);
+            Glide.with(itemView.getContext()).load(game.getImage()).into(gameImage);
         }
     }
 }

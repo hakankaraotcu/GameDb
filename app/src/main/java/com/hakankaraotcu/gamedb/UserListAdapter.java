@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListViewHolder>{
     private ArrayList<Lists> lists;
+    private HashMap<String, ArrayList<Games>> gamesInList;
     private Context context;
 
-    public UserListAdapter(ArrayList<Lists> lists, Context context) {
+    public UserListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
         this.lists = lists;
+        this.gamesInList = gamesInList;
         this.context = context;
     }
 
@@ -33,7 +36,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
         Lists list = lists.get(position);
         holder.setData(list);
         ImageAdapter imageAdapter;
-        imageAdapter = new ImageAdapter(list.getGames(), context);
+        imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setAdapter(imageAdapter);
         holder.recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);

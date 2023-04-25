@@ -38,13 +38,15 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore db;
     private CollectionReference listsReference;
     private ArrayList<Lists> lists = new ArrayList<>();
+    private ArrayList<Games> games = new ArrayList<>();
 
     public ProfileFragment(){
 
     }
 
-    public ProfileFragment(ArrayList<Lists> lists){
+    public ProfileFragment(ArrayList<Lists> lists, ArrayList<Games> games){
         this.lists = lists;
+        this.games = games;
     }
 
     @Override
@@ -86,7 +88,7 @@ public class ProfileFragment extends Fragment {
                         getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userDiaryFragment, null).addToBackStack(null).commit();
                         break;
                     case "Lists":
-                        UserListsFragment userListsFragment = new UserListsFragment(lists);
+                        UserListsFragment userListsFragment = new UserListsFragment(lists, games);
                         getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, userListsFragment, "userListsFragment").addToBackStack(null).commit();
                         break;
                     case "Reviews":

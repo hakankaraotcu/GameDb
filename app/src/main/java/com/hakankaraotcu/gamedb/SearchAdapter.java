@@ -64,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         }
 
         public void setData(Games game){
-            Glide.with(itemView.getContext()).load(game.getImg()).into(gameImage);
+            Glide.with(itemView.getContext()).load(game.getImage()).into(gameImage);
             this.gameName.setText(game.getName());
         }
     }

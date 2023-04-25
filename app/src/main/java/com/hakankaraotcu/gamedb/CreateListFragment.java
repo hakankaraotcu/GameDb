@@ -5,7 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +17,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateListFragment extends Fragment {
 
@@ -32,13 +49,22 @@ public class CreateListFragment extends Fragment {
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
     private Lists list;
+    private User user;
     private LinearLayout linearLayout;
 
     private GridView mGridView;
     private GameAdapter adapter;
     private ArrayList<Games> games = new ArrayList<>();
+    private ArrayList<Games> allGames;
+    private ArrayList<Lists> lists;
+    private int index = 0;
 
-    private CollectionReference listsReference;
+    private CollectionReference listsReference, userReference, gamesReference;
+
+    public CreateListFragment(ArrayList<Lists> lists, ArrayList<Games> allGames){
+        this.lists = lists;
+        this.allGames = allGames;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +93,7 @@ public class CreateListFragment extends Fragment {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddGameToListFragment addGameToListFragment = new AddGameToListFragment();
+                AddGameToListFragment addGameToListFragment = new AddGameToListFragment(allGames);
                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addGameToListFragment, null).addToBackStack(null).commit();
             }
         });
@@ -95,22 +121,64 @@ public class CreateListFragment extends Fragment {
             return;
         }
 
-        list = new Lists(txtListName, txtListDescription, games, games.size());
+        listsReference = mFirestore.collection("Lists");
+        userReference = mFirestore.collection("Users");
+        userReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                    User user = documentSnapshot.toObject(User.class);
+                    list = new Lists(txtListName, txtListDescription, games.size(), user);
+                    listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            String id = null;
+                            for(Lists selectedList : lists){
+                                if(selectedList.getName().equals(list.getName())){
+                                    id = selectedList.getId();
+                                }
+                            }
+                            for(Games game : games){
+                                gamesReference = mFirestore.collection("Lists").document(id).collection("Games");
+                                gamesReference.document(game.getId()).set(game).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        setIndex(1);
+                                        if(index == games.size()){
+                                            getActivity().getSupportFragmentManager().popBackStack();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        /*listsReference.getParent().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    User user = documentSnapshot.toObject(User.class);
+                    list = new Lists(txtListName, txtListDescription, games.size(), mUser.getUid());
+                    listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        }
+                    });
+                }
+            }
+        });
 
-        listsReference = mFirestore.collection("Users").document(mUser.getUid()).collection("Lists");
-
-        listsReference.add(list);
-
-        try {
-            Thread.sleep(250);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        getActivity().getSupportFragmentManager().popBackStack();
+         */
     }
 
     public void setGames(Games game){
         this.games.add(game);
+    }
+
+    public void setIndex(int count){
+        index++;
     }
 }

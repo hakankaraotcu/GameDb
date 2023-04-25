@@ -21,14 +21,6 @@ public class GamesFragment extends Fragment {
     private GameAdapter adapter;
     private ArrayList<Games> games;
 
-    private String[] names = {"","","","","","","","","","","","","","","","","","","",""};
-    private int[] pictures = {R.drawable.spiderman, R.drawable.cuphead, R.drawable.monsterhunter, R.drawable.monkeyisland,
-            R.drawable.batmanarkhamcity, R.drawable.bioshock, R.drawable.discoelysium, R.drawable.eldenring,
-            R.drawable.gta4, R.drawable.halflife, R.drawable.halo, R.drawable.persona5,
-            R.drawable.rdr, R.drawable.re4, R.drawable.darksiders2, R.drawable.metalgearsolid,
-            R.drawable.skyrim, R.drawable.thelastofus, R.drawable.thephantompain, R.drawable.portal};
-
-
     public GamesFragment(ArrayList<Games> games){
         this.games = games;
     }
@@ -55,6 +47,7 @@ public class GamesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //from main activity
                 //getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+
                 //from popular activity
                 Bundle args = new Bundle();
                 args.putString("id", games.get(i).getId());

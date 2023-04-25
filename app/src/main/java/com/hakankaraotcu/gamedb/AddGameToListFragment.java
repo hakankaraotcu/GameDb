@@ -30,7 +30,12 @@ public class AddGameToListFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private CollectionReference gamesReference;
     private ArrayList<Games> games = new ArrayList<>();
+    private ArrayList<Games> allGames;
     private SearchAdapter searchAdapter;
+
+    public AddGameToListFragment(ArrayList<Games> allGames){
+        this.allGames = allGames;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +72,30 @@ public class AddGameToListFragment extends Fragment {
     }
 
     private void searchGames(String query) {
+        games.clear();
+        for(Games game : allGames){
+            if(game.getName().toLowerCase().contains(query.toLowerCase())){
+                games.add(game);
+            }
+            searchAdapter = new SearchAdapter(games, getContext());
+            searchAdapter.notifyDataSetChanged();
+            recyclerView.setHasFixedSize(true);
+            LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setAdapter(searchAdapter);
+            recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+            searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(Games game, int position) {
+                    Fragment fragment = getParentFragmentManager().findFragmentByTag("createListFragment");
+                    CreateListFragment createListFragment = (CreateListFragment) fragment;
+                    createListFragment.setGames(game);
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
+            });
+        }
+        /*
         gamesReference = mFirestore.collection("Games");
 
         gamesReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -77,6 +106,7 @@ public class AddGameToListFragment extends Fragment {
                     return;
                 }
                 for(QueryDocumentSnapshot documentSnapshot : value){
+                    System.out.println("working");
                     Games game = documentSnapshot.toObject(Games.class);
                     if(game.getName().toLowerCase().contains(query.toLowerCase())){
                         games.add(game);
@@ -102,5 +132,7 @@ public class AddGameToListFragment extends Fragment {
                 }
             }
         });
+
+         */
     }
 }

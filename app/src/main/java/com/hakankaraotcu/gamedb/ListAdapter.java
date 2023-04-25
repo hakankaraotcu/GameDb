@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
     private ArrayList<Lists> lists;
+    private HashMap<String, ArrayList<Games>> gamesInList;
     private Context context;
 
-    public ListAdapter(ArrayList<Lists> lists, Context context) {
+    public ListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
         this.lists = lists;
+        this.gamesInList = gamesInList;
         this.context = context;
     }
 
@@ -33,7 +36,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         Lists list = lists.get(position);
         holder.setData(list);
         ImageAdapter imageAdapter;
-        imageAdapter = new ImageAdapter(Games.getData(), context);
+        imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setAdapter(imageAdapter);
         holder.recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
@@ -59,7 +62,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         public void setData(Lists list){
             this.listName.setText(list.getName());
             this.content.setText(list.getDescription());
-            this.userName.setText(list.getUserName());
+            this.userName.setText(list.getUser().getUsername());
         }
     }
 }

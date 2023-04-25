@@ -14,7 +14,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -22,11 +24,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Model.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -51,6 +55,7 @@ public class UserPopularActivity extends AppCompatActivity {
 
     private ArrayList<Games> games = new ArrayList<>();
     private ArrayList<Lists> lists = new ArrayList<>();
+    private ArrayList<Lists> userLists = new ArrayList<>();
 
     private DrawerLayout mDrawer;
     private NavigationView mNav;
@@ -82,7 +87,7 @@ public class UserPopularActivity extends AppCompatActivity {
         mViewPager2 = findViewById(R.id.user_popular_viewPager2);
         mTablayout = findViewById(R.id.user_popular_tabLayout);
 
-        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this, games);
+        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this, games, lists);
 
         mViewPager2.setAdapter(mViewPagerFragmentAdapter);
 
@@ -103,7 +108,6 @@ public class UserPopularActivity extends AppCompatActivity {
         //dw.execute();
 
         gamesReference = mFirestore.collection("Games");
-
         gamesReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -120,16 +124,17 @@ public class UserPopularActivity extends AppCompatActivity {
                     }
                     index++;
                 }
+                profileFragment = new ProfileFragment(userLists, games);
                 init();
             }
         });
 
-        listsReference = mFirestore.collection("Users").document(mUser.getUid()).collection("Lists");
-
+        listsReference = mFirestore.collection("Lists");
         listsReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 lists.clear();
+                userLists.clear();
                 if(error != null){
                     return;
                 }
@@ -140,17 +145,20 @@ public class UserPopularActivity extends AppCompatActivity {
                     if(index >= lists.size()){
                         lists.add(list);
                     }
+                    if(list.getUser().getId().equals(mUser.getUid())){
+                        userLists.add(list);
+                    }
                     index++;
                 }
                 if(getSupportFragmentManager().findFragmentByTag("userListsFragment") == null){
-                    userListsFragment = new UserListsFragment(lists);
+                    userListsFragment = new UserListsFragment(userLists, games);
                 }
                 else{
                     Fragment fragment = getSupportFragmentManager().findFragmentByTag("userListsFragment");
                     userListsFragment = (UserListsFragment) fragment;
-                    userListsFragment.setLists(lists);
+                    userListsFragment.setLists(userLists);
                 }
-                profileFragment = new ProfileFragment(lists);
+                profileFragment = new ProfileFragment(userLists, games);
             }
         });
 
@@ -284,7 +292,7 @@ public class UserPopularActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid){
-            for(int i = 0; i < names.size(); i++){
+            for(int i = 0; i < 10; i++){
                 game = new Games(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i));
                 mFirestore.collection("Games").add(game);
             }

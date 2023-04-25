@@ -59,7 +59,7 @@ public class GameAdapter extends BaseAdapter {
 
         if(v != null){
             gamePicture = v.findViewById(R.id.game_item_imageView);
-            Glide.with(v.getContext()).load(gamess.get(position).getImg()).into(gamePicture);
+            Glide.with(v.getContext()).load(gamess.get(position).getImage()).into(gamePicture);
             //gamePicture.setBackgroundResource(pictures[position]);
         }
         return v;

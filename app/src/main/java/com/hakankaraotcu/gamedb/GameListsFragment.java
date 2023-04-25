@@ -29,6 +29,7 @@ public class GameListsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*
         listAdapter = new ListAdapter(Lists.getData(), getContext());
 
         recyclerView.setHasFixedSize(true);
@@ -36,5 +37,7 @@ public class GameListsFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(listAdapter);
         recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+         */
     }
 }

@@ -239,12 +239,11 @@ public class GameFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    System.out.println(documentSnapshot.getString("name"));
                     gameName.setText(documentSnapshot.getString("name"));
                     gameMetacritic.setText(documentSnapshot.get("metacritic").toString());
                     gameReleaseDate.setText(documentSnapshot.getString("releaseDate"));
                     gameContent.setText(documentSnapshot.getString("content"));
-                    Glide.with(getView().getContext()).load(documentSnapshot.getString("img")).into(gameImage);
+                    Glide.with(getView().getContext()).load(documentSnapshot.getString("image")).into(gameImage);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
