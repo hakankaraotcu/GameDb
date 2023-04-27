@@ -7,8 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private ArrayList<Lists> lists;
     private HashMap<String, ArrayList<Games>> gamesInList;
     private Context context;
+    private ImageAdapter imageAdapter;
 
     public ListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
         this.lists = lists;
@@ -35,7 +44,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Lists list = lists.get(position);
         holder.setData(list);
-        ImageAdapter imageAdapter;
         imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setAdapter(imageAdapter);

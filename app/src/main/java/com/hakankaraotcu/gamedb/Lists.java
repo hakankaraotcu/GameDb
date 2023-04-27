@@ -4,16 +4,16 @@ import com.hakankaraotcu.gamedb.Model.User;
 
 public class Lists {
     private String id, name, description;
-    private int count;
+    private int numberOfGames;
     private User user;
 
     public Lists(){
 
     }
-    public Lists(String name, String description, int count, User user){
+    public Lists(String name, String description, int numberOfGames, User user){
         this.name = name;
         this.description = description;
-        this.count = count;
+        this.numberOfGames = numberOfGames;
         this.user = user;
     }
 
@@ -49,11 +49,15 @@ public class Lists {
         this.description = content;
     }
 
-    public int getCount() {
-        return count;
+    public int getNumberOfGames() {
+        return numberOfGames;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setNumberOfGames(int numberOfGames) {
+        this.numberOfGames = numberOfGames;
+    }
+
+    public void addNumberOfGames(){
+        this.numberOfGames++;
     }
 }

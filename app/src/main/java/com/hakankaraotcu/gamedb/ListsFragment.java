@@ -16,7 +16,12 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -26,23 +31,74 @@ import java.util.HashMap;
 public class ListsFragment extends Fragment {
     private ListAdapter listAdapter;
     private RecyclerView recyclerView;
-    private ArrayList<Lists> lists;
     private FirebaseFirestore mFirestore;
-    private CollectionReference gamesReferences;
+    private Query mQuery, mQuery2;
     private HashMap<String, ArrayList<Games>> gamesInList = new HashMap<>();
-    private int index = 0;
-
-    public ListsFragment(ArrayList<Lists> lists){
-        this.lists = lists;
-    }
+    private ArrayList<Lists> lists;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lists, container, false);
-        recyclerView = view.findViewById(R.id.lists_recyclerView);
+
         mFirestore = FirebaseFirestore.getInstance();
 
+        lists = new ArrayList<>();
+
+        recyclerView = view.findViewById(R.id.lists_recyclerView);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
+
+        mQuery = mFirestore.collection("Lists");
+        mQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(error != null){
+                    return;
+                }
+                if(value != null){
+                    lists.clear();
+
+                    for(DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        Lists list = documentSnapshot.toObject(Lists.class);
+
+                        assert list != null;
+                        list.setId(documentSnapshot.getId());
+                        lists.add(list);
+                    }
+
+                    for(Lists list : lists){
+                        mQuery2 = mFirestore.collection("Lists").document(list.getId()).collection("Games");
+                        mQuery2.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if(error != null){
+                                    return;
+                                }
+                                if(value != null){
+                                    ArrayList<Games> games = new ArrayList<>();
+
+                                    for(DocumentSnapshot documentSnapshot : value.getDocuments()){
+                                        Games game = documentSnapshot.toObject(Games.class);
+
+                                        assert game != null;
+                                        game.setId((documentSnapshot.getId()));
+                                        games.add(game);
+                                    }
+                                    gamesInList.put(list.getId(), games);
+                                    if(lists.size() == gamesInList.size()){
+                                        listAdapter = new ListAdapter(lists, gamesInList, getContext());
+                                        recyclerView.setAdapter(listAdapter);
+                                        recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -50,37 +106,5 @@ public class ListsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        for(Lists list : lists){
-            gamesReferences = mFirestore.collection("Lists").document(list.getId()).collection("Games");
-            gamesReferences.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if(task.isSuccessful()){
-                        ArrayList<Games> selectedGames = new ArrayList<>();
-                        for(QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                            Games game = queryDocumentSnapshot.toObject(Games.class);
-                            selectedGames.add(game);
-                        }
-                        gamesInList.put(list.getId(), selectedGames);
-                    }
-                    setIndex(1);
-
-                    if(index == lists.size()){
-                        listAdapter = new ListAdapter(lists, gamesInList, getContext());
-
-                        recyclerView.setHasFixedSize(true);
-                        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                        recyclerView.setLayoutManager(manager);
-                        recyclerView.setAdapter(listAdapter);
-                        recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-                        index = 0;
-                    }
-                }
-            });
-        }
-    }
-
-    public void setIndex(int count){
-        index++;
     }
 }

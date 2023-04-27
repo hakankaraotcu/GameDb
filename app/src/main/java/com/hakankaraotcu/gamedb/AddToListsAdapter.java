@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,19 +16,19 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameAdapter extends BaseAdapter {
+public class AddToListsAdapter extends BaseAdapter {
+    private TextView listName;
     private Context context;
-    private ImageView gamePicture;
-    private List<Games> gamess;
+    private ArrayList<Lists> lists;
 
-    public GameAdapter(List<Games> games, Context context){
-        this.gamess = games;
+    public AddToListsAdapter(ArrayList<Lists> lists, Context context){
+        this.lists = lists;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return gamess.size();
+        return lists.size();
     }
 
     @Override
@@ -44,11 +45,11 @@ public class GameAdapter extends BaseAdapter {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = layoutInflater.inflate(R.layout.game_item, null);
+        View v = layoutInflater.inflate(R.layout.add_to_lists_item, null);
 
         if(v != null){
-            gamePicture = v.findViewById(R.id.game_item_imageView);
-            Glide.with(v.getContext()).load(gamess.get(position).getImage()).into(gamePicture);
+            listName = v.findViewById(R.id.add_to_lists_name);
+            listName.setText(lists.get(position).getName());
         }
         return v;
     }

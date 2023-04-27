@@ -17,6 +17,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
     private ArrayList<Lists> lists;
     private HashMap<String, ArrayList<Games>> gamesInList;
     private Context context;
+    private ImageAdapter imageAdapter;
 
     public UserListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
         this.lists = lists;
@@ -35,7 +36,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
     public void onBindViewHolder(@NonNull UserListAdapter.ListViewHolder holder, int position) {
         Lists list = lists.get(position);
         holder.setData(list);
-        ImageAdapter imageAdapter;
         imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         holder.recyclerView.setAdapter(imageAdapter);
@@ -61,7 +61,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
 
         public void setData(Lists list){
             this.listName.setText(list.getName());
-            this.count.setText(String.valueOf(list.getCount()));
+            this.count.setText(String.valueOf(list.getNumberOfGames()));
             this.content.setText(list.getDescription());
         }
     }

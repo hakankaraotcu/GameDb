@@ -2,14 +2,17 @@ package com.hakankaraotcu.gamedb;
 
 public class Games {
     private String id, name, releaseDate, content, image;
-    private int metacritic;
+    private int metacritic, numberOfPlayers, numberOfReviews, numberOfLists;
 
-    public Games(String name, String releaseDate, String content, Integer metacritic, String image){
+    public Games(String name, String releaseDate, String content, Integer metacritic, String image,Integer numberOfPlayers,Integer numberOfReviews, Integer numberOfLists){
         this.name = name;
         this.releaseDate = releaseDate;
         this.content = content;
         this.metacritic = metacritic;
         this.image = image;
+        this.numberOfPlayers = numberOfPlayers;
+        this.numberOfReviews = numberOfReviews;
+        this.numberOfLists = numberOfLists;
     }
 
     public Games(){
@@ -63,4 +66,33 @@ public class Games {
     public void setMetacritic(int metacritic) {
         this.metacritic = metacritic;
     }
+
+    public int getNumberOfLists() {
+        return numberOfLists;
+    }
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public int getNumberOfReviews() {
+        return numberOfReviews;
+    }
+
+    public void setNumberOfReviews(int numberOfReviews) {
+        this.numberOfReviews = numberOfReviews;
+    }
+
+    public void setNumberOfLists(int numberOfLists) {
+        this.numberOfLists = numberOfLists;
+    }
+
+    public void addNumberOfLists(){
+        this.numberOfLists++;
+    }
+
 }

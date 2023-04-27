@@ -10,13 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class ProfileListAdapter extends ArrayAdapter<String> {
     private String[] titlesList;
-    private int[] countList;
+    private ArrayList<Integer> countList;
     private Context context;
     private TextView title, count;
 
-    public ProfileListAdapter(String[] titlesList, int[] countList, Context context) {
+    public ProfileListAdapter(String[] titlesList, ArrayList<Integer> countList, Context context) {
         super(context, R.layout.titles, titlesList);
         this.titlesList = titlesList;
         this.countList = countList;
@@ -33,7 +35,7 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
             count = view.findViewById(R.id.profile_listTitleCount);
 
             title.setText(titlesList[position]);
-            count.setText(String.valueOf(countList[position]));
+            count.setText(String.valueOf(countList.get(position)));
         }
         return view;
     }

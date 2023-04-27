@@ -207,6 +207,7 @@
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                     <TextView
+                        android:id="@+id/game_players_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="94k"
@@ -249,6 +250,7 @@
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                     <TextView
+                        android:id="@+id/game_reviews_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="36k"
@@ -290,6 +292,7 @@
                         android:textStyle="bold"
                         android:textAlignment="center"/>
                     <TextView
+                        android:id="@+id/game_lists_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="28k"

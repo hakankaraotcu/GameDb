@@ -3,27 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddtoListsFragment"
     android:orientation="vertical"
-    android:background="#14181C">
+    tools:context=".UserLikesFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/add_to_lists_toolBar"
+        android:id="@+id/user_likes_toolBar"
         android:background="#445566"
         android:layout_alignParentTop="true">
 
         <Button
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/add_to_lists_cancel"
-            android:background="@drawable/ic_cancel"/>
+            android:id="@+id/user_likes_backButton"
+            android:background="@drawable/ic_back"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add to lists"
+            android:text="Username's Likes"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -32,16 +31,30 @@
         <Button
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/add_to_lists_confirm"
-            android:background="@drawable/ic_confirm"
+            android:id="@+id/user_likes_filterButton"
+            android:background="@drawable/ic_filter"
+            android:layout_gravity="right"
+            android:layout_marginEnd="16dp"/>
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/user_likes_sliderButton"
+            android:background="@drawable/ic_slider"
             android:layout_gravity="right"
             android:layout_marginEnd="16dp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <ListView
-        android:id="@+id/add_to_lists_listView"
+    <GridView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"/>
+        android:id="@+id/userLikes_gridView"
+        android:columnWidth="86dp"
+        android:paddingTop="2dp"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="4dp"
+        android:numColumns="4"
+        android:stretchMode="spacingWidthUniform"
+        android:background="#14181C"/>
 
 </LinearLayout>

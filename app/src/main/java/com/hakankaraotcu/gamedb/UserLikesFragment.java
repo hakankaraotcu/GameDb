@@ -22,7 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class UserGamesFragment extends Fragment {
+public class UserLikesFragment extends Fragment {
     private GameFragment gameFragment;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -37,7 +37,7 @@ public class UserGamesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_games, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_likes, container, false);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -46,9 +46,9 @@ public class UserGamesFragment extends Fragment {
         games = new ArrayList<>();
         gamesIDs = new ArrayList<>();
 
-        mGridView = (GridView) view.findViewById(R.id.userGames_gridView);
+        mGridView = (GridView) view.findViewById(R.id.userLikes_gridView);
 
-        mQuery = mFirestore.collection("PlayedGames");
+        mQuery = mFirestore.collection("LikedGames");
         mQuery.whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

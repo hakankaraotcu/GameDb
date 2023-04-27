@@ -47,15 +47,11 @@ public class UserPopularActivity extends AppCompatActivity {
     private TabLayout mTablayout;
 
     private final String[] titles = new String[] {"GAMES", "REVIEWS", "LISTS", "NEWS"};
-    ArrayList<String> names = new ArrayList<>();
-    ArrayList<String> releaseDates = new ArrayList<>();
-    ArrayList<String> contents = new ArrayList<>();
-    ArrayList<String> images = new ArrayList<>();
-    ArrayList<Integer> metacritics = new ArrayList<>();
-
-    private ArrayList<Games> games = new ArrayList<>();
-    private ArrayList<Lists> lists = new ArrayList<>();
-    private ArrayList<Lists> userLists = new ArrayList<>();
+    private ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> releaseDates = new ArrayList<>();
+    private ArrayList<String> contents = new ArrayList<>();
+    private ArrayList<String> images = new ArrayList<>();
+    private ArrayList<Integer> metacritics = new ArrayList<>();
 
     private DrawerLayout mDrawer;
     private NavigationView mNav;
@@ -66,7 +62,6 @@ public class UserPopularActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
     private Games game;
-    private CollectionReference gamesReference, listsReference;
 
     /*
     private SearchFragment searchFragment;
@@ -83,17 +78,6 @@ public class UserPopularActivity extends AppCompatActivity {
     */
     private SettingsFragment settingsFragment;
 
-    private void init(){
-        mViewPager2 = findViewById(R.id.user_popular_viewPager2);
-        mTablayout = findViewById(R.id.user_popular_tabLayout);
-
-        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this, games, lists);
-
-        mViewPager2.setAdapter(mViewPagerFragmentAdapter);
-
-        new TabLayoutMediator(mTablayout, mViewPager2,((tab, position) -> tab.setText(titles[position]))).attach();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,60 +91,14 @@ public class UserPopularActivity extends AppCompatActivity {
         //Description_webscrape dw = new Description_webscrape();
         //dw.execute();
 
-        gamesReference = mFirestore.collection("Games");
-        gamesReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                games.clear();
-                if(error != null){
-                    return;
-                }
-                int index = 0;
-                for(QueryDocumentSnapshot documentSnapshot : value){
-                    Games game = documentSnapshot.toObject(Games.class);
-                    game.setId(documentSnapshot.getId());
-                    if(index >= games.size()){
-                        games.add(game);
-                    }
-                    index++;
-                }
-                profileFragment = new ProfileFragment(userLists, games);
-                init();
-            }
-        });
+        mViewPager2 = findViewById(R.id.user_popular_viewPager2);
+        mTablayout = findViewById(R.id.user_popular_tabLayout);
 
-        listsReference = mFirestore.collection("Lists");
-        listsReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                lists.clear();
-                userLists.clear();
-                if(error != null){
-                    return;
-                }
-                int index = 0;
-                for(QueryDocumentSnapshot documentSnapshot : value){
-                    Lists list = documentSnapshot.toObject(Lists.class);
-                    list.setId(documentSnapshot.getId());
-                    if(index >= lists.size()){
-                        lists.add(list);
-                    }
-                    if(list.getUser().getId().equals(mUser.getUid())){
-                        userLists.add(list);
-                    }
-                    index++;
-                }
-                if(getSupportFragmentManager().findFragmentByTag("userListsFragment") == null){
-                    userListsFragment = new UserListsFragment(userLists, games);
-                }
-                else{
-                    Fragment fragment = getSupportFragmentManager().findFragmentByTag("userListsFragment");
-                    userListsFragment = (UserListsFragment) fragment;
-                    userListsFragment.setLists(userLists);
-                }
-                profileFragment = new ProfileFragment(userLists, games);
-            }
-        });
+        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
+
+        mViewPager2.setAdapter(mViewPagerFragmentAdapter);
+
+        new TabLayoutMediator(mTablayout, mViewPager2,((tab, position) -> tab.setText(titles[position]))).attach();
 
         mDrawer = (DrawerLayout) findViewById(R.id.user_popular_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.user_popular_navigationView);
@@ -169,7 +107,9 @@ public class UserPopularActivity extends AppCompatActivity {
         /*
         searchFragment = new SearchFragment();
         */
+        profileFragment = new ProfileFragment();
         usertoPlayListFragment = new UserToPlayListFragment();
+        userListsFragment = new UserListsFragment();
         /*
         userDiaryFragment = new UserDiaryFragment();
         */
@@ -293,7 +233,7 @@ public class UserPopularActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid){
             for(int i = 0; i < 10; i++){
-                game = new Games(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i));
+                game = new Games(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i), 0, 0, 0);
                 mFirestore.collection("Games").add(game);
             }
         }
