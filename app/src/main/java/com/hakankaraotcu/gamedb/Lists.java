@@ -1,28 +1,18 @@
 package com.hakankaraotcu.gamedb;
 
-import com.hakankaraotcu.gamedb.Model.User;
-
 public class Lists {
-    private String id, name, description;
+    private String id, name, description, userID, username;
     private int numberOfGames;
-    private User user;
 
     public Lists(){
 
     }
-    public Lists(String name, String description, int numberOfGames, User user){
+    public Lists(String name, String description, int numberOfGames, String userID, String username){
         this.name = name;
         this.description = description;
         this.numberOfGames = numberOfGames;
-        this.user = user;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        this.userID = userID;
+        this.username = username;
     }
 
     public String getId(){
@@ -47,6 +37,22 @@ public class Lists {
 
     public void setDescription(String content) {
         this.description = content;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getNumberOfGames() {

@@ -109,7 +109,16 @@ public class AddGameToListFragment extends Fragment {
                         public void onItemClick(Games game, int position) {
                             Fragment fragment = getParentFragmentManager().findFragmentByTag("createListFragment");
                             CreateListFragment createListFragment = (CreateListFragment) fragment;
-                            createListFragment.setGames(game);
+                            boolean flag = true;
+                            for(Games addedGame : createListFragment.getGames()){
+                                if(addedGame.getName().equals(game.getName())){
+                                    flag = false;
+                                    break;
+                                }
+                            }
+                            if(flag){
+                                createListFragment.setGames(game);
+                            }
                             getActivity().getSupportFragmentManager().popBackStack();
                         }
                     });

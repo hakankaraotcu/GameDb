@@ -12,39 +12,42 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddtoListsFragment extends Fragment {
     private ListView listView;
-    private AddToListsAdapter adapter;
-    private Games game;
+    private String gameID;
     private Button confirmBtn;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private DocumentReference gameReference, gamesInListReference, listReference;
-    private String listID = null;
-    private int position;
+    private CollectionReference gamesInListsReference;
+    private DocumentReference gameReference, listReference;
     private ArrayList<Lists> lists;
+    private ArrayList<String> listsNames;
+    private ArrayList<Lists> selectedLists;
+    private int index = 0;
 
-    public AddtoListsFragment(Games game){
-        this.game = game;
+    public AddtoListsFragment(String gameID){
+        this.gameID = gameID;
     }
 
     @Override
@@ -57,11 +60,30 @@ public class AddtoListsFragment extends Fragment {
         mFirestore = FirebaseFirestore.getInstance();
 
         lists = new ArrayList<>();
+        listsNames = new ArrayList<>();
+        selectedLists = new ArrayList<>();
 
         listView = view.findViewById(R.id.add_to_lists_listView);
 
         mQuery = mFirestore.collection("Lists");
-        mQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mQuery.whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                    Lists list = documentSnapshot.toObject(Lists.class);
+
+                    assert list != null;
+                    list.setId(documentSnapshot.getId());
+                    lists.add(list);
+                    listsNames.add(list.getName());
+                }
+                //adapter = new AddToListsAdapter(lists, getContext());
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_multiple_choice, listsNames);
+                listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+                listView.setAdapter(arrayAdapter);
+            }
+        });
+        /*addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error != null){
@@ -74,16 +96,15 @@ public class AddtoListsFragment extends Fragment {
                         Lists list = documentSnapshot.toObject(Lists.class);
 
                         assert list != null;
-                        if(list.getUser().getId().equals(mUser.getUid())){
-                            list.setId(documentSnapshot.getId());
-                            lists.add(list);
-                        }
+                        list.setId(documentSnapshot.getId());
+                        lists.add(list);
                     }
                     adapter = new AddToListsAdapter(lists, getContext());
                     listView.setAdapter(adapter);
                 }
             }
         });
+        */
         return view;
     }
 
@@ -96,28 +117,47 @@ public class AddtoListsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listID = lists.get(i).getId();
-                position = i;
-                gamesInListReference = mFirestore.collection("Lists").document(listID).collection("Games").document(game.getId());
-                gameReference = mFirestore.collection("Games").document(game.getId());
+                CheckedTextView checkedTextView = (CheckedTextView) view;
+                if(checkedTextView.isChecked()){
+                    selectedLists.add(lists.get(i));
+                }
+                else{
+                    selectedLists.remove(lists.get(i));
+                }
             }
         });
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listID != null){
-                    game.addNumberOfLists();
-                    gamesInListReference.set(game);
+                for(Lists selectedList : selectedLists){
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("gameID", gameID);
+                    data.put("listID", selectedList.getId());
 
-                    gameReference.update("numberOfLists", game.getNumberOfLists());
+                    gamesInListsReference = mFirestore.collection("GamesInLists");
+                    gamesInListsReference.whereEqualTo("gameID", gameID).whereEqualTo("listID", selectedList.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if(queryDocumentSnapshots.isEmpty()){
+                                gamesInListsReference.document(selectedList.getId() + "_" + gameID).set(data);
 
-                    lists.get(position).addNumberOfGames();
-                    gameReference.collection("Lists").document(listID).set(lists.get(position));
+                                gameReference = mFirestore.collection("Games").document(gameID);
+                                gameReference.update("numberOfLists", FieldValue.increment(1));
 
-                    listReference = mFirestore.collection("Lists").document(listID);
-                    listReference.update("numberOfGames", lists.get(position).getNumberOfGames());
-                    getActivity().getSupportFragmentManager().popBackStack();
+                                listReference = mFirestore.collection("Lists").document(selectedList.getId());
+                                listReference.update("numberOfGames", FieldValue.increment(1));
+                                index++;
+                            }
+                            else{
+                                Toast.makeText(getActivity(), "Already on the " + selectedList.getName(), Toast.LENGTH_SHORT).show();
+                                index++;
+                            }
+                            if(selectedLists.size() == index){
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                        }
+                    });
                 }
             }
         });

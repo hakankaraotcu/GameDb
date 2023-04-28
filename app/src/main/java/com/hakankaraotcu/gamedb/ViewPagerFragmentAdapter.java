@@ -10,9 +10,15 @@ import java.util.ArrayList;
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
     private String[] titles = new String[] {"POPULAR", "REVIEWS", "LISTS", "NEWS"};
+    private ArrayList<Games> games;
 
     public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
+    }
+
+    public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Games> games) {
+        super(fragmentActivity);
+        this.games = games;
     }
 
     @NonNull
@@ -21,7 +27,7 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-                return new GamesFragment();
+                return new GamesFragment(games);
             case 1:
                 return new ReviewsFragment();
             case 2:
@@ -29,7 +35,7 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
             case 3:
                 return new JournalFragment();
         }
-        return new GamesFragment();
+        return new GamesFragment(games);
     }
 
     @Override

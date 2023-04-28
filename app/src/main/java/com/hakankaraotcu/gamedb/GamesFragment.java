@@ -34,6 +34,10 @@ public class GamesFragment extends Fragment {
     private Query mQuery;
     private ArrayList<Games> games;
 
+    public GamesFragment(ArrayList<Games> games){
+        this.games = games;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,26 +45,12 @@ public class GamesFragment extends Fragment {
 
         mFirestore = FirebaseFirestore.getInstance();
 
-        games = new ArrayList<>();
-
         mGridView = (GridView) view.findViewById(R.id.popular_gridView);
 
-        mQuery = mFirestore.collection("Games");
-        mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
-                    Games game = documentSnapshot.toObject(Games.class);
+        adapter = new GameAdapter(games, getActivity());
+        mGridView.setAdapter(adapter);
+        mGridView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
-                    assert game != null;
-                    game.setId(documentSnapshot.getId());
-                    games.add(game);
-                }
-                adapter = new GameAdapter(games, getActivity());
-                mGridView.setAdapter(adapter);
-                mGridView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-            }
-        });
         return view;
     }
 

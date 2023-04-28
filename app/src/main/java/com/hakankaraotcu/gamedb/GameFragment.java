@@ -338,7 +338,7 @@ public class GameFragment extends Fragment {
                                 bottomSheetDialog.hide();
                                 break;
                             case "Add to lists":
-                                AddtoListsFragment addtoListsFragment = new AddtoListsFragment(game);
+                                AddtoListsFragment addtoListsFragment = new AddtoListsFragment(game.getId());
                                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
@@ -356,6 +356,8 @@ public class GameFragment extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
                     game = documentSnapshot.toObject(Games.class);
+
+                    assert game != null;
                     game.setId(id);
                     gameName.setText(game.getName());
                     gameMetacritic.setText(String.valueOf(game.getMetacritic()));

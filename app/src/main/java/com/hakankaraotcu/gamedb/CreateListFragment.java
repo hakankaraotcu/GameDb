@@ -5,11 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,16 +22,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Model.User;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateListFragment extends Fragment {
 
@@ -48,17 +39,15 @@ public class CreateListFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
-    private Lists list;
     private LinearLayout linearLayout;
 
     private GridView mGridView;
     private GameAdapter adapter;
-    private ArrayList<Games> games = new ArrayList<>();
-    private int index = 0;
+    private ArrayList<Games> selectedGames = new ArrayList<>();
     private String id;
 
-    private CollectionReference listsReference, userReference, gamesInListReference, allGamesReference;
-    private DocumentReference gameReference;
+    private CollectionReference listsReference, usersReference, gamesInListsReference;
+    private DocumentReference gameReference, userReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +60,7 @@ public class CreateListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         mFirestore = FirebaseFirestore.getInstance();
@@ -82,7 +72,7 @@ public class CreateListFragment extends Fragment {
         mGridView = (GridView) view.findViewById(R.id.create_list_gridView);
         linearLayout = (LinearLayout) view.findViewById(R.id.create_list_linearLayout);
 
-        adapter = new GameAdapter(games, getActivity());
+        adapter = new GameAdapter(selectedGames, getActivity());
         mGridView.setAdapter(adapter);
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -117,42 +107,40 @@ public class CreateListFragment extends Fragment {
         }
 
         listsReference = mFirestore.collection("Lists");
-        userReference = mFirestore.collection("Users");
-        userReference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        usersReference = mFirestore.collection("Users");
+        usersReference.whereEqualTo("id", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
                     User user = documentSnapshot.toObject(User.class);
 
                     assert user != null;
-                    if(user.getId().equals(mUser.getUid())){
-                        list = new Lists(txtListName, txtListDescription, games.size(), user);
-                        listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if(task.isSuccessful()){
-                                    id = task.getResult().getId();
+                    Lists list = new Lists(txtListName, txtListDescription, selectedGames.size(), user.getId(), user.getUsername());
 
-                                    for(Games game : games){
-                                        game.addNumberOfLists();
-                                        gamesInListReference = mFirestore.collection("Lists").document(id).collection("Games");
-                                        gamesInListReference.document(game.getId()).set(game).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                setIndex();
-                                                gameReference = mFirestore.collection("Games").document(game.getId());
-                                                gameReference.collection("Lists").document(id).set(list);
-                                                gameReference.update("numberOfLists", game.getNumberOfLists());
-                                                if(index == games.size()){
-                                                    getActivity().getSupportFragmentManager().popBackStack();
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
+                    listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if(task.isSuccessful()){
+                                id = task.getResult().getId();
                             }
-                        });
-                    }
+                            for(Games game : selectedGames){
+                                gamesInListsReference = mFirestore.collection("GamesInLists");
+
+                                Map<String, Object> data = new HashMap<>();
+                                data.put("listID", id);
+                                data.put("gameID", game.getId());
+
+                                gamesInListsReference.document(id + "_" + game.getId()).set(data);
+
+                                userReference = mFirestore.collection("Users").document(mUser.getUid());
+                                userReference.update("listsCount", FieldValue.increment(1));
+
+                                gameReference = mFirestore.collection("Games").document(game.getId());
+                                gameReference.update("numberOfLists", FieldValue.increment(1));
+                            }
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        }
+                    });
                 }
             }
         });
@@ -175,11 +163,11 @@ public class CreateListFragment extends Fragment {
          */
     }
 
-    public void setGames(Games game){
-        this.games.add(game);
+    public ArrayList<Games> getGames(){
+        return this.selectedGames;
     }
 
-    public void setIndex(){
-        index++;
+    public void setGames(Games game){
+        this.selectedGames.add(game);
     }
 }

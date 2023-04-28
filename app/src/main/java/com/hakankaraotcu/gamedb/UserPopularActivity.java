@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -25,9 +27,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Model.User;
@@ -61,6 +65,8 @@ public class UserPopularActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
+    private Query mQuery;
+    private ArrayList<Games> games;
     private Games game;
 
     /*
@@ -78,6 +84,17 @@ public class UserPopularActivity extends AppCompatActivity {
     */
     private SettingsFragment settingsFragment;
 
+    private void init(){
+        mViewPager2 = findViewById(R.id.user_popular_viewPager2);
+        mTablayout = findViewById(R.id.user_popular_tabLayout);
+
+        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this, games);
+
+        mViewPager2.setAdapter(mViewPagerFragmentAdapter);
+
+        new TabLayoutMediator(mTablayout, mViewPager2,((tab, position) -> tab.setText(titles[position]))).attach();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,18 +104,26 @@ public class UserPopularActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         mFirestore = FirebaseFirestore.getInstance();
 
+        games = new ArrayList<>();
+
         //webscrape ile bilgileri metacritic sitesinden almak için alttaki iki kodu çalıştır.
         //Description_webscrape dw = new Description_webscrape();
         //dw.execute();
 
-        mViewPager2 = findViewById(R.id.user_popular_viewPager2);
-        mTablayout = findViewById(R.id.user_popular_tabLayout);
+        mQuery = mFirestore.collection("Games");
+        mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                    Games game = documentSnapshot.toObject(Games.class);
 
-        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
-
-        mViewPager2.setAdapter(mViewPagerFragmentAdapter);
-
-        new TabLayoutMediator(mTablayout, mViewPager2,((tab, position) -> tab.setText(titles[position]))).attach();
+                    assert game != null;
+                    game.setId(documentSnapshot.getId());
+                    games.add(game);
+                }
+                init();
+            }
+        });
 
         mDrawer = (DrawerLayout) findViewById(R.id.user_popular_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.user_popular_navigationView);

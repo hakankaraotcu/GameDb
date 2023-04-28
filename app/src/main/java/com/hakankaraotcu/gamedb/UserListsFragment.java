@@ -36,12 +36,11 @@ public class UserListsFragment extends Fragment {
     private RecyclerView recyclerView;
     private Button createButton;
     private ArrayList<Lists> lists;
-    private ArrayList<Games> games;
-    private HashMap<String, ArrayList<Games>> gamesInList = new HashMap<>();
+    private HashMap<String, ArrayList<Games>> gamesInList;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
-    private Query mQuery, mQuery2;
+    private Query mQuery, mQuery2, mQuery3;
     private CollectionReference gamesReferences;
     private int index = 0;
 
@@ -55,6 +54,7 @@ public class UserListsFragment extends Fragment {
         mFirestore = FirebaseFirestore.getInstance();
 
         lists = new ArrayList<>();
+        gamesInList = new HashMap<>();
 
         recyclerView = view.findViewById(R.id.userLists_recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -62,53 +62,61 @@ public class UserListsFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
 
         mQuery = mFirestore.collection("Lists");
-        mQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mQuery.whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
-                    return;
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                lists.clear();
+                gamesInList.clear();
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                    Lists list = documentSnapshot.toObject(Lists.class);
+
+                    assert list != null;
+                    list.setId(documentSnapshot.getId());
+                    lists.add(list);
                 }
-                if(value != null){
-                    lists.clear();
-
-                    for(DocumentSnapshot documentSnapshot : value.getDocuments()) {
-                        Lists list = documentSnapshot.toObject(Lists.class);
-
-                        assert list != null;
-                        if(list.getUser().getId().equals(mUser.getUid())){
-                            list.setId(documentSnapshot.getId());
-                            lists.add(list);
-                        }
-                    }
-
-                    for(Lists list : lists){
-                        mQuery2 = mFirestore.collection("Lists").document(list.getId()).collection("Games");
-                        mQuery2.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                if(error != null){
-                                    return;
+                for(Lists list : lists){
+                    mQuery2 = mFirestore.collection("GamesInLists");
+                    mQuery2.whereEqualTo("listID", list.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            ArrayList<Games> games = new ArrayList<>();
+                            ArrayList<Object> gamesIDs = new ArrayList<>();
+                            if(!queryDocumentSnapshots.isEmpty()){
+                                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                                    gamesIDs.add(documentSnapshot.get("gameID"));
                                 }
-                                if(value != null){
-                                    ArrayList<Games> games = new ArrayList<>();
+                                for(Object gameID : gamesIDs){
+                                    mQuery3 = mFirestore.collection("Games");
+                                    mQuery3.whereEqualTo("id", gameID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                                                Games game = documentSnapshot.toObject(Games.class);
 
-                                    for(DocumentSnapshot documentSnapshot : value.getDocuments()){
-                                        Games game = documentSnapshot.toObject(Games.class);
-
-                                        assert game != null;
-                                        game.setId((documentSnapshot.getId()));
-                                        games.add(game);
-                                    }
-                                    gamesInList.put(list.getId(), games);
-                                    if(lists.size() == gamesInList.size()){
-                                        userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
-                                        recyclerView.setAdapter(userListAdapter);
-                                        recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
-                                    }
+                                                assert game != null;
+                                                game.setId(documentSnapshot.getId());
+                                                games.add(game);
+                                            }
+                                            gamesInList.put(list.getId(), games);
+                                            if(lists.size() == gamesInList.size()){
+                                                userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
+                                                recyclerView.setAdapter(userListAdapter);
+                                                recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                                            }
+                                        }
+                                    });
                                 }
                             }
-                        });
-                    }
+                            else{
+                                gamesInList.put(list.getId(), games);
+                            }
+                            if(lists.size() == gamesInList.size()){
+                                userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
+                                recyclerView.setAdapter(userListAdapter);
+                                recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+                            }
+                        }
+                    });
                 }
             }
         });
