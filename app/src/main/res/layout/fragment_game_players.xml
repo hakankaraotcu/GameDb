@@ -35,7 +35,6 @@
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:background="#14181C"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"/>
+        android:scrollbars="none"/>
 
 </LinearLayout>

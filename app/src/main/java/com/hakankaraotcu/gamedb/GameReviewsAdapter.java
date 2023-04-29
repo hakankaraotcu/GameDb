@@ -11,24 +11,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-public class GameReviewsAdapter extends ArrayAdapter<String> {
-    private int[] images;
-    private String[] usernameList;
-    private int[] ratings;
-    private String[] contents;
+import java.util.ArrayList;
+
+public class GameReviewsAdapter extends ArrayAdapter<Reviews> {
     private Context context;
     private CircularImageView image;
     private TextView username, content;
     private RatingBar ratingBar;
+    private ArrayList<Reviews> reviews;
 
-    public GameReviewsAdapter(String[] usernameList, String[] contents, int[] images, int[] ratings, Context context) {
-        super(context, R.layout.game_reviews_item, usernameList);
-        this.usernameList = usernameList;
-        this.contents = contents;
-        this.images = images;
-        this.ratings = ratings;
+    public GameReviewsAdapter(ArrayList<Reviews> reviews, Context context) {
+        super(context, R.layout.game_reviews_item, reviews);
+        this.reviews = reviews;
         this.context = context;
     }
 
@@ -43,10 +41,10 @@ public class GameReviewsAdapter extends ArrayAdapter<String> {
             content = view.findViewById(R.id.game_reviews_item_content);
             ratingBar = view.findViewById(R.id.game_reviews_RatingBar);
 
-            image.setImageResource(images[position]);
-            username.setText(usernameList[position]);
-            content.setText(contents[position]);
-            ratingBar.setRating((float) ratings[position]);
+            Glide.with(view.getContext()).load(reviews.get(position).getGameImage()).into(image);
+            username.setText(reviews.get(position).getUsername());
+            content.setText(reviews.get(position).getReviewContent());
+            ratingBar.setRating(reviews.get(position).getGameRating());
         }
         return view;
     }

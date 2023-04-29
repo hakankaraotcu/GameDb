@@ -91,7 +91,7 @@ public class CreateListFragment extends Fragment {
         });
     }
 
-    private void createList(){
+    public void createList(){
         txtListName = editListName.getText().toString();
         txtListDescription = editListDescription.getText().toString();
 
@@ -115,6 +115,7 @@ public class CreateListFragment extends Fragment {
                     User user = documentSnapshot.toObject(User.class);
 
                     assert user != null;
+                    user.setId(documentSnapshot.getId());
                     Lists list = new Lists(txtListName, txtListDescription, selectedGames.size(), user.getId(), user.getUsername());
 
                     listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

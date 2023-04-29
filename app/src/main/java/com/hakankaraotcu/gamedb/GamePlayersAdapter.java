@@ -11,20 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hakankaraotcu.gamedb.Model.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-public class GamePlayersAdapter extends ArrayAdapter<String> {
+import java.util.ArrayList;
+
+public class GamePlayersAdapter extends ArrayAdapter<User> {
     private int[] images;
-    private String[] usernameList;
     private int[] ratings;
     private Context context;
     private CircularImageView image;
     private TextView username;
-    RatingBar ratingBar;
+    private RatingBar ratingBar;
+    private ArrayList<User> users;
 
-    public GamePlayersAdapter(String[] usernameList, int[] images, int[] ratings, Context context) {
-        super(context, R.layout.game_players_item, usernameList);
-        this.usernameList = usernameList;
+    public GamePlayersAdapter(ArrayList<User> users, int[] images, int[] ratings, Context context) {
+        super(context, R.layout.game_players_item, users);
+        this.users = users;
         this.images = images;
         this.ratings = ratings;
         this.context = context;
@@ -41,7 +44,7 @@ public class GamePlayersAdapter extends ArrayAdapter<String> {
             ratingBar = view.findViewById(R.id.player_rating);
 
             image.setImageResource(images[position]);
-            username.setText(usernameList[position]);
+            username.setText(users.get(position).getUsername());
             ratingBar.setRating((float) ratings[position]);
         }
         return view;

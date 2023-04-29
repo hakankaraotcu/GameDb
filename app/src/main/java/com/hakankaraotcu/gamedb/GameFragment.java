@@ -25,22 +25,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.taufiqrahman.reviewratings.BarLabels;
@@ -48,7 +42,6 @@ import com.taufiqrahman.reviewratings.RatingReviews;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -72,9 +65,6 @@ public class GameFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private CollectionReference playedGamesReference, likedGamesReference, toPlayGamesReference;
     private DocumentReference userReference, gameReference;
-    private ArrayList<Lists> lists;
-    private ArrayList<Lists> allLists;
-    private ArrayList<Lists> addLists = new ArrayList<>();
     private Games game;
 
     private Boolean toPlayCheck = false;
@@ -159,7 +149,7 @@ public class GameFragment extends Fragment {
         gamePlayersCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GamePlayersFragment gamePlayersFragment = new GamePlayersFragment();
+                GamePlayersFragment gamePlayersFragment = new GamePlayersFragment(id);
                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
             }
         });
@@ -167,8 +157,8 @@ public class GameFragment extends Fragment {
         gameReviewsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameReviewsFragment gameReviewsFragment = new GameReviewsFragment();
-                getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+                GameReviewsFragment gameReviewsFragment = new GameReviewsFragment(id);
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
             }
         });
 
@@ -333,7 +323,7 @@ public class GameFragment extends Fragment {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         switch (titles[i]) {
                             case "Review":
-                                AddReviewFragment addReviewFragment = new AddReviewFragment();
+                                AddReviewFragment addReviewFragment = new AddReviewFragment(game);
                                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
@@ -399,13 +389,5 @@ public class GameFragment extends Fragment {
         }
         avg = ((raters[0] * 5) + (raters[1] * 4) + (raters[2] * 3) + (raters[3] * 2) + (raters[4] * 1)) / sum;
         return avg;
-    }
-
-    public void setLists(ArrayList<Lists> lists) {
-        this.lists = lists;
-    }
-
-    public void setAllLists(ArrayList<Lists> allLists) {
-        this.allLists = allLists;
     }
 }

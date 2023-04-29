@@ -10,15 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsHolder> {
 
-    private ArrayList<Reviews> reviewsList;
+    private ArrayList<Reviews> reviews;
     private Context context;
 
-    public ReviewsAdapter(ArrayList<Reviews> reviewsList, Context context) {
-        this.reviewsList = reviewsList;
+    public ReviewsAdapter(ArrayList<Reviews> reviews, Context context) {
+        this.reviews = reviews;
         this.context = context;
     }
 
@@ -31,18 +33,18 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
 
     @Override
     public void onBindViewHolder(@NonNull ReviewsHolder holder, int position) {
-        Reviews reviews = reviewsList.get(position);
-        holder.setData(reviews);
+        Reviews review = reviews.get(position);
+        holder.setData(review);
     }
 
     @Override
     public int getItemCount() {
-        return reviewsList.size();
+        return reviews.size();
     }
 
     class ReviewsHolder extends RecyclerView.ViewHolder{
 
-        TextView gameName,gameDate, reviewContent;
+        TextView gameName, gameDate, reviewContent;
         ImageView reviewGameImage;
 
         public ReviewsHolder(@NonNull View itemView){
@@ -53,11 +55,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
             reviewGameImage = (ImageView) itemView.findViewById(R.id.reviews_item_GameImageViewImage);
         }
 
-        public void setData(Reviews reviews){
-            this.gameName.setText(reviews.getGameName());
-            this.gameDate.setText(reviews.getGameDate());
-            this.reviewContent.setText(reviews.getReviewContent());
-            this.reviewGameImage.setBackgroundResource(reviews.getReviewGameImage());
+        public void setData(Reviews review){
+            this.gameName.setText(review.getGameName());
+            this.gameDate.setText(review.getGameReleaseDate().substring(review.getGameReleaseDate().length() - 4));
+            this.reviewContent.setText(review.getReviewContent());
+            Glide.with(itemView.getContext()).load(review.getGameImage()).into(reviewGameImage);
         }
     }
 }

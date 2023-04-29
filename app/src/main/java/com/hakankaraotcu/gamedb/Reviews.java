@@ -1,34 +1,31 @@
 package com.hakankaraotcu.gamedb;
 
-import java.util.ArrayList;
-
 public class Reviews {
-    private String gameName, gameDate,reviewContent;
-    private int reviewGameImage;
+    private String id, reviewContent, reviewDate, gameImage, gameID, gameName, gameReleaseDate, userID, username;
+    private Float gameRating;
 
     public Reviews(){
 
     }
 
-    public Reviews(String gameName, String reviewContent){
-        this.gameName = gameName;
+    public Reviews(String reviewContent, String reviewDate, String gameImage, Float gameRating, String gameID, String gameName, String gameReleaseDate, String userID, String username){
         this.reviewContent = reviewContent;
-    }
-
-    public String getGameName() {
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
+        this.reviewDate = reviewDate;
+        this.gameImage = gameImage;
+        this.gameRating = gameRating;
+        this.gameID = gameID;
         this.gameName = gameName;
+        this.gameReleaseDate = gameReleaseDate;
+        this.userID = userID;
+        this.username = username;
     }
 
-    public String getGameDate() {
-        return gameDate;
+    public String getId() {
+        return id;
     }
 
-    public void setGameDate(String gameDate) {
-        this.gameDate = gameDate;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getReviewContent() {
@@ -39,31 +36,67 @@ public class Reviews {
         this.reviewContent = reviewContent;
     }
 
-    public int getReviewGameImage() {
-        return reviewGameImage;
+    public String getReviewDate() {
+        return reviewDate;
     }
 
-    public void setReviewGameImage(int reviewGameImage) {
-        this.reviewGameImage = reviewGameImage;
+    public void setReviewDate(String reviewDate) {
+        this.reviewDate = reviewDate;
     }
 
-    static public ArrayList<Reviews> getData(){
-        ArrayList<Reviews> reviewsList = new ArrayList<Reviews>();
-        String[] names = {"Spider-Man", "Batman Arkham City", "Grand Theft Auto IV", "Darksiders II", "The Elder Scrools V: Skyrim", "Portal 2", "Elden Ring"};
-        String[] dates = {"2018", "2011", "2008", "2012", "2011", "2011", "2022"};
-        String[] contents = {"Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra"};
-        int[] images = {R.drawable.spiderman, R.drawable.batmanarkhamcity, R.drawable.gta4, R.drawable.darksiders2, R.drawable.skyrim, R.drawable.portal, R.drawable.eldenring,};
+    public String getGameImage() {
+        return gameImage;
+    }
 
-        for(int i = 0;i < names.length;i++){
-            Reviews review = new Reviews();
-            review.setGameName(names[i]);
-            review.setGameDate(dates[i]);
-            review.setReviewContent(contents[i]);
-            review.setReviewGameImage(images[i]);
+    public void setGameImage(String gameImage) {
+        this.gameImage = gameImage;
+    }
 
-            reviewsList.add((review));
-        }
+    public String getGameID() {
+        return gameID;
+    }
 
-        return reviewsList;
+    public void setGameID(String gameID) {
+        this.gameID = gameID;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getGameReleaseDate() {
+        return gameReleaseDate;
+    }
+
+    public void setGameReleaseDate(String gameReleaseDate) {
+        this.gameReleaseDate = gameReleaseDate;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Float getGameRating() {
+        return gameRating;
+    }
+
+    public void setGameRating(Float gameRating) {
+        this.gameRating = gameRating;
     }
 }

@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +43,7 @@ public class UserListsFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private Query mQuery, mQuery2, mQuery3;
     private CollectionReference gamesReferences;
+    private DocumentReference gameReference;
     private int index = 0;
 
     @Override
@@ -86,17 +88,15 @@ public class UserListsFragment extends Fragment {
                                     gamesIDs.add(documentSnapshot.get("gameID"));
                                 }
                                 for(Object gameID : gamesIDs){
-                                    mQuery3 = mFirestore.collection("Games");
-                                    mQuery3.whereEqualTo("id", gameID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    gameReference = mFirestore.collection("Games").document(gameID.toString());
+                                    gameReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
-                                                Games game = documentSnapshot.toObject(Games.class);
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Games game = documentSnapshot.toObject(Games.class);
 
-                                                assert game != null;
-                                                game.setId(documentSnapshot.getId());
-                                                games.add(game);
-                                            }
+                                            assert game != null;
+                                            game.setId(documentSnapshot.getId());
+                                            games.add(game);
                                             gamesInList.put(list.getId(), games);
                                             if(lists.size() == gamesInList.size()){
                                                 userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
