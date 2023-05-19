@@ -15,9 +15,9 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsHolder> {
-
     private ArrayList<Reviews> reviews;
     private Context context;
+    private OnItemClickListener listener;
 
     public ReviewsAdapter(ArrayList<Reviews> reviews, Context context) {
         this.reviews = reviews;
@@ -43,8 +43,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
     }
 
     class ReviewsHolder extends RecyclerView.ViewHolder{
-
-        TextView gameName, gameDate, reviewContent;
+        TextView gameName, gameDate, reviewContent, username;
         ImageView reviewGameImage;
 
         public ReviewsHolder(@NonNull View itemView){
@@ -53,13 +52,34 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
             gameDate = (TextView) itemView.findViewById(R.id.reviews_item_textViewGameDate);
             reviewContent = (TextView) itemView.findViewById(R.id.reviews_item_textViewContent);
             reviewGameImage = (ImageView) itemView.findViewById(R.id.reviews_item_GameImageViewImage);
+            username = (TextView) itemView.findViewById(R.id.reviews_item_textViewUsername);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(reviews.get(position), position);
+                    }
+                }
+            });
         }
 
         public void setData(Reviews review){
             this.gameName.setText(review.getGameName());
             this.gameDate.setText(review.getGameReleaseDate().substring(review.getGameReleaseDate().length() - 4));
             this.reviewContent.setText(review.getReviewContent());
+            this.username.setText(review.getUsername());
             Glide.with(itemView.getContext()).load(review.getGameImage()).into(reviewGameImage);
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Reviews review, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

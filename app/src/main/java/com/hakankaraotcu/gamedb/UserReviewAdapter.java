@@ -15,9 +15,9 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class UserReviewAdapter extends RecyclerView.Adapter<UserReviewAdapter.ReviewsHolder> {
-
     private ArrayList<Reviews> reviews;
     private Context context;
+    private OnItemClickListener listener;
 
     public UserReviewAdapter(ArrayList<Reviews> reviews, Context context) {
         this.reviews = reviews;
@@ -53,6 +53,17 @@ public class UserReviewAdapter extends RecyclerView.Adapter<UserReviewAdapter.Re
             gameDate = (TextView) itemView.findViewById(R.id.userReviews_item_textViewGameDate);
             reviewContent = (TextView) itemView.findViewById(R.id.userReviews_item_textViewContent);
             reviewGameImage = (ImageView) itemView.findViewById(R.id.userReviews_item_GameImageViewImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(reviews.get(position), position);
+                    }
+                }
+            });
         }
 
         public void setData(Reviews review){
@@ -61,5 +72,13 @@ public class UserReviewAdapter extends RecyclerView.Adapter<UserReviewAdapter.Re
             this.reviewContent.setText(review.getReviewContent());
             Glide.with(itemView.getContext()).load(review.getGameImage()).into(reviewGameImage);
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Reviews review, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

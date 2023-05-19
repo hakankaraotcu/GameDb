@@ -14,9 +14,10 @@
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/userName"
+        app:layout_constraintEnd_toStartOf="@+id/reviews_item_textViewUsername"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/reviews_item_textViewGameDate"
@@ -30,13 +31,13 @@
         app:layout_constraintTop_toBottomOf="@+id/reviews_item_textViewGameName" />
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/reviews_item_textViewUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
         android:textColor="#99AABB"
         android:layout_marginTop="1dp"
-        app:layout_constraintEnd_toStartOf="@id/userName"
+        app:layout_constraintEnd_toStartOf="@id/reviews_item_textViewUsername"
         app:layout_constraintTop_toTopOf="@id/reviews_item_textViewGameName"/>
 
     <com.mikhaellopez.circularimageview.CircularImageView
@@ -44,8 +45,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         app:civ_border="false"
-        app:layout_constraintStart_toEndOf="@id/userName"
-        app:layout_constraintTop_toTopOf="@id/userName"
+        app:layout_constraintStart_toEndOf="@id/reviews_item_textViewUsername"
+        app:layout_constraintTop_toTopOf="@id/reviews_item_textViewUsername"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"

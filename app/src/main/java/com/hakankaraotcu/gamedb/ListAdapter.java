@@ -26,6 +26,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     private HashMap<String, ArrayList<Games>> gamesInList;
     private Context context;
     private ImageAdapter imageAdapter;
+    private OnItemClickListener listener;
 
     public ListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
         this.lists = lists;
@@ -65,6 +66,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             userName = itemView.findViewById(R.id.lists_userName);
             content = itemView.findViewById(R.id.lists_item_textViewContent);
             recyclerView = itemView.findViewById(R.id.list_recyclerView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if(listener != null && position != RecyclerView.NO_POSITION){
+                        listener.onItemClick(lists.get(position), position);
+                    }
+                }
+            });
         }
 
         public void setData(Lists list){
@@ -72,5 +84,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             this.content.setText(list.getDescription());
             this.userName.setText(list.getUsername());
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Lists list, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 }

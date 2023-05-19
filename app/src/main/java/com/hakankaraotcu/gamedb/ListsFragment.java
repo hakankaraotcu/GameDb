@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -95,6 +94,14 @@ public class ListsFragment extends Fragment {
                                                 listAdapter = new ListAdapter(lists, gamesInList, getContext());
                                                 recyclerView.setAdapter(listAdapter);
                                                 recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+                                                listAdapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
+                                                    @Override
+                                                    public void onItemClick(Lists list, int position) {
+                                                        ListFragment listFragment = new ListFragment(list, gamesInList.get(list.getId()));
+                                                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, listFragment, null).addToBackStack(null).commit();
+                                                    }
+                                                });
                                             }
                                         }
                                     });

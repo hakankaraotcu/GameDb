@@ -62,6 +62,14 @@ public class UserReviewsFragment extends Fragment {
                 }
                 adapter = new UserReviewAdapter(reviews, getContext());
                 recyclerView.setAdapter(adapter);
+
+                adapter.setOnItemClickListener(new UserReviewAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Reviews review, int position) {
+                        ReviewFragment reviewFragment = new ReviewFragment(review);
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                    }
+                });
             }
         });
 

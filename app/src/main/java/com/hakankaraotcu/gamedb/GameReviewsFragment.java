@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -73,5 +74,13 @@ public class GameReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ReviewFragment reviewFragment = new ReviewFragment(reviews.get(i));
+                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+            }
+        });
     }
 }

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="#14181C"
     tools:context=".GameFragment">
 
@@ -61,7 +60,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"/>
 
                 <TextView
                     android:id="@+id/game_developer"
@@ -70,6 +71,7 @@
                     android:text="Insomniac Games"
                     android:textColor="#99AABB"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
                     app:layout_constraintTop_toBottomOf="@+id/game_name"
                     app:layout_constraintStart_toStartOf="@+id/game_name"
                     expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"/>
@@ -82,7 +84,8 @@
                     android:textColor="#99AABB"
                     app:layout_constraintTop_toBottomOf="@+id/game_developer"
                     app:layout_constraintStart_toStartOf="@+id/game_developer"
-                    expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"/>
+                    expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"
+                    android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:id="@+id/game_metacritic"
@@ -111,7 +114,8 @@
                     android:textColor="#99AABB"
                     app:layout_constraintTop_toBottomOf="@+id/game_metacritic"
                     app:layout_constraintStart_toStartOf="@+id/game_metacritic"
-                    expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"/>
+                    expandableTextView:layout_constraintEnd_toStartOf="@id/game_image"
+                    android:layout_marginEnd="8dp"/>
 
                 <ImageView
                     android:id="@+id/game_image"
