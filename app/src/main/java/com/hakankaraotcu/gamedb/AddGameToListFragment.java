@@ -14,14 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.SearchAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
 
 import java.util.ArrayList;
 
@@ -31,8 +31,8 @@ public class AddGameToListFragment extends Fragment {
     private SearchView searchView;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private ArrayList<Games> games;
-    private ArrayList<Games> allGames;
+    private ArrayList<Game> games;
+    private ArrayList<Game> allGames;
     private SearchAdapter searchAdapter;
 
     @Override
@@ -91,7 +91,7 @@ public class AddGameToListFragment extends Fragment {
                 }
 
                 for(DocumentSnapshot documentSnapshot : value.getDocuments()){
-                    Games game = documentSnapshot.toObject(Games.class);
+                    Game game = documentSnapshot.toObject(Game.class);
 
                     assert game != null;
                     if(game.getName().toLowerCase().contains(query.toLowerCase())){
@@ -106,11 +106,11 @@ public class AddGameToListFragment extends Fragment {
 
                     searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Games game, int position) {
+                        public void onItemClick(Game game, int position) {
                             Fragment fragment = getParentFragmentManager().findFragmentByTag("createListFragment");
                             CreateListFragment createListFragment = (CreateListFragment) fragment;
                             boolean flag = true;
-                            for(Games addedGame : createListFragment.getGames()){
+                            for(Game addedGame : createListFragment.getGames()){
                                 if(addedGame.getName().equals(game.getName())){
                                     flag = false;
                                     break;

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,7 +26,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.Model.Review;
 import com.hakankaraotcu.gamedb.Model.User;
 
 public class AddReviewFragment extends Fragment {
@@ -37,7 +37,7 @@ public class AddReviewFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private CollectionReference reviewsReference;
     private DocumentReference userReference, gameReference;
-    private Games game;
+    private Game game;
     private TextView gameName, gameReleaseDate, reviewDate;
     private EditText reviewContent;
     private ImageView gameImage;
@@ -45,7 +45,7 @@ public class AddReviewFragment extends Fragment {
     private Button confirmButton;
     private String txtReviewContent, txtReviewDate;
 
-    public AddReviewFragment(Games game){
+    public AddReviewFragment(Game game){
         this.game = game;
     }
 
@@ -117,7 +117,7 @@ public class AddReviewFragment extends Fragment {
                 assert user != null;
                 user.setId(documentSnapshot.getId());
 
-                Reviews review = new Reviews(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), user.getId(), user.getUsername());
+                Review review = new Review(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), user.getId(), user.getUsername());
 
                 reviewsReference = mFirestore.collection("Reviews");
                 reviewsReference.add(review).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

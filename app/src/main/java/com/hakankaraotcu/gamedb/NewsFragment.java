@@ -12,15 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class JournalFragment extends Fragment {
+import com.hakankaraotcu.gamedb.Adapter.NewsAdapter;
+import com.hakankaraotcu.gamedb.Model.News;
+
+public class NewsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private JournalsAdapter adapter;
+    private NewsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_journal, container, false);
+        View view = inflater.inflate(R.layout.fragment_news, container, false);
         return view;
     }
 
@@ -28,8 +31,8 @@ public class JournalFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.journal_recyclerView);
-        adapter = new JournalsAdapter(Journals.getData(), getContext());
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.news_recyclerView);
+        adapter = new NewsAdapter(News.getData(), getContext());
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

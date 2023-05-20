@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
-    private ArrayList<Games> games;
+    private ArrayList<Game> games;
     private Context context;
     private OnItemClickListener listener;
 
-    public SearchAdapter(ArrayList<Games> games, Context context) {
+    public SearchAdapter(ArrayList<Game> games, Context context) {
         this.games = games;
         this.context = context;
     }
@@ -33,7 +35,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.SearchViewHolder holder, int position) {
-        Games game = games.get(position);
+        Game game = games.get(position);
         holder.setData(game);
     }
 
@@ -63,14 +65,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             });
         }
 
-        public void setData(Games game){
+        public void setData(Game game){
             Glide.with(itemView.getContext()).load(game.getImage()).into(gameImage);
             this.gameName.setText(game.getName());
         }
     }
 
     public interface OnItemClickListener{
-        void onItemClick(Games game, int position);
+        void onItemClick(Game game, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

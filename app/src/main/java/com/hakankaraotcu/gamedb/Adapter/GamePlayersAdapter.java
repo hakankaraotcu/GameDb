@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.hakankaraotcu.gamedb.Model.User;
+import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;

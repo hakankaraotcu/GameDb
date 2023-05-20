@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,19 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.hakankaraotcu.gamedb.Model.User;
+import com.hakankaraotcu.gamedb.Model.Review;
+import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 
-public class GameReviewsAdapter extends ArrayAdapter<Reviews> {
+public class GameReviewsAdapter extends ArrayAdapter<Review> {
     private Context context;
     private CircularImageView image;
     private TextView username, content;
     private RatingBar ratingBar;
-    private ArrayList<Reviews> reviews;
+    private ArrayList<Review> reviews;
 
-    public GameReviewsAdapter(ArrayList<Reviews> reviews, Context context) {
+    public GameReviewsAdapter(ArrayList<Review> reviews, Context context) {
         super(context, R.layout.game_reviews_item, reviews);
         this.reviews = reviews;
         this.context = context;

@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.Review;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class ReviewFragment extends Fragment {
@@ -21,9 +22,9 @@ public class ReviewFragment extends Fragment {
     private ImageView review_gameImage;
     private TextView review_username, review_gameName, review_gameReleaseDate, review_date, review_content;
     private RatingBar review_gameRating;
-    private Reviews review;
+    private Review review;
 
-    public ReviewFragment(Reviews review){
+    public ReviewFragment(Review review){
         this.review = review;
     }
 
@@ -54,5 +55,54 @@ public class ReviewFragment extends Fragment {
         review_gameReleaseDate.setText(review.getGameReleaseDate());
         review_date.setText(review.getReviewDate());
         review_content.setText(review.getReviewContent());
+
+        review_gameImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GameFragment gameFragment = new GameFragment();
+
+                Bundle args = new Bundle();
+                args.putString("id", review.getGameID());
+                gameFragment.setArguments(args);
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
+
+        review_username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment profileFragment = new ProfileFragment(review.getUserID());
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
+
+        review_userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment profileFragment = new ProfileFragment(review.getUserID());
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
     }
 }

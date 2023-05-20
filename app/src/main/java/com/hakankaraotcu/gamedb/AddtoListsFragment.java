@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Model.List;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,9 +42,9 @@ public class AddtoListsFragment extends Fragment {
     private Query mQuery;
     private CollectionReference gamesInListsReference;
     private DocumentReference gameReference, listReference;
-    private ArrayList<Lists> lists;
+    private ArrayList<List> lists;
     private ArrayList<String> listsNames;
-    private ArrayList<Lists> selectedLists;
+    private ArrayList<List> selectedLists;
     private int index = 0;
 
     public AddtoListsFragment(String gameID){
@@ -70,7 +71,7 @@ public class AddtoListsFragment extends Fragment {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
-                    Lists list = documentSnapshot.toObject(Lists.class);
+                    List list = documentSnapshot.toObject(List.class);
 
                     assert list != null;
                     list.setId(documentSnapshot.getId());
@@ -93,7 +94,7 @@ public class AddtoListsFragment extends Fragment {
                     lists.clear();
 
                     for(DocumentSnapshot documentSnapshot : value.getDocuments()){
-                        Lists list = documentSnapshot.toObject(Lists.class);
+                        List list = documentSnapshot.toObject(List.class);
 
                         assert list != null;
                         list.setId(documentSnapshot.getId());
@@ -130,7 +131,7 @@ public class AddtoListsFragment extends Fragment {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(Lists selectedList : selectedLists){
+                for(List selectedList : selectedLists){
                     Map<String, Object> data = new HashMap<>();
                     data.put("gameID", gameID);
                     data.put("listID", selectedList.getId());

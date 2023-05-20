@@ -1,10 +1,10 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Model;
 
-public class Games {
+public class Game {
     private String id, name, releaseDate, content, image;
     private int metacritic, numberOfPlayers, numberOfReviews, numberOfLists;
 
-    public Games(String name, String releaseDate, String content, Integer metacritic, String image,Integer numberOfPlayers,Integer numberOfReviews, Integer numberOfLists){
+    public Game(String name, String releaseDate, String content, Integer metacritic, String image, Integer numberOfPlayers, Integer numberOfReviews, Integer numberOfLists){
         this.name = name;
         this.releaseDate = releaseDate;
         this.content = content;
@@ -15,7 +15,7 @@ public class Games {
         this.numberOfLists = numberOfLists;
     }
 
-    public Games(){
+    public Game(){
 
     }
 

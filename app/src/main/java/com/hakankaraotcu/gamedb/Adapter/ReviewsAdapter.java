@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,15 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.Review;
+import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsHolder> {
-    private ArrayList<Reviews> reviews;
+    private ArrayList<Review> reviews;
     private Context context;
     private OnItemClickListener listener;
 
-    public ReviewsAdapter(ArrayList<Reviews> reviews, Context context) {
+    public ReviewsAdapter(ArrayList<Review> reviews, Context context) {
         this.reviews = reviews;
         this.context = context;
     }
@@ -33,7 +35,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
 
     @Override
     public void onBindViewHolder(@NonNull ReviewsHolder holder, int position) {
-        Reviews review = reviews.get(position);
+        Review review = reviews.get(position);
         holder.setData(review);
     }
 
@@ -66,7 +68,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
             });
         }
 
-        public void setData(Reviews review){
+        public void setData(Review review){
             this.gameName.setText(review.getGameName());
             this.gameDate.setText(review.getGameReleaseDate().substring(review.getGameReleaseDate().length() - 4));
             this.reviewContent.setText(review.getReviewContent());
@@ -76,7 +78,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewsH
     }
 
     public interface OnItemClickListener{
-        void onItemClick(Reviews review, int position);
+        void onItemClick(Review review, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

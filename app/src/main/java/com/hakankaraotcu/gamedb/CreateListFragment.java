@@ -25,6 +25,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.Model.List;
 import com.hakankaraotcu.gamedb.Model.User;
 
 import java.util.ArrayList;
@@ -43,7 +46,7 @@ public class CreateListFragment extends Fragment {
 
     private GridView mGridView;
     private GameAdapter adapter;
-    private ArrayList<Games> selectedGames = new ArrayList<>();
+    private ArrayList<Game> selectedGames = new ArrayList<>();
     private String id;
 
     private CollectionReference listsReference, usersReference, gamesInListsReference;
@@ -116,7 +119,7 @@ public class CreateListFragment extends Fragment {
 
                     assert user != null;
                     user.setId(documentSnapshot.getId());
-                    Lists list = new Lists(txtListName, txtListDescription, selectedGames.size(), user.getId(), user.getUsername());
+                    List list = new List(txtListName, txtListDescription, selectedGames.size(), user.getId(), user.getUsername());
 
                     listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
@@ -124,7 +127,7 @@ public class CreateListFragment extends Fragment {
                             if(task.isSuccessful()){
                                 id = task.getResult().getId();
                             }
-                            for(Games game : selectedGames){
+                            for(Game game : selectedGames){
                                 gamesInListsReference = mFirestore.collection("GamesInLists");
 
                                 Map<String, Object> data = new HashMap<>();
@@ -150,7 +153,7 @@ public class CreateListFragment extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
                     User user = documentSnapshot.toObject(User.class);
-                    list = new Lists(txtListName, txtListDescription, games.size(), mUser.getUid());
+                    list = new List(txtListName, txtListDescription, games.size(), mUser.getUid());
                     listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
@@ -164,11 +167,11 @@ public class CreateListFragment extends Fragment {
          */
     }
 
-    public ArrayList<Games> getGames(){
+    public ArrayList<Game> getGames(){
         return this.selectedGames;
     }
 
-    public void setGames(Games game){
+    public void setGames(Game game){
         this.selectedGames.add(game);
     }
 }

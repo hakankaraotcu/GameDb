@@ -1,24 +1,25 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    private ArrayList<Games> games;
+    private ArrayList<Game> games;
     private Context context;
 
-    public ImageAdapter(ArrayList<Games> games, Context context) {
+    public ImageAdapter(ArrayList<Game> games, Context context) {
         this.games = games;
         this.context = context;
     }
@@ -32,7 +33,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageAdapter.ImageViewHolder holder, int position) {
-        Games game = games.get(position);
+        Game game = games.get(position);
         holder.setData(game);
     }
 
@@ -49,7 +50,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             gameImage = itemView.findViewById(R.id.list_game_item_imageView);
         }
 
-        public void setData(Games game){
+        public void setData(Game game){
             Glide.with(itemView.getContext()).load(game.getImage()).into(gameImage);
         }
     }

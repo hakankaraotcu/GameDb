@@ -10,7 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hakankaraotcu.gamedb.Model.User;
+
 public class UserDiaryFragment extends Fragment {
+    private User user;
+    private String userID;
+
+    public UserDiaryFragment(User user) {
+        this.user = user;
+    }
+
+    public UserDiaryFragment(String userID) {
+        this.userID = userID;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.hakankaraotcu.gamedb.R;
 
 public class GameActivityAdapter extends ArrayAdapter<String> {
     private String[] titles;

@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,23 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameAdapter extends BaseAdapter {
     private Context context;
     private ImageView gamePicture;
-    private List<Games> gamess;
+    private List<Game> games;
 
-    public GameAdapter(List<Games> games, Context context){
-        this.gamess = games;
+    public GameAdapter(List<Game> games, Context context){
+        this.games = games;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return gamess.size();
+        return games.size();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class GameAdapter extends BaseAdapter {
 
         if(v != null){
             gamePicture = v.findViewById(R.id.game_item_imageView);
-            Glide.with(v.getContext()).load(gamess.get(position).getImage()).into(gamePicture);
+            Glide.with(v.getContext()).load(games.get(position).getImage()).into(gamePicture);
         }
         return v;
     }

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.GamePlayersAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.User;
 
 import java.util.ArrayList;
@@ -30,10 +34,12 @@ public class GamePlayersFragment extends Fragment {
     private FirebaseFirestore mFirestore;
     private DocumentReference userReference;
     private Query mQuery;
-    private String gameId;
+    private Game selectedGame;
 
-    public GamePlayersFragment(String gameId){
-        this.gameId = gameId;
+    private TextView gameName;
+
+    public GamePlayersFragment(Game selectedGame){
+        this.selectedGame = selectedGame;
     }
 
     @Override
@@ -43,13 +49,15 @@ public class GamePlayersFragment extends Fragment {
 
         mFirestore = FirebaseFirestore.getInstance();
 
+        gameName = view.findViewById(R.id.game_players_gameName);
+
         users = new ArrayList<>();
         usersIDs = new ArrayList<>();
 
         listView = view.findViewById(R.id.gamePlayers_listView);
 
         mQuery = mFirestore.collection("PlayedGames");
-        mQuery.whereEqualTo("gameID", gameId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        mQuery.whereEqualTo("gameID", selectedGame.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
@@ -69,6 +77,21 @@ public class GamePlayersFragment extends Fragment {
                             if(usersIDs.size() == users.size()){
                                 adapter = new GamePlayersAdapter(users, images, ratings, getContext());
                                 listView.setAdapter(adapter);
+
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        ProfileFragment profileFragment = new ProfileFragment(user.getId());
+                                        // for guest
+                                        if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                                            getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                                        }
+                                        // for user
+                                        if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                                            getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                                        }
+                                    }
+                                });
                             }
                         }
                     });
@@ -81,5 +104,7 @@ public class GamePlayersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        gameName.setText("Players of " + selectedGame.getName());
     }
 }

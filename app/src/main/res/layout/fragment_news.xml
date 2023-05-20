@@ -3,17 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GamesFragment">
+    tools:context=".NewsFragment">
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/popular_gridView"
-        android:columnWidth="86dp"
-        android:paddingTop="2dp"
-        android:verticalSpacing="4dp"
-        android:numColumns="4"
-        android:stretchMode="spacingWidthUniform"
+        android:id="@+id/news_recyclerView"
         android:background="#14181C"/>
 
 </RelativeLayout>

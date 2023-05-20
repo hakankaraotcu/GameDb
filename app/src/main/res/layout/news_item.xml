@@ -26,13 +26,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="185dp"
                 android:scaleType="fitXY"
-                android:id="@+id/journals_item_imageViewImage"/>
+                android:id="@+id/news_item_imageViewImage"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/journals_item_textViewTitle"
-                android:text="JOURNAL TITLE"
+                android:id="@+id/news_item_textViewTitle"
+                android:text="NEWS TITLE"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/journals_item_textViewContent"
+                android:id="@+id/news_item_textViewContent"
                 android:text="Overwatch 2 Announces New Tank Hero, Ramattra"
                 android:textSize="14dp"
                 android:textColor="#99AABB"

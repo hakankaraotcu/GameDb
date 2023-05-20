@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.Model.List;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
@@ -27,12 +27,12 @@ public class ListFragment extends Fragment {
     private CircularImageView list_userImage;
     private TextView list_username, list_name;
     private ExpandableTextView list_description;
-    private Lists list;
+    private List list;
     private GridView mGridView;
     private GameAdapter adapter;
-    private ArrayList<Games> games;
+    private ArrayList<Game> games;
 
-    public ListFragment(Lists list, ArrayList<Games> games){
+    public ListFragment(List list, ArrayList<Game> games){
         this.list = list;
         this.games = games;
     }
@@ -62,19 +62,52 @@ public class ListFragment extends Fragment {
         list_name.setText(list.getName());
         list_description.setText(list.getDescription());
 
+        list_username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment profileFragment = new ProfileFragment(list.getUserID());
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
+
+        list_userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment profileFragment = new ProfileFragment(list.getUserID());
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
+
         gameFragment = new GameFragment();
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //from main activity
-                //getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
-
-                //from popular activity
                 Bundle args = new Bundle();
                 args.putString("id", games.get(i).getId());
                 gameFragment.setArguments(args);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class FollowingFollowersAdapter extends ArrayAdapter<String> {

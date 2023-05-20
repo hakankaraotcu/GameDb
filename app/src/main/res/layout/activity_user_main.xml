@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/user_popular_drawerLayout"
-    tools:context=".UserPopularActivity">
+    tools:openDrawer="start"
+    tools:context=".UserMainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,19 +14,19 @@
         android:id="@+id/user_popular_RelativeLayout">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/user_popular_toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/user_popular_toolBar"
-            android:background="#445566"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:background="#445566">
 
             <Button
+                android:id="@+id/user_popular_searchButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:id="@+id/user_popular_searchButton"
-                android:background="@drawable/ic_search_white"
-                android:layout_gravity="right"
-                android:layout_marginRight="16dp"/>
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_search_white" />
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
@@ -36,11 +37,12 @@
             android:background="#445566"
             app:tabIndicatorColor="#15BB32"
             app:tabTextColor="@color/white"/>
+
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/user_popular_viewPager2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/user_popular_viewPager2"
-            android:layout_below="@id/user_popular_tabLayout"/>
+            android:layout_below="@id/user_popular_tabLayout" />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

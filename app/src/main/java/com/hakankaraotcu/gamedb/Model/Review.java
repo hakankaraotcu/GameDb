@@ -1,14 +1,14 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Model;
 
-public class Reviews {
+public class Review {
     private String id, reviewContent, reviewDate, gameImage, gameID, gameName, gameReleaseDate, userID, username;
     private Float gameRating;
 
-    public Reviews(){
+    public Review(){
 
     }
 
-    public Reviews(String reviewContent, String reviewDate, String gameImage, Float gameRating, String gameID, String gameName, String gameReleaseDate, String userID, String username){
+    public Review(String reviewContent, String reviewDate, String gameImage, Float gameRating, String gameID, String gameName, String gameReleaseDate, String userID, String username){
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
         this.gameImage = gameImage;

@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,16 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.Model.List;
+import com.hakankaraotcu.gamedb.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListViewHolder>{
-    private ArrayList<Lists> lists;
-    private HashMap<String, ArrayList<Games>> gamesInList;
+    private ArrayList<List> lists;
+    private HashMap<String, ArrayList<Game>> gamesInList;
     private Context context;
     private ImageAdapter imageAdapter;
 
-    public UserListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
+    public UserListAdapter(ArrayList<List> lists, HashMap<String, ArrayList<Game>> gamesInList, Context context) {
         this.lists = lists;
         this.gamesInList = gamesInList;
         this.context = context;
@@ -34,7 +38,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
 
     @Override
     public void onBindViewHolder(@NonNull UserListAdapter.ListViewHolder holder, int position) {
-        Lists list = lists.get(position);
+        List list = lists.get(position);
         holder.setData(list);
         imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -59,7 +63,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
             recyclerView = itemView.findViewById(R.id.userLists_recyclerView);
         }
 
-        public void setData(Lists list){
+        public void setData(List list){
             this.listName.setText(list.getName());
             this.count.setText(String.valueOf(list.getNumberOfGames()));
             this.content.setText(list.getDescription());

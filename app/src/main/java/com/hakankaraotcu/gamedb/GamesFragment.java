@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,14 +14,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
 
 import java.util.ArrayList;
 
@@ -32,24 +29,35 @@ public class GamesFragment extends Fragment {
     private GameAdapter adapter;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private ArrayList<Games> games;
-
-    public GamesFragment(ArrayList<Games> games){
-        this.games = games;
-    }
+    private ArrayList<Game> games;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_popular, container, false);
+        View view = inflater.inflate(R.layout.fragment_games, container, false);
 
         mFirestore = FirebaseFirestore.getInstance();
 
-        mGridView = (GridView) view.findViewById(R.id.popular_gridView);
+        mGridView = (GridView) view.findViewById(R.id.games_gridView);
 
-        adapter = new GameAdapter(games, getActivity());
-        mGridView.setAdapter(adapter);
-        mGridView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        games = new ArrayList<>();
+
+        mQuery = mFirestore.collection("Games");
+        mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                    Game game = documentSnapshot.toObject(Game.class);
+
+                    assert game != null;
+                    game.setId(documentSnapshot.getId());
+                    games.add(game);
+                }
+                adapter = new GameAdapter(games, getActivity());
+                mGridView.setAdapter(adapter);
+                mGridView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+            }
+        });
 
         return view;
     }
@@ -63,14 +71,17 @@ public class GamesFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //from main activity
-                //getParentFragmentManager().beginTransaction().replace(R.id.main_activity_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
-
-                //from popular activity
                 Bundle args = new Bundle();
                 args.putString("id", games.get(i).getId());
                 gameFragment.setArguments(args);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                // for guest
+                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                }
             }
         });
     }

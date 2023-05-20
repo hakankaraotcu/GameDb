@@ -1,7 +1,6 @@
 package com.hakankaraotcu.gamedb;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,42 +8,39 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.ProfileListAdapter;
+import com.hakankaraotcu.gamedb.Adapter.ViewPagerFragmentAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.User;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UserPopularActivity extends AppCompatActivity {
+public class UserMainActivity extends AppCompatActivity {
 
     private ViewPager2 mViewPager2;
     private ViewPagerFragmentAdapter mViewPagerFragmentAdapter;
@@ -63,32 +59,21 @@ public class UserPopularActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private ArrayList<Games> games;
-    private Games game;
 
-    /*
-    private SearchFragment searchFragment;
-    */
-    private ProfileFragment profileFragment;
-    private UserToPlayListFragment usertoPlayListFragment;
-    private UserListsFragment userListsFragment;
-    /*
-    private UserDiaryFragment userDiaryFragment;
-    */
-    private UserReviewsFragment userReviewsFragment;
-    /*
-    private ActivityFragment activityFragment;
-    */
-    private SettingsFragment settingsFragment;
+    private Game game;
+    private User user;
+
+    private TextView profile_username;
+
+    private Fragment selectedFragment = null;
 
     private void init(){
         mViewPager2 = findViewById(R.id.user_popular_viewPager2);
         mTablayout = findViewById(R.id.user_popular_tabLayout);
 
-        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this, games);
+        mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
 
         mViewPager2.setAdapter(mViewPagerFragmentAdapter);
 
@@ -98,51 +83,23 @@ public class UserPopularActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_popular);
+        setContentView(R.layout.activity_user_main);
 
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
         mFirestore = FirebaseFirestore.getInstance();
-
-        games = new ArrayList<>();
 
         //webscrape ile bilgileri metacritic sitesinden almak için alttaki iki kodu çalıştır.
         //Description_webscrape dw = new Description_webscrape();
         //dw.execute();
 
-        mQuery = mFirestore.collection("Games");
-        mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
-                    Games game = documentSnapshot.toObject(Games.class);
-
-                    assert game != null;
-                    game.setId(documentSnapshot.getId());
-                    games.add(game);
-                }
-                init();
-            }
-        });
+        init();
 
         mDrawer = (DrawerLayout) findViewById(R.id.user_popular_drawerLayout);
         mNav = (NavigationView) findViewById(R.id.user_popular_navigationView);
         mToolbar = (Toolbar) findViewById(R.id.user_popular_toolBar);
 
-        /*
-        searchFragment = new SearchFragment();
-        */
-        profileFragment = new ProfileFragment();
-        usertoPlayListFragment = new UserToPlayListFragment();
-        userListsFragment = new UserListsFragment();
-        /*
-        userDiaryFragment = new UserDiaryFragment();
-        */
-        userReviewsFragment = new UserReviewsFragment();
-        /*
-        activityFragment = new ActivityFragment();
-        */
-        settingsFragment = new SettingsFragment();
+        View headerView = mNav.getHeaderView(0);
+        profile_username = headerView.findViewById(R.id.user_nav_username);
 
         setSupportActionBar(mToolbar);
         mNav.getMenu().findItem(R.id.nav_menu_popular).setChecked(true);
@@ -151,6 +108,17 @@ public class UserPopularActivity extends AppCompatActivity {
         mToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.nav_open, R.string.nav_close);
         mDrawer.addDrawerListener(mToggle);
         mToggle.syncState();
+
+        mQuery = mFirestore.collection("Users");
+        mQuery.whereEqualTo("id", mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                    user = documentSnapshot.toObject(User.class);
+                }
+                profile_username.setText(user.getUsername());
+            }
+        });
 
         mNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -161,45 +129,54 @@ public class UserPopularActivity extends AppCompatActivity {
                         return true;
                     /*
                     case R.id.nav_menu_search:
-                        setFragment(searchFragment);
+                        selectedFragment = new SearchFragment();
+                        setFragment(selectedFragment, "searchFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;*/
                     case R.id.nav_menu_profile:
-                        setFragment(profileFragment, "profileFragment");
+                        selectedFragment = new ProfileFragment(mAuth.getUid());
+                        setFragment(selectedFragment, "profileFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_menu_toPlayList:
-                        setFragment(usertoPlayListFragment, "usertoPlayListFragment");
+                        selectedFragment = new UserToPlayListFragment(user);
+                        setFragment(selectedFragment, "usertoPlayListFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_menu_lists:
-                        setFragment(userListsFragment, "userListsFragment");
+                        selectedFragment = new UserListsFragment(user);
+                        setFragment(selectedFragment, "userListsFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     /*
                     case R.id.nav_menu_diary:
-                        setFragment(userDiaryFragment);
+                        selectedFragment = new UserDiaryFragment(user);
+                        setFragment(selectedFragment, "userDiaryFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     */
                     case R.id.nav_menu_reviews:
-                        setFragment(userReviewsFragment, "userReviewsFragment");
+                        selectedFragment = new UserReviewsFragment(user);
+                        setFragment(selectedFragment, "userReviewsFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     /*
                     case R.id.nav_menu_activity:
-                        setFragment(activityFragment);
+                        selectedFragment = ActivityFragment();
+                        setFragment(selectedFragment, "activityFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                      */
                     case R.id.nav_menu_settings:
-                        setFragment(settingsFragment, "settingsFragment");
+                        selectedFragment = new SettingsFragment();
+                        setFragment(selectedFragment, "settingsFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
                     case R.id.nav_menu_signOut:
+                        selectedFragment = null;
                         mAuth.signOut();
+                        startActivity(new Intent(UserMainActivity.this, GuestMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
-                        startActivity(new Intent(UserPopularActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         return true;
                     default:
                         return false;
@@ -258,7 +235,7 @@ public class UserPopularActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid){
             for(int i = 0; i < 10; i++){
-                game = new Games(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i), 0, 0, 0);
+                game = new Game(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i), 0, 0, 0);
                 mFirestore.collection("Games").add(game);
             }
         }

@@ -22,6 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/game_lists_gameName"
             android:text="Lists with Game Name"
             android:textSize="20dp"
             android:textStyle="bold"

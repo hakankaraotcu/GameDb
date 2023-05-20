@@ -17,15 +17,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.ReviewsAdapter;
+import com.hakankaraotcu.gamedb.Model.Review;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ReviewsFragment extends Fragment {
 
     private FirebaseFirestore mFirestore;
     private Query mQuery;
-    private ArrayList<Reviews> reviews;
+    private ArrayList<Review> reviews;
     private RecyclerView recyclerView;
     private ReviewsAdapter adapter;
 
@@ -48,7 +49,7 @@ public class ReviewsFragment extends Fragment {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
-                    Reviews review = documentSnapshot.toObject(Reviews.class);
+                    Review review = documentSnapshot.toObject(Review.class);
 
                     assert review != null;
                     review.setId(documentSnapshot.getId());
@@ -59,9 +60,16 @@ public class ReviewsFragment extends Fragment {
 
                 adapter.setOnItemClickListener(new ReviewsAdapter.OnItemClickListener() {
                     @Override
-                    public void onItemClick(Reviews review, int position) {
+                    public void onItemClick(Review review, int position) {
                         ReviewFragment reviewFragment = new ReviewFragment(review);
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                        // for guest
+                        if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                            getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                        }
+                        // for user
+                        if(getActivity().getLocalClassName().equals("UserMainActivity")){
+                            getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                        }
                     }
                 });
             }

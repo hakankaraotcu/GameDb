@@ -1,13 +1,13 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Model;
 
-public class Lists {
+public class List {
     private String id, name, description, userID, username;
     private int numberOfGames;
 
-    public Lists(){
+    public List(){
 
     }
-    public Lists(String name, String description, int numberOfGames, String userID, String username){
+    public List(String name, String description, int numberOfGames, String userID, String username){
         this.name = name;
         this.description = description;
         this.numberOfGames = numberOfGames;

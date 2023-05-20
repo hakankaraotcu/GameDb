@@ -1,27 +1,26 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
+import com.hakankaraotcu.gamedb.Model.List;
+import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddToListsAdapter extends BaseAdapter {
     private TextView listName;
     private Context context;
-    private ArrayList<Lists> lists;
+    private ArrayList<List> lists;
 
-    public AddToListsAdapter(ArrayList<Lists> lists, Context context){
+    public AddToListsAdapter(ArrayList<List> lists, Context context){
         this.lists = lists;
         this.context = context;
     }

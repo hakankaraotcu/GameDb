@@ -1,4 +1,4 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,28 +7,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.Model.List;
+import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
-    private ArrayList<Lists> lists;
-    private HashMap<String, ArrayList<Games>> gamesInList;
+    private ArrayList<List> lists;
+    private HashMap<String, ArrayList<Game>> gamesInList;
     private Context context;
     private ImageAdapter imageAdapter;
     private OnItemClickListener listener;
 
-    public ListAdapter(ArrayList<Lists> lists, HashMap<String, ArrayList<Games>> gamesInList, Context context) {
+    public ListAdapter(ArrayList<List> lists, HashMap<String, ArrayList<Game>> gamesInList, Context context) {
         this.lists = lists;
         this.gamesInList = gamesInList;
         this.context = context;
@@ -43,7 +39,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        Lists list = lists.get(position);
+        List list = lists.get(position);
         holder.setData(list);
         imageAdapter = new ImageAdapter(gamesInList.get(list.getId()), context);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -79,7 +75,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             });
         }
 
-        public void setData(Lists list){
+        public void setData(List list){
             this.listName.setText(list.getName());
             this.content.setText(list.getDescription());
             this.userName.setText(list.getUsername());
@@ -87,7 +83,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     }
 
     public interface OnItemClickListener{
-        void onItemClick(Lists list, int position);
+        void onItemClick(List list, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

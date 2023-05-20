@@ -1,24 +1,24 @@
-package com.hakankaraotcu.gamedb;
+package com.hakankaraotcu.gamedb.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.hakankaraotcu.gamedb.GamesFragment;
+import com.hakankaraotcu.gamedb.ListsFragment;
+import com.hakankaraotcu.gamedb.Model.Game;
+import com.hakankaraotcu.gamedb.NewsFragment;
+import com.hakankaraotcu.gamedb.ReviewsFragment;
+
 import java.util.ArrayList;
 
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
-    private String[] titles = new String[] {"POPULAR", "REVIEWS", "LISTS", "NEWS"};
-    private ArrayList<Games> games;
+    private final String[] titles = new String[] {"GAMES", "REVIEWS", "LISTS", "NEWS"};
 
     public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
-    }
-
-    public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity, ArrayList<Games> games) {
-        super(fragmentActivity);
-        this.games = games;
     }
 
     @NonNull
@@ -27,15 +27,15 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0:
-                return new GamesFragment(games);
+                return new GamesFragment();
             case 1:
                 return new ReviewsFragment();
             case 2:
                 return new ListsFragment();
             case 3:
-                return new JournalFragment();
+                return new NewsFragment();
         }
-        return new GamesFragment(games);
+        return new GamesFragment();
     }
 
     @Override

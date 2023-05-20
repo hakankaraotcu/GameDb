@@ -36,11 +36,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.hakankaraotcu.gamedb.Adapter.GameActivityAdapter;
+import com.hakankaraotcu.gamedb.Model.Game;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.taufiqrahman.reviewratings.BarLabels;
 import com.taufiqrahman.reviewratings.RatingReviews;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -56,16 +57,17 @@ public class GameFragment extends Fragment {
     private CardView gamePlayersCardView, gameReviewsCardView, gameListsCardView;
     private ListView listView;
     private GameActivityAdapter adapter;
-    private String[] titles = {"Review", "Add to lists"};
+    private String[] titles = {"Reviews", "Add to lists"};
     private int[] images = {R.drawable.ic_add_circle, R.drawable.ic_addtolist};
     private String id;
+    private String guestOrUser;
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private FirebaseFirestore mFirestore;
     private CollectionReference playedGamesReference, likedGamesReference, toPlayGamesReference;
     private DocumentReference userReference, gameReference;
-    private Games game;
+    private Game game;
 
     private Boolean toPlayCheck = false;
 
@@ -73,6 +75,9 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+
+        guestOrUser = getActivity().getLocalClassName();
+
         RatingReviews ratingReviews = (RatingReviews) view.findViewById(R.id.ratingChart);
         averageRatingBar = (RatingBar) view.findViewById(R.id.averageRatingBar);
         averageRatingText = (TextView) view.findViewById(R.id.averageRatingText);
@@ -88,6 +93,15 @@ public class GameFragment extends Fragment {
         gamePlayersCount = view.findViewById(R.id.game_players_count);
         gameReviewsCount = view.findViewById(R.id.game_reviews_count);
         gameListsCount = view.findViewById(R.id.game_lists_count);
+
+        activityButton = view.findViewById(R.id.game_activityButton);
+
+        if(guestOrUser.equals("GuestMainActivity")){
+            activityButton.setVisibility(View.GONE);
+        }
+        else if(guestOrUser.equals("UserMainActivity")){
+            activityButton.setVisibility(View.VISIBLE);
+        }
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -134,7 +148,6 @@ public class GameFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         backButton = view.findViewById(R.id.game_backButton);
-        activityButton = view.findViewById(R.id.game_activityButton);
         gamePlayersCardView = view.findViewById(R.id.game_players);
         gameReviewsCardView = view.findViewById(R.id.game_reviews);
         gameListsCardView = view.findViewById(R.id.game_lists);
@@ -142,31 +155,46 @@ public class GameFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                startActivity(new Intent(getActivity(), GuestMainActivity.class));
             }
         });
 
         gamePlayersCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GamePlayersFragment gamePlayersFragment = new GamePlayersFragment(id);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
+                GamePlayersFragment gamePlayersFragment = new GamePlayersFragment(game);
+                if(guestOrUser.equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
+                }
+                else if(guestOrUser.equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
+                }
             }
         });
 
         gameReviewsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameReviewsFragment gameReviewsFragment = new GameReviewsFragment(id);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+                GameReviewsFragment gameReviewsFragment = new GameReviewsFragment(game);
+                if(guestOrUser.equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().add(R.id.guest_main_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+                }
+                else if(guestOrUser.equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+                }
             }
         });
 
         gameListsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameListsFragment gameListsFragment = new GameListsFragment(id);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
+                GameListsFragment gameListsFragment = new GameListsFragment(game);
+                if(guestOrUser.equals("GuestMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
+                }
+                else if(guestOrUser.equals("UserMainActivity")){
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
+                }
             }
         });
 
@@ -322,7 +350,7 @@ public class GameFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         switch (titles[i]) {
-                            case "Review":
+                            case "Reviews":
                                 AddReviewFragment addReviewFragment = new AddReviewFragment(game);
                                 getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
@@ -345,7 +373,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    game = documentSnapshot.toObject(Games.class);
+                    game = documentSnapshot.toObject(Game.class);
 
                     assert game != null;
                     game.setId(id);

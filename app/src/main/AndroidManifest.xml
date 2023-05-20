@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hakankaraotcu.gamedb">
-    
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,7 @@
         android:theme="@style/Theme.GameDb"
         tools:targetApi="31">
         <activity
-            android:name=".UserPopularActivity"
+            android:name=".GuestDrawerBaseActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
@@ -25,7 +25,10 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".UserMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GuestMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
