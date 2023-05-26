@@ -5,17 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.GamesFragment;
 import com.hakankaraotcu.gamedb.ListsFragment;
-import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.NewsFragment;
 import com.hakankaraotcu.gamedb.ReviewsFragment;
 
-import java.util.ArrayList;
-
 public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
-
-    private final String[] titles = new String[] {"GAMES", "REVIEWS", "LISTS", "NEWS"};
 
     public ViewPagerFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -40,6 +36,6 @@ public class ViewPagerFragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return AppGlobals.mainTitles.length;
     }
 }

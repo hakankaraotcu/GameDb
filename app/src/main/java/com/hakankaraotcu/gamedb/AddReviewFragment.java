@@ -17,24 +17,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.Review;
-import com.hakankaraotcu.gamedb.Model.User;
 
 public class AddReviewFragment extends Fragment {
-
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-    private FirebaseFirestore mFirestore;
     private CollectionReference reviewsReference;
     private DocumentReference userReference, gameReference;
     private Game game;
@@ -45,7 +36,7 @@ public class AddReviewFragment extends Fragment {
     private Button confirmButton;
     private String txtReviewContent, txtReviewDate;
 
-    public AddReviewFragment(Game game){
+    public AddReviewFragment(Game game) {
         this.game = game;
     }
 
@@ -54,16 +45,12 @@ public class AddReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_review, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        mFirestore = FirebaseFirestore.getInstance();
-
-        gameName = view.findViewById(R.id.add_review_name);
-        gameReleaseDate = view.findViewById(R.id.add_review_releaseDate);
-        gameImage = view.findViewById(R.id.add_review_image);
+        gameName = view.findViewById(R.id.add_review_gameName);
+        gameReleaseDate = view.findViewById(R.id.add_review_gameReleaseDate);
+        gameImage = view.findViewById(R.id.add_review_gameImage);
         gameRating = view.findViewById(R.id.add_review_rating);
         reviewContent = view.findViewById(R.id.add_review_content);
-        reviewDate = view.findViewById(R.id.add_review_date_description);
+        reviewDate = view.findViewById(R.id.add_review_dateDescription);
         confirmButton = view.findViewById(R.id.add_review_confirm);
 
         return view;
@@ -93,47 +80,37 @@ public class AddReviewFragment extends Fragment {
         });
     }
 
-    public void createReview(){
+    public void createReview() {
         txtReviewContent = reviewContent.getText().toString();
         txtReviewDate = reviewDate.getText().toString();
 
-        if(txtReviewContent.isEmpty()){
+        if (txtReviewContent.isEmpty()) {
             reviewContent.setError("List name is required");
             reviewContent.requestFocus();
             return;
         }
-        if(txtReviewDate.isEmpty()){
+        if (txtReviewDate.isEmpty()) {
             reviewDate.setError("List description is required");
             reviewDate.requestFocus();
             return;
         }
 
-        userReference = mFirestore.collection("Users").document(mUser.getUid());
-        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        Review review = new Review(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), AppGlobals.currentUser.getId(), AppGlobals.currentUser.getUsername(), AppGlobals.currentUser.getAvatar());
+
+        reviewsReference = AppGlobals.db.collection("Reviews");
+        reviewsReference.add(review).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
 
-                assert user != null;
-                user.setId(documentSnapshot.getId());
+                    gameReference = AppGlobals.db.collection("Games").document(game.getId());
+                    gameReference.update("numberOfReviews", FieldValue.increment(1));
 
-                Review review = new Review(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), user.getId(), user.getUsername());
+                    userReference = AppGlobals.db.collection("Users").document(AppGlobals.currentUser.getId());
+                    userReference.update("reviewsCount", FieldValue.increment(1));
 
-                reviewsReference = mFirestore.collection("Reviews");
-                reviewsReference.add(review).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if(task.isSuccessful()){
-
-                            gameReference = mFirestore.collection("Games").document(game.getId());
-                            gameReference.update("numberOfReviews", FieldValue.increment(1));
-
-                            userReference.update("reviewsCount", FieldValue.increment(1));
-
-                            getActivity().getSupportFragmentManager().popBackStack();
-                        }
-                    }
-                });
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
             }
         });
     }

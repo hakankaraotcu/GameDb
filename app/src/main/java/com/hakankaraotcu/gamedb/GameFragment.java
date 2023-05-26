@@ -28,15 +28,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.GameActivityAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.taufiqrahman.reviewratings.BarLabels;
@@ -49,6 +47,7 @@ import java.util.Random;
 public class GameFragment extends Fragment {
     private ImageButton activityButton, playButton, likeButton, toPlayButton;
     private Button backButton;
+    private RatingReviews ratingReviews;
     private RatingBar averageRatingBar;
     private TextView averageRatingText, trailerText, playDescription, likeDescription, addReview, addToLists;
     private TextView gameName, gameDeveloper, gameReleaseDate, gameMetacritic, gameGenres, gamePlayersCount, gameReviewsCount, gameListsCount;
@@ -61,14 +60,9 @@ public class GameFragment extends Fragment {
     private int[] images = {R.drawable.ic_add_circle, R.drawable.ic_addtolist};
     private String id;
     private String guestOrUser;
-
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-    private FirebaseFirestore mFirestore;
     private CollectionReference playedGamesReference, likedGamesReference, toPlayGamesReference;
     private DocumentReference userReference, gameReference;
     private Game game;
-
     private Boolean toPlayCheck = false;
 
     @Override
@@ -78,34 +72,29 @@ public class GameFragment extends Fragment {
 
         guestOrUser = getActivity().getLocalClassName();
 
-        RatingReviews ratingReviews = (RatingReviews) view.findViewById(R.id.ratingChart);
-        averageRatingBar = (RatingBar) view.findViewById(R.id.averageRatingBar);
-        averageRatingText = (TextView) view.findViewById(R.id.averageRatingText);
-        trailerText = (TextView) view.findViewById(R.id.game_trailer);
+        ratingReviews = view.findViewById(R.id.ratingChart);
+        averageRatingBar = view.findViewById(R.id.averageRatingBar);
+        averageRatingText = view.findViewById(R.id.averageRatingText);
+        trailerText = view.findViewById(R.id.game_trailer);
 
         gameName = view.findViewById(R.id.game_name);
         gameDeveloper = view.findViewById(R.id.game_developer);
         gameReleaseDate = view.findViewById(R.id.game_releaseDate);
-        gameMetacritic = view.findViewById(R.id.game_metacritic_description);
+        gameMetacritic = view.findViewById(R.id.game_metacriticDescription);
         gameGenres = view.findViewById(R.id.game_genres);
         gameImage = view.findViewById(R.id.game_image);
-        gameContent = (ExpandableTextView) view.findViewById(R.id.expand_text_view);
-        gamePlayersCount = view.findViewById(R.id.game_players_count);
-        gameReviewsCount = view.findViewById(R.id.game_reviews_count);
-        gameListsCount = view.findViewById(R.id.game_lists_count);
+        gameContent = view.findViewById(R.id.expand_text_view);
+        gamePlayersCount = view.findViewById(R.id.game_playersCount);
+        gameReviewsCount = view.findViewById(R.id.game_reviewsCount);
+        gameListsCount = view.findViewById(R.id.game_listsCount);
 
         activityButton = view.findViewById(R.id.game_activityButton);
 
-        if(guestOrUser.equals("GuestMainActivity")){
+        if (guestOrUser.equals("GuestMainActivity")) {
             activityButton.setVisibility(View.GONE);
-        }
-        else if(guestOrUser.equals("UserMainActivity")){
+        } else if (guestOrUser.equals("UserMainActivity")) {
             activityButton.setVisibility(View.VISIBLE);
         }
-
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        mFirestore = FirebaseFirestore.getInstance();
 
         id = getArguments().getString("id");
 
@@ -163,11 +152,10 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GamePlayersFragment gamePlayersFragment = new GamePlayersFragment(game);
-                if(guestOrUser.equals("GuestMainActivity")){
+                if (guestOrUser.equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
-                }
-                else if(guestOrUser.equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
+                } else if (guestOrUser.equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gamePlayersFragment, null).addToBackStack(null).commit();
                 }
             }
         });
@@ -176,11 +164,10 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GameReviewsFragment gameReviewsFragment = new GameReviewsFragment(game);
-                if(guestOrUser.equals("GuestMainActivity")){
+                if (guestOrUser.equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().add(R.id.guest_main_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
-                }
-                else if(guestOrUser.equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
+                } else if (guestOrUser.equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gameReviewsFragment, null).addToBackStack(null).commit();
                 }
             }
         });
@@ -189,11 +176,10 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GameListsFragment gameListsFragment = new GameListsFragment(game);
-                if(guestOrUser.equals("GuestMainActivity")){
+                if (guestOrUser.equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
-                }
-                else if(guestOrUser.equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
+                } else if (guestOrUser.equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gameListsFragment, null).addToBackStack(null).commit();
                 }
             }
         });
@@ -206,52 +192,49 @@ public class GameFragment extends Fragment {
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
 
-                listView = bottomSheetView.findViewById(R.id.game_activity_listView);
-                playButton = bottomSheetView.findViewById(R.id.play_button);
-                likeButton = bottomSheetView.findViewById(R.id.like_button);
-                toPlayButton = bottomSheetView.findViewById(R.id.toPlay_button);
-                playDescription = bottomSheetView.findViewById(R.id.play_description);
-                likeDescription = bottomSheetView.findViewById(R.id.like_description);
+                listView = bottomSheetView.findViewById(R.id.bottom_sheet_listView);
+                playButton = bottomSheetView.findViewById(R.id.bottom_sheet_playButton);
+                likeButton = bottomSheetView.findViewById(R.id.bottom_sheet_likeButton);
+                toPlayButton = bottomSheetView.findViewById(R.id.bottom_sheet_toPlayButton);
+                playDescription = bottomSheetView.findViewById(R.id.bottom_sheet_playDescription);
+                likeDescription = bottomSheetView.findViewById(R.id.bottom_sheet_likeDescription);
 
-                playedGamesReference = mFirestore.collection("PlayedGames");
-                playedGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                playedGamesReference = AppGlobals.db.collection("PlayedGames");
+                playedGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", AppGlobals.mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.getDocuments().size() > 0){
+                        if (queryDocumentSnapshots.getDocuments().size() > 0) {
                             playButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 21, 187, 50)));
                             playDescription.setText("Played");
-                        }
-                        else{
+                        } else {
                             playButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                             playDescription.setText("Play");
                         }
                     }
                 });
 
-                likedGamesReference = mFirestore.collection("LikedGames");
-                likedGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                likedGamesReference = AppGlobals.db.collection("LikedGames");
+                likedGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", AppGlobals.mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.getDocuments().size() > 0){
+                        if (queryDocumentSnapshots.getDocuments().size() > 0) {
                             likeButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 255, 128, 0)));
                             likeDescription.setText("Liked");
-                        }
-                        else{
+                        } else {
                             likeButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                             likeDescription.setText("Like");
                         }
                     }
                 });
 
-                toPlayGamesReference = mFirestore.collection("ToPlayGames");
-                toPlayGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                toPlayGamesReference = AppGlobals.db.collection("ToPlayGames");
+                toPlayGamesReference.whereEqualTo("gameID", id).whereEqualTo("userID", AppGlobals.mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.getDocuments().size() > 0){
+                        if (queryDocumentSnapshots.getDocuments().size() > 0) {
                             toPlayButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 64, 188, 244)));
                             toPlayCheck = true;
-                        }
-                        else{
+                        } else {
                             toPlayButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                             toPlayCheck = false;
                         }
@@ -264,28 +247,27 @@ public class GameFragment extends Fragment {
                 playButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(playDescription.getText().toString().equals("Play")){
+                        if (playDescription.getText().toString().equals("Play")) {
                             Map<String, Object> data = new HashMap<>();
                             data.put("gameID", id);
-                            data.put("userID", mUser.getUid());
-                            playedGamesReference.document(id + "_" + mUser.getUid()).set(data);
+                            data.put("userID", AppGlobals.mUser.getUid());
+                            playedGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).set(data);
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("playedCount", FieldValue.increment(1));
 
-                            gameReference = mFirestore.collection("Games").document(id);
+                            gameReference = AppGlobals.db.collection("Games").document(id);
                             gameReference.update("numberOfPlayers", FieldValue.increment(1));
 
                             playButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 21, 187, 50)));
                             playDescription.setText("Played");
-                        }
-                        else if(playDescription.getText().toString().equals("Played")){
-                            playedGamesReference.document(id + "_" + mUser.getUid()).delete();
+                        } else if (playDescription.getText().toString().equals("Played")) {
+                            playedGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).delete();
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("playedCount", FieldValue.increment(-1));
 
-                            gameReference = mFirestore.collection("Games").document(id);
+                            gameReference = AppGlobals.db.collection("Games").document(id);
                             gameReference.update("numberOfPlayers", FieldValue.increment(-1));
 
                             playButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
@@ -297,22 +279,21 @@ public class GameFragment extends Fragment {
                 likeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(likeDescription.getText().toString().equals("Like")){
+                        if (likeDescription.getText().toString().equals("Like")) {
                             Map<String, Object> data = new HashMap<>();
                             data.put("gameID", id);
-                            data.put("userID", mUser.getUid());
-                            likedGamesReference.document(id + "_" + mUser.getUid()).set(data);
+                            data.put("userID", AppGlobals.mUser.getUid());
+                            likedGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).set(data);
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("likedCount", FieldValue.increment(1));
 
                             likeButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 255, 128, 0)));
                             likeDescription.setText("Liked");
-                        }
-                        else if(likeDescription.getText().toString().equals("Liked")){
-                            likedGamesReference.document(id + "_" + mUser.getUid()).delete();
+                        } else if (likeDescription.getText().toString().equals("Liked")) {
+                            likedGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).delete();
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("likedCount", FieldValue.increment(-1));
 
                             likeButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
@@ -324,21 +305,20 @@ public class GameFragment extends Fragment {
                 toPlayButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(!toPlayCheck){
+                        if (!toPlayCheck) {
                             Map<String, Object> data = new HashMap<>();
                             data.put("gameID", id);
-                            data.put("userID", mUser.getUid());
+                            data.put("userID", AppGlobals.mUser.getUid());
 
-                            toPlayGamesReference.document(id + "_" + mUser.getUid()).set(data);
+                            toPlayGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).set(data);
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("toPlayCount", FieldValue.increment(1));
                             toPlayButton.setImageTintList(ColorStateList.valueOf(Color.argb(255, 64, 188, 244)));
-                        }
-                        else{
-                            toPlayGamesReference.document(id + "_" + mUser.getUid()).delete();
+                        } else {
+                            toPlayGamesReference.document(id + "_" + AppGlobals.mUser.getUid()).delete();
 
-                            userReference = mFirestore.collection("Users").document(mUser.getUid());
+                            userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
                             userReference.update("toPlayCount", FieldValue.increment(-1));
                             toPlayButton.setImageTintList(ColorStateList.valueOf(Color.WHITE));
                         }
@@ -352,12 +332,12 @@ public class GameFragment extends Fragment {
                         switch (titles[i]) {
                             case "Reviews":
                                 AddReviewFragment addReviewFragment = new AddReviewFragment(game);
-                                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
+                                getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, addReviewFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
                             case "Add to lists":
                                 AddtoListsFragment addtoListsFragment = new AddtoListsFragment(game.getId());
-                                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
+                                getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, addtoListsFragment, null).addToBackStack(null).commit();
                                 bottomSheetDialog.hide();
                                 break;
                         }
@@ -367,12 +347,12 @@ public class GameFragment extends Fragment {
         });
     }
 
-    private void fetchData(){
-        DocumentReference documentReference = mFirestore.collection("Games").document(id);
+    private void fetchData() {
+        DocumentReference documentReference = AppGlobals.db.collection("Games").document(id);
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     game = documentSnapshot.toObject(Game.class);
 
                     assert game != null;
@@ -390,29 +370,29 @@ public class GameFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(),"Failed to fetch data", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Failed to fetch data", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private int maxValue(int[] raters){
+    private int maxValue(int[] raters) {
         int min = raters[0];
         int max = raters[0];
-        for(int i = 0; i < raters.length; i++){
-            if(raters[i] < min){
+        for (int i = 0; i < raters.length; i++) {
+            if (raters[i] < min) {
                 min = raters[i];
             }
-            if(raters[i] > max){
+            if (raters[i] > max) {
                 max = raters[i];
             }
         }
         return max;
     }
 
-    private double avgValue(int[] raters){
+    private double avgValue(int[] raters) {
         float avg;
         float sum = 0;
-        for(int i = 0; i < raters.length; i++){
+        for (int i = 0; i < raters.length; i++) {
             sum += raters[i];
         }
         avg = ((raters[0] * 5) + (raters[1] * 4) + (raters[2] * 3) + (raters[3] * 2) + (raters[4] * 1)) / sum;

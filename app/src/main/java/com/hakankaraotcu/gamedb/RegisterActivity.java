@@ -3,6 +3,7 @@ package com.hakankaraotcu.gamedb;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,25 +16,34 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.User;
 import com.hakankaraotcu.gamedb.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends GuestDrawerBaseActivity {
-
-    ActivityRegisterBinding activityRegisterBinding;
-
+    private ActivityRegisterBinding activityRegisterBinding;
+    private ProgressDialog mProgress;
     private User user;
-    private EditText editEmail, editUsername, editPassword;
+    private EditText editEmail, editUsername, editPassword, editPasswordConfirm;
     private CheckBox checkAge, checkPrivacy;
-    private String txtEmail, txtUsername, txtPassword;
+    private String txtEmail, txtUsername, txtPassword, txtPasswordConfirm;
     private Button backButton, registerButton;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-    private FirebaseFirestore db;
     private ConstraintLayout mConstraint;
+
+    private void init() {
+        editEmail = findViewById(R.id.register_email);
+        editUsername = findViewById(R.id.register_username);
+        editPassword = findViewById(R.id.register_password);
+        editPasswordConfirm = findViewById(R.id.register_passwordConfirm);
+
+        checkAge = findViewById(R.id.register_ageCheckBox);
+        checkPrivacy = findViewById(R.id.register_privacyCheckBox);
+
+        mConstraint = findViewById(R.id.register_constraint);
+
+        backButton = findViewById(R.id.register_backBtn);
+        registerButton = findViewById(R.id.registerBtn);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +51,7 @@ public class RegisterActivity extends GuestDrawerBaseActivity {
         activityRegisterBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(activityRegisterBinding.getRoot());
 
-        editEmail = findViewById(R.id.register_email);
-        editUsername = findViewById(R.id.register_username);
-        editPassword = findViewById(R.id.register_password);
-        checkAge = findViewById(R.id.register_ageCheckBox);
-        checkPrivacy = findViewById(R.id.register_privacyCheckBox);
-
-        mConstraint = findViewById(R.id.register_constraint);
-
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
-        backButton = findViewById(R.id.backBtn);
-        registerButton = findViewById(R.id.registerBtn);
+        init();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,77 +68,94 @@ public class RegisterActivity extends GuestDrawerBaseActivity {
         });
     }
 
-    private void registerUser(){
+    private void registerUser() {
         txtEmail = editEmail.getText().toString();
         txtUsername = editUsername.getText().toString();
         txtPassword = editPassword.getText().toString();
+        txtPasswordConfirm = editPasswordConfirm.getText().toString();
 
-        if(txtEmail.isEmpty()){
+        if (txtEmail.isEmpty()) {
             editEmail.setError("Email is required");
             editEmail.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(txtEmail).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(txtEmail).matches()) {
             editEmail.setError("Please provide a valid email");
             editEmail.requestFocus();
             return;
         }
-        if(txtUsername.isEmpty()){
+        if (txtUsername.isEmpty()) {
             editUsername.setError("Username is required");
             editUsername.requestFocus();
             return;
         }
-        if(txtPassword.isEmpty()){
+        if (txtPassword.isEmpty()) {
             editPassword.setError("Password is required");
             editPassword.requestFocus();
             return;
         }
-        if(txtPassword.length() < 6){
+        if (txtPassword.length() < 6) {
             editPassword.setError("Please enter at least 6 characters");
             editPassword.requestFocus();
             return;
         }
-        if(!checkAge.isChecked()){
+        if (txtPasswordConfirm.isEmpty() || !txtPasswordConfirm.equals(txtPassword)) {
+            editPassword.setError("Password confirmation doesn't match the password");
+            editPassword.requestFocus();
+            return;
+        }
+        if (!checkAge.isChecked()) {
             checkAge.setError("You must accepts the age");
             checkAge.requestFocus();
             return;
         }
-        if(!checkPrivacy.isChecked()){
+        if (!checkPrivacy.isChecked()) {
             checkPrivacy.setError("You must accepts the privacy");
             checkPrivacy.requestFocus();
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mProgress = new ProgressDialog(RegisterActivity.this);
+        mProgress.setTitle("Registering...");
+        mProgress.show();
+
+        AppGlobals.mAuth.createUserWithEmailAndPassword(txtEmail, txtPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    mUser = mAuth.getCurrentUser();
+                if (task.isSuccessful()) {
+                    AppGlobals.mUser = AppGlobals.mAuth.getCurrentUser();
 
-                    if(mUser != null){
-                        user = new User(mUser.getUid(), txtUsername, txtEmail, txtPassword);
+                    if (AppGlobals.mUser != null) {
+                        user = new User(AppGlobals.mUser.getUid(), txtUsername, txtEmail, txtPassword, "default");
 
-                        db.collection("Users").document(mUser.getUid()).set(user).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<Void>() {
+                        AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid()).set(user).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
+                                if (task.isSuccessful()) {
+                                    progressSet();
                                     Intent intent = new Intent(RegisterActivity.this, UserMainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
                                     finish();
-                                }
-                                else{
+                                    startActivity(intent);
+                                } else {
+                                    progressSet();
                                     Snackbar.make(mConstraint, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     }
-                }
-                else{
+                } else {
+                    progressSet();
                     Snackbar.make(mConstraint, task.getException().getMessage(), Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void progressSet() {
+        if (mProgress.isShowing()) {
+            mProgress.dismiss();
+        }
     }
 
     @Override

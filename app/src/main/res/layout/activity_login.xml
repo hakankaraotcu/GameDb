@@ -2,113 +2,113 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#14181C"
-    android:id="@+id/login_constraint"
     tools:context=".LoginActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/backgroundEffect"
         android:layout_width="wrap_content"
         android:layout_height="480dp"
-        android:id="@+id/backgroundEffect"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
+            android:id="@+id/login_backButton"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:id="@+id/backButton"
-            android:background="@drawable/ic_back"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"/>
+            android:background="@drawable/ic_back" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background1"/>
+            android:background="@drawable/background1" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shadoweffect"/>
+            android:background="@drawable/shadoweffect" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginStart="20dp"
             android:text="Sign in to GameDb"
             android:textColor="@color/white"
-            android:textSize="35dp"
-            android:layout_marginStart="20dp"/>
+            android:textSize="35dp" />
     </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/backgroundEffect"
-        app:layout_constraintStart_toStartOf="@+id/backgroundEffect"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="#99AABB"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        app:layout_constraintStart_toStartOf="@+id/backgroundEffect"
+        app:layout_constraintTop_toBottomOf="@+id/backgroundEffect" />
 
     <EditText
         android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/login_email"
-        app:layout_constraintStart_toStartOf="@+id/login_email"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="#99AABB"
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        app:layout_constraintStart_toStartOf="@+id/login_email"
+        app:layout_constraintTop_toBottomOf="@+id/login_email" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/joinBtn"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/login_password"
-        app:layout_constraintStart_toStartOf="@+id/login_email"
-        app:layout_constraintEnd_toStartOf="@+id/resetPasswordBtn"
         android:layout_marginTop="10dp"
         android:backgroundTint="#445566"
         android:text="join"
         android:textStyle="bold"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/resetPasswordBtn"
+        app:layout_constraintStart_toStartOf="@+id/login_email"
+        app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/resetPasswordBtn"
         android:layout_width="172dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/joinBtn"
-        app:layout_constraintStart_toEndOf="@+id/joinBtn"
-        app:layout_constraintEnd_toStartOf="@+id/loginBtn"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:backgroundTint="#445566"
         android:text="reset password"
         android:textStyle="bold"
-        android:backgroundTint="#445566"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toStartOf="@+id/loginBtn"
+        app:layout_constraintStart_toEndOf="@+id/joinBtn"
+        app:layout_constraintTop_toTopOf="@+id/joinBtn" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginBtn"
         android:layout_width="54dp"
         android:layout_height="wrap_content"
-        android:id="@+id/loginBtn"
-        app:layout_constraintTop_toTopOf="@+id/resetPasswordBtn"
-        app:layout_constraintStart_toEndOf="@+id/resetPasswordBtn"
-        app:layout_constraintEnd_toEndOf="@+id/login_password"
+        android:backgroundTint="#15BB32"
         android:text="go"
         android:textStyle="bold"
-        android:backgroundTint="#15BB32"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/login_password"
+        app:layout_constraintStart_toEndOf="@+id/resetPasswordBtn"
+        app:layout_constraintTop_toTopOf="@+id/resetPasswordBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

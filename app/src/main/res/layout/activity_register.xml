@@ -2,153 +2,169 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#14181C"
-    android:id="@+id/register_constraint"
     tools:context=".RegisterActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/backgroundEffect"
         android:layout_width="wrap_content"
         android:layout_height="320dp"
-        android:id="@+id/backgroundEffect"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/backBtn"
+            android:id="@+id/register_backBtn"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:background="@drawable/ic_back"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="18dp"/>
+            android:background="@drawable/ic_back" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background1"/>
+            android:background="@drawable/background1" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/shadoweffect"/>
+            android:background="@drawable/shadoweffect" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginStart="20dp"
             android:text="Join GameDb"
             android:textColor="@color/white"
-            android:textSize="35dp"
-            android:layout_marginStart="20dp"/>
+            android:textSize="35dp" />
     </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/backgroundEffect"
-        app:layout_constraintStart_toStartOf="@+id/backgroundEffect"
         android:layout_marginStart="18dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="#99AABB"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB" />
+        app:layout_constraintStart_toStartOf="@+id/backgroundEffect"
+        app:layout_constraintTop_toBottomOf="@+id/backgroundEffect" />
 
     <EditText
         android:id="@+id/register_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_email"
-        app:layout_constraintStart_toStartOf="@+id/register_email"
-        app:layout_constraintEnd_toEndOf="@+id/register_email"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="#99AABB"
         android:hint="Username"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB" />
+        app:layout_constraintEnd_toEndOf="@+id/register_email"
+        app:layout_constraintStart_toStartOf="@+id/register_email"
+        app:layout_constraintTop_toBottomOf="@+id/register_email" />
+
     <EditText
         android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_username"
-        app:layout_constraintStart_toStartOf="@+id/register_username"
-        app:layout_constraintEnd_toEndOf="@+id/register_username"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="#99AABB"
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB" />
+        app:layout_constraintEnd_toEndOf="@+id/register_username"
+        app:layout_constraintStart_toStartOf="@+id/register_username"
+        app:layout_constraintTop_toBottomOf="@+id/register_username" />
+
+    <EditText
+        android:id="@+id/register_passwordConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="#99AABB"
+        android:hint="Password Confirmation"
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="#99AABB"
+        app:layout_constraintEnd_toEndOf="@+id/register_password"
+        app:layout_constraintStart_toStartOf="@+id/register_password"
+        app:layout_constraintTop_toBottomOf="@+id/register_password" />
 
     <TextView
         android:id="@+id/register_age"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_password"
-        app:layout_constraintStart_toStartOf="@+id/register_password"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:text="I'm at least 16 years old and accept the Terms of Use"
-        android:textColor="#99AABB"/>
+        android:textColor="#99AABB"
+        app:layout_constraintStart_toStartOf="@+id/register_passwordConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/register_passwordConfirm" />
 
     <CheckBox
         android:id="@+id/register_ageCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/register_age"
+        app:layout_constraintBottom_toBottomOf="@+id/register_age"
+        app:layout_constraintEnd_toEndOf="@+id/register_passwordConfirm"
         app:layout_constraintStart_toEndOf="@+id/register_age"
-        app:layout_constraintEnd_toEndOf="@+id/register_password"
-        app:layout_constraintBottom_toBottomOf="@+id/register_age"/>
+        app:layout_constraintTop_toTopOf="@+id/register_age" />
 
     <TextView
         android:id="@+id/register_privacy"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_age"
-        app:layout_constraintStart_toStartOf="@+id/register_age"
         android:layout_marginTop="10dp"
         android:text="I accept the Privacy Policy and consent to the processing of my personal information in accordance with it"
-        android:textColor="#99AABB"/>
+        android:textColor="#99AABB"
+        app:layout_constraintStart_toStartOf="@+id/register_age"
+        app:layout_constraintTop_toBottomOf="@+id/register_age" />
 
     <CheckBox
         android:id="@+id/register_privacyCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_ageCheckBox"
+        app:layout_constraintBottom_toBottomOf="@+id/register_privacy"
+        app:layout_constraintEnd_toEndOf="@+id/register_passwordConfirm"
         app:layout_constraintStart_toEndOf="@+id/register_privacy"
-        app:layout_constraintEnd_toEndOf="@+id/register_password"
-        app:layout_constraintBottom_toBottomOf="@+id/register_privacy"/>
+        app:layout_constraintTop_toBottomOf="@+id/register_ageCheckBox" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_privacy"
-        app:layout_constraintStart_toStartOf="@+id/register_privacy"
         android:layout_marginTop="10dp"
         android:backgroundTint="#445566"
         android:text="SIGN IN"
         android:textStyle="bold"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="@+id/register_privacy"
+        app:layout_constraintTop_toBottomOf="@+id/register_privacy" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/register_privacy"
-        app:layout_constraintStart_toEndOf="@+id/signInBtn"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:backgroundTint="#445566"
         android:text="GO"
         android:textStyle="bold"
-        app:cornerRadius="10dp"/>
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toEndOf="@+id/signInBtn"
+        app:layout_constraintTop_toBottomOf="@+id/register_privacy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,7 +48,7 @@ public class GameAdapter extends BaseAdapter {
         View v = layoutInflater.inflate(R.layout.game_item, null);
 
         if(v != null){
-            gamePicture = v.findViewById(R.id.game_item_imageView);
+            gamePicture = v.findViewById(R.id.game_item_image);
             Glide.with(v.getContext()).load(games.get(position).getImage()).into(gamePicture);
         }
         return v;

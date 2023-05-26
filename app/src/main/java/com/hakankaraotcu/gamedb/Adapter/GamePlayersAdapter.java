@@ -14,22 +14,21 @@ import androidx.annotation.Nullable;
 import com.hakankaraotcu.gamedb.Model.User;
 import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class GamePlayersAdapter extends ArrayAdapter<User> {
-    private int[] images;
     private int[] ratings;
     private Context context;
-    private CircularImageView image;
+    private CircularImageView avatar;
     private TextView username;
     private RatingBar ratingBar;
     private ArrayList<User> users;
 
-    public GamePlayersAdapter(ArrayList<User> users, int[] images, int[] ratings, Context context) {
+    public GamePlayersAdapter(ArrayList<User> users, int[] ratings, Context context) {
         super(context, R.layout.game_players_item, users);
         this.users = users;
-        this.images = images;
         this.ratings = ratings;
         this.context = context;
     }
@@ -40,11 +39,16 @@ public class GamePlayersAdapter extends ArrayAdapter<User> {
         View view = LayoutInflater.from(context).inflate(R.layout.game_players_item, null);
 
         if (view != null) {
-            image = view.findViewById(R.id.player_image);
-            username = view.findViewById(R.id.player_username);
-            ratingBar = view.findViewById(R.id.player_rating);
+            avatar = view.findViewById(R.id.game_players_item_avatar);
+            username = view.findViewById(R.id.game_players_item_username);
+            ratingBar = view.findViewById(R.id.game_players_item_rating);
 
-            image.setImageResource(images[position]);
+            if(users.get(position).getAvatar().equals("default")){
+                avatar.setImageResource(R.mipmap.ic_launcher);
+            }
+            else{
+                Picasso.get().load(users.get(position).getAvatar()).resize(24,24).into(avatar);
+            }
             username.setText(users.get(position).getUsername());
             ratingBar.setRating((float) ratings[position]);
         }

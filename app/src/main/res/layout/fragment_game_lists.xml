@@ -7,33 +7,32 @@
     tools:context=".GameListsFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/game_lists_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/game_lists_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/game_lists_backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/game_lists_backButton"
-            android:background="@drawable/ic_back"/>
+            android:background="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/game_lists_gameName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/game_lists_gameName"
+            android:layout_gravity="center"
             android:text="Lists with Game Name"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/gameLists_recyclerView"
+        android:id="@+id/game_lists_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#14181C"/>
+        android:background="#14181C" />
 
 </LinearLayout>

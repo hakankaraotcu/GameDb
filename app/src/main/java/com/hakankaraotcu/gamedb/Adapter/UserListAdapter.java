@@ -17,7 +17,7 @@ import com.hakankaraotcu.gamedb.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListViewHolder>{
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListViewHolder> {
     private ArrayList<List> lists;
     private HashMap<String, ArrayList<Game>> gamesInList;
     private Context context;
@@ -51,21 +51,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
         return lists.size();
     }
 
-    class ListViewHolder extends RecyclerView.ViewHolder{
-        TextView listName, count, content;
+    class ListViewHolder extends RecyclerView.ViewHolder {
+        TextView listName, gameCount, content;
         RecyclerView recyclerView;
 
-        public ListViewHolder(@NonNull View itemView){
+        public ListViewHolder(@NonNull View itemView) {
             super(itemView);
-            listName = itemView.findViewById(R.id.userLists_item_textViewListName);
-            count = itemView.findViewById(R.id.userLists_count);
-            content = itemView.findViewById(R.id.userLists_item_textViewContent);
-            recyclerView = itemView.findViewById(R.id.userLists_recyclerView);
+            listName = itemView.findViewById(R.id.user_lists_item_listName);
+            gameCount = itemView.findViewById(R.id.user_lists_item_gameCount);
+            content = itemView.findViewById(R.id.user_lists_item_content);
+            recyclerView = itemView.findViewById(R.id.user_lists_item_recyclerView);
         }
 
-        public void setData(List list){
+        public void setData(List list) {
             this.listName.setText(list.getName());
-            this.count.setText(String.valueOf(list.getNumberOfGames()));
+            this.gameCount.setText(String.valueOf(list.getNumberOfGames()));
             this.content.setText(list.getDescription());
         }
     }

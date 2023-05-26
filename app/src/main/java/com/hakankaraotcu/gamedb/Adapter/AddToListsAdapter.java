@@ -47,7 +47,7 @@ public class AddToListsAdapter extends BaseAdapter {
         View v = layoutInflater.inflate(R.layout.add_to_lists_item, null);
 
         if(v != null){
-            listName = v.findViewById(R.id.add_to_lists_name);
+            listName = v.findViewById(R.id.add_to_lists_listName);
             listName.setText(lists.get(position).getName());
         }
         return v;

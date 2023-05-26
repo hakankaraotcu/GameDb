@@ -37,7 +37,7 @@ public class UserFollowersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_followers, container, false);
-        listView = view.findViewById(R.id.userFollowers_listView);
+        listView = view.findViewById(R.id.user_followers_listView);
         profile_username = view.findViewById(R.id.user_followers_username);
         return view;
     }
@@ -48,7 +48,7 @@ public class UserFollowersFragment extends Fragment {
 
         adapter = new FollowingFollowersAdapter(usernames, images, getContext());
         listView.setAdapter(adapter);
-        
+
         profile_username.setText(user.getUsername() + "'s Followers");
     }
 }

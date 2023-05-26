@@ -14,17 +14,15 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.ReviewsAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Review;
 
 import java.util.ArrayList;
 
 public class ReviewsFragment extends Fragment {
-
-    private FirebaseFirestore mFirestore;
     private Query mQuery;
     private ArrayList<Review> reviews;
     private RecyclerView recyclerView;
@@ -35,8 +33,6 @@ public class ReviewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reviews, container, false);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
         reviews = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.reviews_recyclerView);
@@ -44,11 +40,11 @@ public class ReviewsFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        mQuery = mFirestore.collection("Reviews");
+        mQuery = AppGlobals.db.collection("Reviews");
         mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Review review = documentSnapshot.toObject(Review.class);
 
                     assert review != null;
@@ -63,12 +59,12 @@ public class ReviewsFragment extends Fragment {
                     public void onItemClick(Review review, int position) {
                         ReviewFragment reviewFragment = new ReviewFragment(review);
                         // for guest
-                        if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                        if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                             getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
                         }
                         // for user
-                        if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                            getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                        if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                            getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
                         }
                     }
                 });

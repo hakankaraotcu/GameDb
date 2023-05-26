@@ -3,24 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListsFragment"
-    android:background="#14181C">
+    android:background="#14181C"
+    tools:context=".ListsFragment">
 
     <TextView
+        android:id="@+id/lists_textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lists_textViewTitle"
-        android:text="Popular this week"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Popular this week"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lists_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lists_recyclerView"
-        android:layout_below="@id/lists_textViewTitle"/>
+        android:layout_below="@id/lists_textViewTitle" />
 
 </RelativeLayout>

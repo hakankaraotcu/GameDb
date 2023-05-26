@@ -7,55 +7,54 @@
     tools:context=".UserToPlayListFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/user_to_playList_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/user_toPlayList_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/user_to_playList_backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_toPlayList_backButton"
-            android:background="@drawable/ic_back"/>
+            android:background="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/user_to_playList_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/user_toPlayList_username"
+            android:layout_gravity="center"
             android:text="Username's to-Playlist"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/user_to_playList_filterButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_to_PlayList_filterButton"
-            android:background="@drawable/ic_filter"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_filter" />
 
         <Button
+            android:id="@+id/user_to_playList_sliderButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_toPlayList_sliderButton"
-            android:background="@drawable/ic_slider"
             android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_slider" />
     </androidx.appcompat.widget.Toolbar>
 
     <GridView
+        android:id="@+id/user_to_playList_gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/userToPlayList_gridView"
+        android:background="#14181C"
         android:columnWidth="86dp"
-        android:paddingTop="2dp"
         android:horizontalSpacing="3dp"
-        android:verticalSpacing="4dp"
         android:numColumns="4"
+        android:paddingTop="2dp"
         android:stretchMode="spacingWidthUniform"
-        android:background="#14181C"/>
+        android:verticalSpacing="4dp" />
 
 </LinearLayout>

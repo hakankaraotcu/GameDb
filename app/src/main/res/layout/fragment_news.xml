@@ -6,9 +6,9 @@
     tools:context=".NewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/news_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/news_recyclerView"
-        android:background="#14181C"/>
+        android:background="#14181C" />
 
 </RelativeLayout>

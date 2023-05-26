@@ -3,45 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#14181C"
     android:orientation="vertical"
-    tools:context=".UserReviewsFragment"
-    android:background="#14181C">
+    tools:context=".UserReviewsFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/user_games_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/user_games_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/user_reviews_backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_reviews_backButton"
-            android:background="@drawable/ic_back"/>
+            android:background="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/user_reviews_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/user_reviews_username"
+            android:layout_gravity="center"
             android:text="Username's Reviews"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/user_reviews_filterButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_reviews_filterButton"
-            android:background="@drawable/ic_filter"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_filter" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_reviews_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/userReviews_recyclerView"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -7,35 +7,34 @@
     tools:context=".GamePlayersFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/game_players_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/game_players_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/game_players_backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/game_players_backButton"
-            android:background="@drawable/ic_back"/>
+            android:background="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/game_players_gameName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/game_players_gameName"
+            android:layout_gravity="center"
             android:text="Players of Game Name"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <ListView
-        android:id="@+id/gamePlayers_listView"
+        android:id="@+id/game_players_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
         android:background="#14181C"
-        android:scrollbars="none"/>
+        android:divider="@android:color/transparent"
+        android:scrollbars="none" />
 
 </LinearLayout>

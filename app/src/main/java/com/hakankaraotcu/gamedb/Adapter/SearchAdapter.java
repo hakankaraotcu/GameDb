@@ -44,38 +44,38 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return games.size();
     }
 
-    class SearchViewHolder extends RecyclerView.ViewHolder{
+    class SearchViewHolder extends RecyclerView.ViewHolder {
         ImageView gameImage;
         TextView gameName;
 
-        public SearchViewHolder(@NonNull View itemView){
+        public SearchViewHolder(@NonNull View itemView) {
             super(itemView);
-            gameImage = itemView.findViewById(R.id.search_item_GameImageViewImage);
-            gameName = itemView.findViewById(R.id.search_item_textViewGameName);
+            gameImage = itemView.findViewById(R.id.search_item_gameImage);
+            gameName = itemView.findViewById(R.id.search_item_gameName);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if(listener != null && position != RecyclerView.NO_POSITION){
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(games.get(position), position);
                     }
                 }
             });
         }
 
-        public void setData(Game game){
+        public void setData(Game game) {
             Glide.with(itemView.getContext()).load(game.getImage()).into(gameImage);
             this.gameName.setText(game.getName());
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(Game game, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 }

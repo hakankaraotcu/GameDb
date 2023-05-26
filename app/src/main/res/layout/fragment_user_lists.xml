@@ -3,53 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#14181C"
     android:orientation="vertical"
-    tools:context=".UserListsFragment"
-    android:background="#14181C">
+    tools:context=".UserListsFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/user_lists_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/user_lists_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/user_lists_backButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/user_lists_backButton"
-            android:background="@drawable/ic_back"/>
+            android:background="@drawable/ic_back" />
 
         <TextView
+            android:id="@+id/user_lists_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/user_lists_username"
+            android:layout_gravity="center"
             android:text="Username's Lists"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
-            android:layout_width="24dp"
-            android:layout_height="24dp"
             android:id="@+id/user_lists_filterButton"
-            android:background="@drawable/ic_filter"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
-
-        <Button
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_filter" />
+
+        <Button
             android:id="@+id/user_lists_createButton"
-            android:background="@drawable/ic_add"
-            android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_add" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_lists_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/userLists_recyclerView"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -16,7 +16,6 @@ import com.hakankaraotcu.gamedb.Adapter.NewsAdapter;
 import com.hakankaraotcu.gamedb.Model.News;
 
 public class NewsFragment extends Fragment {
-
     private RecyclerView mRecyclerView;
     private NewsAdapter adapter;
 
@@ -31,7 +30,7 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.news_recyclerView);
+        mRecyclerView = view.findViewById(R.id.news_recyclerView);
         adapter = new NewsAdapter(News.getData(), getContext());
 
         mRecyclerView.setHasFixedSize(true);

@@ -14,13 +14,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.User;
 
@@ -28,15 +26,12 @@ import java.util.ArrayList;
 
 public class UserLikesFragment extends Fragment {
     private GameFragment gameFragment;
-    private FirebaseFirestore mFirestore;
     private Query mQuery, mQuery2;
     private ArrayList<Game> games;
     private ArrayList<Object> gamesIDs;
     private User user;
     private String userID;
-
     private TextView profile_username;
-
     private GridView mGridView;
     private GameAdapter adapter;
 
@@ -53,28 +48,26 @@ public class UserLikesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_likes, container, false);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
         profile_username = view.findViewById(R.id.user_likes_username);
 
         games = new ArrayList<>();
         gamesIDs = new ArrayList<>();
 
-        mGridView = (GridView) view.findViewById(R.id.userLikes_gridView);
+        mGridView = view.findViewById(R.id.user_likes_gridView);
 
-        mQuery = mFirestore.collection("LikedGames");
+        mQuery = AppGlobals.db.collection("LikedGames");
         mQuery.whereEqualTo("userID", user.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     gamesIDs.add(documentSnapshot.get("gameID"));
                 }
-                for(Object gameID : gamesIDs){
-                    mQuery2 = mFirestore.collection("Games");
+                for (Object gameID : gamesIDs) {
+                    mQuery2 = AppGlobals.db.collection("Games");
                     mQuery2.whereEqualTo("id", gameID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                                 Game game = documentSnapshot.toObject(Game.class);
 
                                 assert game != null;
@@ -104,7 +97,7 @@ public class UserLikesFragment extends Fragment {
                 Bundle args = new Bundle();
                 args.putString("id", games.get(i).getId());
                 gameFragment.setArguments(args);
-                getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
             }
         });
     }

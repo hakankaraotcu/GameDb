@@ -37,7 +37,7 @@ public class UserFollowingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_following, container, false);
-        listView = view.findViewById(R.id.userFollowing_listView);
+        listView = view.findViewById(R.id.user_following_listView);
         profile_username = view.findViewById(R.id.user_following_username);
         return view;
     }

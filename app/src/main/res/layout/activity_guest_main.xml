@@ -8,16 +8,16 @@
     tools:context=".GuestMainActivity">
 
     <RelativeLayout
+        android:id="@+id/guest_main_RelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/guest_main_RelativeLayout">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/guest_main_activity_toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="#445566">
+            android:background="#445566"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:layout_width="24dp"
@@ -29,19 +29,19 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/guest_main_activity_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/guest_main_activity_tabLayout"
             android:layout_below="@id/guest_main_activity_toolBar"
             android:background="#445566"
             app:tabIndicatorColor="#15BB32"
-            app:tabTextColor="@color/white"/>
+            app:tabTextColor="@color/white" />
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/guest_main_activity_viewPager2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/guest_main_activity_viewPager2"
-            android:layout_below="@id/guest_main_activity_tabLayout"/>
+            android:layout_below="@id/guest_main_activity_tabLayout" />
 
     </RelativeLayout>
 

@@ -1,14 +1,14 @@
 package com.hakankaraotcu.gamedb.Model;
 
 public class Review {
-    private String id, reviewContent, reviewDate, gameImage, gameID, gameName, gameReleaseDate, userID, username;
+    private String id, reviewContent, reviewDate, gameImage, gameID, gameName, gameReleaseDate, userID, username, userAvatar;
     private Float gameRating;
 
     public Review(){
 
     }
 
-    public Review(String reviewContent, String reviewDate, String gameImage, Float gameRating, String gameID, String gameName, String gameReleaseDate, String userID, String username){
+    public Review(String reviewContent, String reviewDate, String gameImage, Float gameRating, String gameID, String gameName, String gameReleaseDate, String userID, String username, String userAvatar){
         this.reviewContent = reviewContent;
         this.reviewDate = reviewDate;
         this.gameImage = gameImage;
@@ -18,6 +18,7 @@ public class Review {
         this.gameReleaseDate = gameReleaseDate;
         this.userID = userID;
         this.username = username;
+        this.userAvatar = userAvatar;
     }
 
     public String getId() {
@@ -90,6 +91,14 @@ public class Review {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
     public Float getGameRating() {

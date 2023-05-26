@@ -43,19 +43,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
         return newsList.size();
     }
 
-    class NewsHolder extends RecyclerView.ViewHolder{
+    class NewsHolder extends RecyclerView.ViewHolder {
 
         TextView newsTitle, newsContent;
         ImageView newsImage;
 
-        public NewsHolder(@NonNull View itemView){
+        public NewsHolder(@NonNull View itemView) {
             super(itemView);
-            newsTitle = (TextView) itemView.findViewById(R.id.news_item_textViewTitle);
-            newsContent = (TextView) itemView.findViewById(R.id.news_item_textViewContent);
-            newsImage = (ImageView) itemView.findViewById(R.id.news_item_imageViewImage);
+            newsTitle = itemView.findViewById(R.id.news_item_title);
+            newsContent = itemView.findViewById(R.id.news_item_content);
+            newsImage = itemView.findViewById(R.id.news_item_image);
         }
 
-        public void setData(News news){
+        public void setData(News news) {
             this.newsTitle.setText(news.getNewsTitle());
             this.newsContent.setText(news.getNewsContent());
             this.newsImage.setBackgroundResource(news.getNewsImage());

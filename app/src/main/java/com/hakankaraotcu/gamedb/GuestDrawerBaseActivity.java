@@ -14,8 +14,7 @@ import android.widget.FrameLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class GuestDrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
+public class GuestDrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawer;
     private NavigationView mNav;
 
@@ -26,10 +25,10 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
         container.addView(view);
         super.setContentView(mDrawer);
 
-        Toolbar mToolbar = (Toolbar) mDrawer.findViewById(R.id.guest_main_activity_toolBar);
+        Toolbar mToolbar = mDrawer.findViewById(R.id.guest_main_activity_toolBar);
         setSupportActionBar(mToolbar);
 
-        mNav = (NavigationView) findViewById(R.id.guest_main_activity_navigationView);
+        mNav = findViewById(R.id.guest_main_activity_navigationView);
         mNav.getMenu().findItem(R.id.nav_menu_popular).setChecked(true);
         mNav.setItemIconTintList(null);
         mNav.setNavigationItemSelectedListener(this);
@@ -41,9 +40,9 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.nav_menu_popular:
-                if(!item.isChecked()){
+                if (!item.isChecked()) {
                     startActivity(new Intent(this, GuestMainActivity.class));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
@@ -52,13 +51,13 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
                 mDrawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_menu_signIn:
-                if(!item.isChecked()){
+                if (!item.isChecked()) {
                     startActivity(new Intent(this, LoginActivity.class));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_menu_createAccount:
-                if(!item.isChecked()){
+                if (!item.isChecked()) {
                     startActivity(new Intent(this, RegisterActivity.class));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
@@ -71,7 +70,7 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
         }
     }
 
-    protected void setSelectedMenu(int title){
+    protected void setSelectedMenu(int title) {
         mNav.getMenu().findItem(title).setChecked(true);
     }
 }

@@ -32,7 +32,7 @@ public class ListFragment extends Fragment {
     private GameAdapter adapter;
     private ArrayList<Game> games;
 
-    public ListFragment(List list, ArrayList<Game> games){
+    public ListFragment(List list, ArrayList<Game> games) {
         this.list = list;
         this.games = games;
     }
@@ -42,8 +42,8 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        mGridView = (GridView) view.findViewById(R.id.list_gridView);
-        list_userImage = view.findViewById(R.id.list_user_image);
+        mGridView = view.findViewById(R.id.list_gridView);
+        list_userImage = view.findViewById(R.id.list_userImage);
         list_username = view.findViewById(R.id.list_username);
         list_name = view.findViewById(R.id.list_name);
         list_description = view.findViewById(R.id.expand_text_view);
@@ -67,12 +67,12 @@ public class ListFragment extends Fragment {
             public void onClick(View view) {
                 ProfileFragment profileFragment = new ProfileFragment(list.getUserID());
                 // for guest
-                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
                 }
                 // for user
-                if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
                 }
             }
         });
@@ -82,12 +82,12 @@ public class ListFragment extends Fragment {
             public void onClick(View view) {
                 ProfileFragment profileFragment = new ProfileFragment(list.getUserID());
                 // for guest
-                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
                 }
                 // for user
-                if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
                 }
             }
         });
@@ -101,12 +101,12 @@ public class ListFragment extends Fragment {
                 args.putString("id", games.get(i).getId());
                 gameFragment.setArguments(args);
                 // for guest
-                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
                 }
                 // for user
-                if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
                 }
             }
         });

@@ -14,12 +14,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.GameReviewsAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.Review;
 
@@ -29,13 +28,11 @@ public class GameReviewsFragment extends Fragment {
     private ListView listView;
     private GameReviewsAdapter adapter;
     private ArrayList<Review> reviews;
-    private FirebaseFirestore mFirestore;
     private Query mQuery;
     private Game selectedGame;
-
     private TextView gameName;
 
-    public GameReviewsFragment(Game selectedGame){
+    public GameReviewsFragment(Game selectedGame) {
         this.selectedGame = selectedGame;
     }
 
@@ -44,20 +41,17 @@ public class GameReviewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_reviews, container, false);
 
-
-        mFirestore = FirebaseFirestore.getInstance();
-
         gameName = view.findViewById(R.id.game_reviews_gameName);
 
         reviews = new ArrayList<>();
 
-        listView = view.findViewById(R.id.gameReviews_listView);
+        listView = view.findViewById(R.id.game_reviews_listView);
 
-        mQuery = mFirestore.collection("Reviews");
+        mQuery = AppGlobals.db.collection("Reviews");
         mQuery.whereEqualTo("gameID", selectedGame.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Review review = documentSnapshot.toObject(Review.class);
 
                     assert review != null;
@@ -84,12 +78,12 @@ public class GameReviewsFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ReviewFragment reviewFragment = new ReviewFragment(reviews.get(i));
                 // for guest
-                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
                 }
                 // for user
-                if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
                 }
             }
         });

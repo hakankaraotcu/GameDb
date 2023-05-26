@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start"
-    tools:context=".GuestDrawerBaseActivity">
+    tools:context=".GuestDrawerBaseActivity"
+    tools:openDrawer="start">
 
-    <include layout="@layout/content_layout"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"/>
+    <include
+        layout="@layout/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/guest_main_activity_navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/guest_main_activity_navigationView"
         android:layout_gravity="start"
         android:background="#14181C"
-        app:menu="@menu/guest_nav_menu"
         app:headerLayout="@layout/guest_nav_header"
-        app:itemTextColor="@color/white"/>
+        app:itemTextColor="@color/white"
+        app:menu="@menu/guest_nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

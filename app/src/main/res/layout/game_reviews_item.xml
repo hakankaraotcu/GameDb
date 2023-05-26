@@ -5,58 +5,58 @@
     android:layout_height="wrap_content">
 
     <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/game_reviews_item_image"
+        android:id="@+id/game_reviews_item_avatar"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/spiderman"
         app:civ_border="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/spiderman"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/game_reviews_item_userName"
+        android:id="@+id/game_reviews_item_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="Username"
         android:textColor="#99AABB"
-        android:textStyle="bold"
         android:textSize="16dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@id/game_reviews_item_image"
-        app:layout_constraintTop_toTopOf="@id/game_reviews_item_image"
-        app:layout_constraintEnd_toStartOf="@+id/game_reviews_RatingBar"/>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/game_reviews_ratingBar"
+        app:layout_constraintStart_toEndOf="@id/game_reviews_item_avatar"
+        app:layout_constraintTop_toTopOf="@id/game_reviews_item_avatar" />
 
     <RatingBar
-        android:id="@+id/game_reviews_RatingBar"
+        android:id="@+id/game_reviews_ratingBar"
+        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_marginTop="4dp"
-        android:rating="4"
-        app:layout_constraintTop_toTopOf="@id/game_reviews_item_userName"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:rating="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/game_reviews_item_username" />
 
     <TextView
         android:id="@+id/game_reviews_item_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         android:textColor="#99AABB"
-        app:layout_constraintTop_toBottomOf="@id/game_reviews_item_image"
-        app:layout_constraintStart_toStartOf="@id/game_reviews_item_userName"
-        app:layout_constraintEnd_toEndOf="@id/game_reviews_RatingBar"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintEnd_toEndOf="@id/game_reviews_ratingBar"
+        app:layout_constraintStart_toStartOf="@id/game_reviews_item_username"
+        app:layout_constraintTop_toBottomOf="@id/game_reviews_item_avatar" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="#2C3440"
-        app:layout_constraintTop_toBottomOf="@id/game_reviews_item_content"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/game_reviews_item_content"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/game_reviews_item_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

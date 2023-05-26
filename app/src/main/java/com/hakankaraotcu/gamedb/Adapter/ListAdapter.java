@@ -58,10 +58,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
 
         public ListViewHolder(@NonNull View itemView){
             super(itemView);
-            listName = itemView.findViewById(R.id.lists_item_textViewListName);
-            userName = itemView.findViewById(R.id.lists_userName);
-            content = itemView.findViewById(R.id.lists_item_textViewContent);
-            recyclerView = itemView.findViewById(R.id.list_recyclerView);
+            listName = itemView.findViewById(R.id.lists_item_listName);
+            userName = itemView.findViewById(R.id.lists_username);
+            content = itemView.findViewById(R.id.lists_item_content);
+            recyclerView = itemView.findViewById(R.id.lists_item_recyclerView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

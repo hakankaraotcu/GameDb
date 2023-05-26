@@ -6,14 +6,14 @@
     tools:context=".GamesFragment">
 
     <GridView
+        android:id="@+id/games_gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/games_gridView"
+        android:background="#14181C"
         android:columnWidth="86dp"
-        android:paddingTop="2dp"
-        android:verticalSpacing="4dp"
         android:numColumns="4"
+        android:paddingTop="2dp"
         android:stretchMode="spacingWidthUniform"
-        android:background="#14181C"/>
+        android:verticalSpacing="4dp" />
 
 </RelativeLayout>

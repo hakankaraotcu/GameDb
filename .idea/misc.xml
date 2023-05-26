@@ -65,9 +65,9 @@
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_game.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_guest_drawer_base.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_guest_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_login.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_login.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_register.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_scrolling.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_test.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/activity_user_main.xml" value="0.36666666666666664" />
@@ -86,7 +86,7 @@
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_create_account.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_create_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_game.xml" value="0.264" />
+        <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_game.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_game_lists.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_game_players.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/hakan/AndroidStudioProjects/GameDb/app/src/main/res/layout/fragment_game_reviews.xml" value="0.24010416666666667" />

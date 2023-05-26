@@ -33,8 +33,8 @@ public class FollowingFollowersAdapter extends ArrayAdapter<String> {
         View view = LayoutInflater.from(context).inflate(R.layout.following_followers, null);
 
         if (view != null) {
-            image = view.findViewById(R.id.follower_image);
-            username = view.findViewById(R.id.follower_username);
+            image = view.findViewById(R.id.following_followers_image);
+            username = view.findViewById(R.id.following_followers_username);
 
             image.setImageResource(images[position]);
             username.setText(usernameList[position]);

@@ -16,23 +16,20 @@ import android.view.ViewGroup;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.SearchAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 
 import java.util.ArrayList;
 
 public class AddGameToListFragment extends Fragment {
-
     private RecyclerView recyclerView;
     private SearchView searchView;
-    private FirebaseFirestore mFirestore;
     private Query mQuery;
     private ArrayList<Game> games;
-    private ArrayList<Game> allGames;
     private SearchAdapter searchAdapter;
 
     @Override
@@ -40,18 +37,16 @@ public class AddGameToListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_game_to_list, container, false);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
         games = new ArrayList<>();
 
-        recyclerView = view.findViewById(R.id.add_game_search_recyclerView);
+        recyclerView = view.findViewById(R.id.add_game_to_list_recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        searchView = view.findViewById(R.id.add_game_searchView);
+        searchView = view.findViewById(R.id.add_game_to_list_searchView);
 
-        mQuery = mFirestore.collection("Games");
+        mQuery = AppGlobals.db.collection("Games");
 
         return view;
     }
@@ -63,7 +58,7 @@ public class AddGameToListFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(!TextUtils.isEmpty(query.trim())){
+                if (!TextUtils.isEmpty(query.trim())) {
                     searchGames(query);
                 }
                 return false;
@@ -71,7 +66,7 @@ public class AddGameToListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(!TextUtils.isEmpty(newText.trim())){
+                if (!TextUtils.isEmpty(newText.trim())) {
                     searchGames(newText);
                 }
                 return false;
@@ -83,18 +78,18 @@ public class AddGameToListFragment extends Fragment {
         mQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(error != null){
+                if (error != null) {
                     return;
                 }
-                if(value != null){
+                if (value != null) {
                     games.clear();
                 }
 
-                for(DocumentSnapshot documentSnapshot : value.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
                     Game game = documentSnapshot.toObject(Game.class);
 
                     assert game != null;
-                    if(game.getName().toLowerCase().contains(query.toLowerCase())){
+                    if (game.getName().toLowerCase().contains(query.toLowerCase())) {
                         game.setId(documentSnapshot.getId());
                         games.add(game);
                     }
@@ -110,13 +105,13 @@ public class AddGameToListFragment extends Fragment {
                             Fragment fragment = getParentFragmentManager().findFragmentByTag("createListFragment");
                             CreateListFragment createListFragment = (CreateListFragment) fragment;
                             boolean flag = true;
-                            for(Game addedGame : createListFragment.getGames()){
-                                if(addedGame.getName().equals(game.getName())){
+                            for (Game addedGame : createListFragment.getGames()) {
+                                if (addedGame.getName().equals(game.getName())) {
                                     flag = false;
                                     break;
                                 }
                             }
-                            if(flag){
+                            if (flag) {
                                 createListFragment.setGames(game);
                             }
                             getActivity().getSupportFragmentManager().popBackStack();

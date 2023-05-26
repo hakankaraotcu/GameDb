@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#14181C"
+    android:orientation="vertical"
     tools:context=".SettingsFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/settings_toolBar"
-        android:background="#445566"
-        android:layout_alignParentTop="true">
+        android:background="#445566">
 
         <Button
+            android:id="@+id/settings_cancel"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/settings_cancel"
-            android:background="@drawable/ic_cancel"/>
+            android:background="@drawable/ic_cancel" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Profile Settings"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
+            android:id="@+id/settings_confirm"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/settings_confirm"
-            android:background="@drawable/ic_confirm"
             android:layout_gravity="right"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_confirm" />
     </androidx.appcompat.widget.Toolbar>
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/settings_avatar"
+        android:layout_width="156dp"
+        android:layout_height="156dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="3dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Email Address"
+        android:textColor="#99AABB" />
 
     <EditText
         android:id="@+id/settings_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Email"
-        android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        android:backgroundTint="#99AABB"
+        android:textColor="@color/white" />
 
     <EditText
         android:id="@+id/settings_password"
@@ -57,10 +72,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
+        android:backgroundTint="#99AABB"
         android:hint="Password"
         android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        android:textColorHint="#99AABB" />
 
     <EditText
         android:id="@+id/settings_location"
@@ -69,10 +84,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
+        android:backgroundTint="#99AABB"
         android:hint="Location"
         android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        android:textColorHint="#99AABB" />
 
     <EditText
         android:id="@+id/settings_website"
@@ -81,32 +96,26 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
+        android:backgroundTint="#99AABB"
         android:hint="Website"
         android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        android:textColorHint="#99AABB" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Bio"
+        android:textColor="#99AABB" />
 
     <EditText
         android:id="@+id/settings_bio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Bio"
-        android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
-
-    <EditText
-        android:id="@+id/settings_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:hint="Avatar"
-        android:textColor="@color/white"
-        android:textColorHint="#99AABB"
-        android:backgroundTint="#99AABB"/>
+        android:backgroundTint="#99AABB"
+        android:textColor="@color/white" />
 </LinearLayout>

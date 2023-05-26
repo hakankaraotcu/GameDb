@@ -15,12 +15,13 @@ import com.bumptech.glide.Glide;
 import com.hakankaraotcu.gamedb.Model.Review;
 import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class GameReviewsAdapter extends ArrayAdapter<Review> {
     private Context context;
-    private CircularImageView image;
+    private CircularImageView avatar;
     private TextView username, content;
     private RatingBar ratingBar;
     private ArrayList<Review> reviews;
@@ -37,12 +38,16 @@ public class GameReviewsAdapter extends ArrayAdapter<Review> {
         View view = LayoutInflater.from(context).inflate(R.layout.game_reviews_item, null);
 
         if (view != null) {
-            image = view.findViewById(R.id.game_reviews_item_image);
-            username = view.findViewById(R.id.game_reviews_item_userName);
+            avatar = view.findViewById(R.id.game_reviews_item_avatar);
+            username = view.findViewById(R.id.game_reviews_item_username);
             content = view.findViewById(R.id.game_reviews_item_content);
-            ratingBar = view.findViewById(R.id.game_reviews_RatingBar);
+            ratingBar = view.findViewById(R.id.game_reviews_ratingBar);
 
-            Glide.with(view.getContext()).load(reviews.get(position).getGameImage()).into(image);
+            if (reviews.get(position).getUserAvatar().equals("default")) {
+                avatar.setImageResource(R.mipmap.ic_launcher);
+            } else {
+                Picasso.get().load(reviews.get(position).getUserAvatar()).resize(24, 24).into(avatar);
+            }
             username.setText(reviews.get(position).getUsername());
             content.setText(reviews.get(position).getReviewContent());
             ratingBar.setRating(reviews.get(position).getGameRating());

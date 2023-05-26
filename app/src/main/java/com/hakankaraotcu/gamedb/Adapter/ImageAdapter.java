@@ -47,7 +47,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
         public ImageViewHolder(@NonNull View itemView){
             super(itemView);
-            gameImage = itemView.findViewById(R.id.list_game_item_imageView);
+            gameImage = itemView.findViewById(R.id.list_game_item_image);
         }
 
         public void setData(Game game){

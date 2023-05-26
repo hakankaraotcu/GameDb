@@ -14,20 +14,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.UserReviewAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Review;
 import com.hakankaraotcu.gamedb.Model.User;
 
 import java.util.ArrayList;
 
 public class UserReviewsFragment extends Fragment {
-    private FirebaseFirestore mFirestore;
     private Query mQuery;
     private ArrayList<Review> reviews;
     private RecyclerView recyclerView;
@@ -50,22 +47,20 @@ public class UserReviewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_reviews, container, false);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
         profile_username = view.findViewById(R.id.user_reviews_username);
 
         reviews = new ArrayList<>();
 
-        recyclerView = view.findViewById(R.id.userReviews_recyclerView);
+        recyclerView = view.findViewById(R.id.user_reviews_recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        mQuery = mFirestore.collection("Reviews");
+        mQuery = AppGlobals.db.collection("Reviews");
         mQuery.whereEqualTo("userID", user.getId()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Review review = documentSnapshot.toObject(Review.class);
 
                     assert review != null;
@@ -79,7 +74,7 @@ public class UserReviewsFragment extends Fragment {
                     @Override
                     public void onItemClick(Review review, int position) {
                         ReviewFragment reviewFragment = new ReviewFragment(review);
-                        getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
+                        getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, reviewFragment, null).addToBackStack(null).commit();
                     }
                 });
             }

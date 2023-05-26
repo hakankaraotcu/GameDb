@@ -15,10 +15,10 @@ import android.widget.GridView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ public class GamesFragment extends Fragment {
     private GameFragment gameFragment;
     private GridView mGridView;
     private GameAdapter adapter;
-    private FirebaseFirestore mFirestore;
     private Query mQuery;
     private ArrayList<Game> games;
 
@@ -36,17 +35,15 @@ public class GamesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_games, container, false);
 
-        mFirestore = FirebaseFirestore.getInstance();
-
-        mGridView = (GridView) view.findViewById(R.id.games_gridView);
+        mGridView = view.findViewById(R.id.games_gridView);
 
         games = new ArrayList<>();
 
-        mQuery = mFirestore.collection("Games");
+        mQuery = AppGlobals.db.collection("Games");
         mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()){
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                     Game game = documentSnapshot.toObject(Game.class);
 
                     assert game != null;
@@ -75,12 +72,12 @@ public class GamesFragment extends Fragment {
                 args.putString("id", games.get(i).getId());
                 gameFragment.setArguments(args);
                 // for guest
-                if(getActivity().getLocalClassName().equals("GuestMainActivity")){
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
                     getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
                 }
                 // for user
-                if(getActivity().getLocalClassName().equals("UserMainActivity")){
-                    getParentFragmentManager().beginTransaction().replace(R.id.user_popular_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, gameFragment, null).addToBackStack(null).commit();
                 }
             }
         });

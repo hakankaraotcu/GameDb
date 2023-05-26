@@ -33,8 +33,8 @@ public class ProfileListAdapter extends ArrayAdapter<String> {
         View view = LayoutInflater.from(context).inflate(R.layout.titles, null);
 
         if (view != null) {
-            title = view.findViewById(R.id.profile_listTitle);
-            count = view.findViewById(R.id.profile_listTitleCount);
+            title = view.findViewById(R.id.titles_title);
+            count = view.findViewById(R.id.titles_count);
 
             title.setText(titlesList[position]);
             count.setText(String.valueOf(countList.get(position)));

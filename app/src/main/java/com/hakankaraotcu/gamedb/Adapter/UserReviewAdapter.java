@@ -44,43 +44,43 @@ public class UserReviewAdapter extends RecyclerView.Adapter<UserReviewAdapter.Re
         return reviews.size();
     }
 
-    class ReviewsHolder extends RecyclerView.ViewHolder{
+    class ReviewsHolder extends RecyclerView.ViewHolder {
 
-        TextView gameName, gameDate, reviewContent;
+        TextView gameName, gameReleaseDate, reviewContent;
         ImageView reviewGameImage;
 
-        public ReviewsHolder(@NonNull View itemView){
+        public ReviewsHolder(@NonNull View itemView) {
             super(itemView);
-            gameName = (TextView) itemView.findViewById(R.id.userReviews_item_textViewGameName);
-            gameDate = (TextView) itemView.findViewById(R.id.userReviews_item_textViewGameDate);
-            reviewContent = (TextView) itemView.findViewById(R.id.userReviews_item_textViewContent);
-            reviewGameImage = (ImageView) itemView.findViewById(R.id.userReviews_item_GameImageViewImage);
+            gameName = itemView.findViewById(R.id.user_reviews_item_gameName);
+            gameReleaseDate = itemView.findViewById(R.id.user_reviews_item_gameReleaseDate);
+            reviewContent = itemView.findViewById(R.id.user_reviews_item_content);
+            reviewGameImage = itemView.findViewById(R.id.user_reviews_item_gameImage);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if(listener != null && position != RecyclerView.NO_POSITION){
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(reviews.get(position), position);
                     }
                 }
             });
         }
 
-        public void setData(Review review){
+        public void setData(Review review) {
             this.gameName.setText(review.getGameName());
-            this.gameDate.setText(review.getGameReleaseDate().substring(review.getGameReleaseDate().length() - 4));
+            this.gameReleaseDate.setText(review.getGameReleaseDate().substring(review.getGameReleaseDate().length() - 4));
             this.reviewContent.setText(review.getReviewContent());
             Glide.with(itemView.getContext()).load(review.getGameImage()).into(reviewGameImage);
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(Review review, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 }

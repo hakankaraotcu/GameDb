@@ -2,26 +2,26 @@
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/user_main_drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/user_popular_drawerLayout"
-    tools:openDrawer="start"
-    tools:context=".UserMainActivity">
+    tools:context=".UserMainActivity"
+    tools:openDrawer="start">
 
     <RelativeLayout
+        android:id="@+id/user_main_RelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_popular_RelativeLayout">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/user_popular_toolBar"
+            android:id="@+id/user_main_toolBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
             android:background="#445566">
 
             <Button
-                android:id="@+id/user_popular_searchButton"
+                android:id="@+id/user_main_searchButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="end"
@@ -30,29 +30,29 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/user_main_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_popular_tabLayout"
-            android:layout_below="@id/user_popular_toolBar"
+            android:layout_below="@id/user_main_toolBar"
             android:background="#445566"
             app:tabIndicatorColor="#15BB32"
-            app:tabTextColor="@color/white"/>
+            app:tabTextColor="@color/white" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/user_popular_viewPager2"
+            android:id="@+id/user_main_viewPager2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/user_popular_tabLayout" />
+            android:layout_below="@id/user_main_tabLayout" />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/user_main_navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/user_popular_navigationView"
         android:layout_gravity="start"
         android:background="#14181C"
-        app:menu="@menu/user_nav_menu"
         app:headerLayout="@layout/user_nav_header"
-        app:itemTextColor="@color/white"/>
+        app:itemTextColor="@color/white"
+        app:menu="@menu/user_nav_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
