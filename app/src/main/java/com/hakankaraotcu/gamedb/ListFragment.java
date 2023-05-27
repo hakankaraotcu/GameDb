@@ -14,11 +14,17 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.hakankaraotcu.gamedb.Adapter.GameAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.List;
+import com.hakankaraotcu.gamedb.Model.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,8 @@ public class ListFragment extends Fragment {
     private GridView mGridView;
     private GameAdapter adapter;
     private ArrayList<Game> games;
+    private DocumentReference documentReference;
+    private User user;
 
     public ListFragment(List list, ArrayList<Game> games) {
         this.list = list;
@@ -57,10 +65,27 @@ public class ListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list_username.setText(list.getUsername());
-        //Glide.with(getView().getContext()).load(list.getUserImage()).into(list_userImage);
-        list_name.setText(list.getName());
-        list_description.setText(list.getDescription());
+
+        documentReference = AppGlobals.db.collection("Users").document(list.getUserID());
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    user = documentSnapshot.toObject(User.class);
+
+                    assert user != null;
+                    list_username.setText(user.getUsername());
+                    list_name.setText(list.getName());
+                    list_description.setText(list.getDescription());
+
+                    if (user.getAvatar().equals("default")) {
+                        list_userImage.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        Picasso.get().load(user.getAvatar()).resize(24, 24).into(list_userImage);
+                    }
+                }
+            }
+        });
 
         list_username.setOnClickListener(new View.OnClickListener() {
             @Override

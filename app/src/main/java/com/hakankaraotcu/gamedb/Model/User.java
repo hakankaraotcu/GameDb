@@ -1,19 +1,21 @@
 package com.hakankaraotcu.gamedb.Model;
 
 public class User {
-    private String id, username, email, password, avatar;
+    private String id, username, email, password, avatar, bio, website;
     private int playedCount, diaryCount, listsCount, reviewsCount, toPlayCount, likedCount, followingCount, followersCount;
 
     public User(){
 
     }
 
-    public User(String id, String username, String email, String password, String avatar) {
+    public User(String id, String username, String email, String password, String avatar, String bio, String website) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.avatar = avatar;
+        this.bio = bio;
+        this.website = website;
     }
 
     public String getId(){
@@ -54,6 +56,22 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public int getPlayedCount() {

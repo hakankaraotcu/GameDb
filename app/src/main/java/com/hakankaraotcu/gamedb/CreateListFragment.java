@@ -93,7 +93,7 @@ public class CreateListFragment extends Fragment {
             return;
         }
 
-        List list = new List(txtListName, txtListDescription, selectedGames.size(), AppGlobals.currentUser.getId(), AppGlobals.currentUser.getUsername());
+        List list = new List(txtListName, txtListDescription, selectedGames.size(), AppGlobals.currentUser.getId());
 
         listsReference = AppGlobals.db.collection("Lists");
         listsReference.add(list).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -111,12 +111,12 @@ public class CreateListFragment extends Fragment {
 
                     gamesInListsReference.document(id + "_" + game.getId()).set(data);
 
-                    userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
-                    userReference.update("listsCount", FieldValue.increment(1));
-
                     gameReference = AppGlobals.db.collection("Games").document(game.getId());
                     gameReference.update("numberOfLists", FieldValue.increment(1));
                 }
+                userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
+                userReference.update("listsCount", FieldValue.increment(1));
+
                 getActivity().getSupportFragmentManager().popBackStack();
             }
         });

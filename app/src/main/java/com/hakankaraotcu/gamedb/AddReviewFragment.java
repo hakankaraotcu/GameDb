@@ -95,7 +95,7 @@ public class AddReviewFragment extends Fragment {
             return;
         }
 
-        Review review = new Review(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), AppGlobals.currentUser.getId(), AppGlobals.currentUser.getUsername(), AppGlobals.currentUser.getAvatar());
+        Review review = new Review(txtReviewContent, txtReviewDate, game.getImage(), gameRating.getRating(), game.getId(), game.getName(), game.getReleaseDate(), AppGlobals.currentUser.getId());
 
         reviewsReference = AppGlobals.db.collection("Reviews");
         reviewsReference.add(review).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

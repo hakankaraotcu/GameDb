@@ -1,6 +1,7 @@
 package com.hakankaraotcu.gamedb;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,7 +22,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.ViewPagerFragmentAdapter;
@@ -52,6 +56,7 @@ public class UserMainActivity extends AppCompatActivity {
     private NavigationView mNav;
     private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
+    private DocumentReference userReference;
     private Query mQuery;
     private Game game;
     private TextView profile_username;
@@ -96,20 +101,20 @@ public class UserMainActivity extends AppCompatActivity {
         mDrawer.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        mQuery = AppGlobals.db.collection("Users");
-        mQuery.whereEqualTo("id", AppGlobals.mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        userReference = AppGlobals.db.collection("Users").document(AppGlobals.mAuth.getUid());
+        userReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    AppGlobals.currentUser = documentSnapshot.toObject(User.class);
-                    AppGlobals.currentUser.setId(documentSnapshot.getId());
-                }
-                profile_username.setText(AppGlobals.currentUser.getUsername());
-                if(AppGlobals.currentUser.getAvatar().equals("default")){
-                    profile_avatar.setImageResource(R.mipmap.ic_launcher);
-                }
-                else{
-                    Picasso.get().load(AppGlobals.currentUser.getAvatar()).resize(80,80).into(profile_avatar);
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value.exists()){
+                    AppGlobals.currentUser = value.toObject(User.class);
+                    AppGlobals.currentUser.setId(value.getId());
+                    profile_username.setText(AppGlobals.currentUser.getUsername());
+                    if(AppGlobals.currentUser.getAvatar().equals("default")){
+                        profile_avatar.setImageResource(R.mipmap.ic_launcher);
+                    }
+                    else{
+                        Picasso.get().load(AppGlobals.currentUser.getAvatar()).resize(80,80).into(profile_avatar);
+                    }
                 }
             }
         });

@@ -126,7 +126,7 @@ public class RegisterActivity extends GuestDrawerBaseActivity {
                     AppGlobals.mUser = AppGlobals.mAuth.getCurrentUser();
 
                     if (AppGlobals.mUser != null) {
-                        user = new User(AppGlobals.mUser.getUid(), txtUsername, txtEmail, txtPassword, "default");
+                        user = new User(AppGlobals.mUser.getUid(), txtUsername, txtEmail, txtPassword, "default", "", "");
 
                         AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid()).set(user).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<Void>() {
                             @Override

@@ -11,8 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Review;
+import com.hakankaraotcu.gamedb.Model.User;
 import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -25,6 +29,8 @@ public class GameReviewsAdapter extends ArrayAdapter<Review> {
     private TextView username, content;
     private RatingBar ratingBar;
     private ArrayList<Review> reviews;
+    private DocumentReference documentReference;
+    private User user;
 
     public GameReviewsAdapter(ArrayList<Review> reviews, Context context) {
         super(context, R.layout.game_reviews_item, reviews);
@@ -43,14 +49,25 @@ public class GameReviewsAdapter extends ArrayAdapter<Review> {
             content = view.findViewById(R.id.game_reviews_item_content);
             ratingBar = view.findViewById(R.id.game_reviews_ratingBar);
 
-            if (reviews.get(position).getUserAvatar().equals("default")) {
-                avatar.setImageResource(R.mipmap.ic_launcher);
-            } else {
-                Picasso.get().load(reviews.get(position).getUserAvatar()).resize(24, 24).into(avatar);
-            }
-            username.setText(reviews.get(position).getUsername());
-            content.setText(reviews.get(position).getReviewContent());
-            ratingBar.setRating(reviews.get(position).getGameRating());
+            documentReference = AppGlobals.db.collection("Users").document(reviews.get(position).getUserID());
+            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        user = documentSnapshot.toObject(User.class);
+
+                        assert user != null;
+                        if (user.getAvatar().equals("default")) {
+                            avatar.setImageResource(R.mipmap.ic_launcher);
+                        } else {
+                            Picasso.get().load(user.getAvatar()).resize(24, 24).into(avatar);
+                        }
+                        username.setText(user.getUsername());
+                        content.setText(reviews.get(position).getReviewContent());
+                        ratingBar.setRating(reviews.get(position).getGameRating());
+                    }
+                }
+            });
         }
         return view;
     }

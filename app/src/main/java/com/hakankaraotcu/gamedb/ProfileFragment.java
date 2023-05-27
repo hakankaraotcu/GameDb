@@ -14,7 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.ProfileListAdapter;
@@ -26,12 +29,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
-    private TextView profile_username;
+    private TextView profile_username, profile_bio;
     private CircularImageView profile_avatar;
     private ListView listView;
     private ProfileListAdapter adapter;
     private ArrayList<Integer> count;
-    private Query mQuery;
+    private DocumentReference userReference;
     private User user;
     private String userID;
 
@@ -50,13 +53,14 @@ public class ProfileFragment extends Fragment {
 
         profile_avatar = view.findViewById(R.id.profile_avatar);
         profile_username = view.findViewById(R.id.profile_username);
+        profile_bio = view.findViewById(R.id.profile_bio);
 
-        mQuery = AppGlobals.db.collection("Users");
-        mQuery.whereEqualTo("id", userID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        userReference = AppGlobals.db.collection("Users").document(userID);
+        userReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    user = documentSnapshot.toObject(User.class);
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value.exists()){
+                    user = value.toObject(User.class);
                     count.add(user.getPlayedCount());
                     count.add(user.getDiaryCount());
                     count.add(user.getListsCount());
@@ -65,15 +69,26 @@ public class ProfileFragment extends Fragment {
                     count.add(user.getLikedCount());
                     count.add(user.getFollowingCount());
                     count.add(user.getFollowersCount());
+
+                    profile_username.setText(user.getUsername());
+                    profile_bio.setText(user.getBio());
+
+                    if(user.getBio().equals("")){
+                        profile_bio.setVisibility(View.GONE);
+                    }
+                    else{
+                        profile_bio.setVisibility(View.VISIBLE);
+                    }
+
+                    if (user.getAvatar().equals("default")) {
+                        profile_avatar.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        Picasso.get().load(user.getAvatar()).resize(120, 120).into(profile_avatar);
+                    }
+
+                    adapter = new ProfileListAdapter(AppGlobals.profileTitles, count, getContext());
+                    listView.setAdapter(adapter);
                 }
-                profile_username.setText(user.getUsername());
-                if (user.getAvatar().equals("default")) {
-                    profile_avatar.setImageResource(R.mipmap.ic_launcher);
-                } else {
-                    Picasso.get().load(user.getAvatar()).resize(120, 120).into(profile_avatar);
-                }
-                adapter = new ProfileListAdapter(AppGlobals.profileTitles, count, getContext());
-                listView.setAdapter(adapter);
             }
         });
         return view;

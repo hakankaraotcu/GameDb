@@ -14,8 +14,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Review;
+import com.hakankaraotcu.gamedb.Model.User;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 public class ReviewFragment extends Fragment {
     private CircularImageView review_userImage;
@@ -23,6 +29,8 @@ public class ReviewFragment extends Fragment {
     private TextView review_username, review_gameName, review_gameReleaseDate, review_date, review_content;
     private RatingBar review_gameRating;
     private Review review;
+    private DocumentReference documentReference;
+    private User user;
 
     public ReviewFragment(Review review) {
         this.review = review;
@@ -48,13 +56,31 @@ public class ReviewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        review_username.setText(review.getUsername());
-        review_gameRating.setRating(review.getGameRating());
-        Glide.with(getView().getContext()).load(review.getGameImage()).into(review_gameImage);
-        review_gameName.setText(review.getGameName());
-        review_gameReleaseDate.setText(review.getGameReleaseDate());
-        review_date.setText(review.getReviewDate());
-        review_content.setText(review.getReviewContent());
+
+        documentReference = AppGlobals.db.collection("Users").document(review.getUserID());
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    user = documentSnapshot.toObject(User.class);
+
+                    assert user != null;
+                    review_username.setText(user.getUsername());
+                    review_gameRating.setRating(review.getGameRating());
+                    Glide.with(getView().getContext()).load(review.getGameImage()).into(review_gameImage);
+                    review_gameName.setText(review.getGameName());
+                    review_gameReleaseDate.setText(review.getGameReleaseDate());
+                    review_date.setText(review.getReviewDate());
+                    review_content.setText(review.getReviewContent());
+
+                    if (user.getAvatar().equals("default")) {
+                        review_userImage.setImageResource(R.mipmap.ic_launcher);
+                    } else {
+                        Picasso.get().load(user.getAvatar()).resize(24, 24).into(review_userImage);
+                    }
+                }
+            }
+        });
 
         review_gameImage.setOnClickListener(new View.OnClickListener() {
             @Override
