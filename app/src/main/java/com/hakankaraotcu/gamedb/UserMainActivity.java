@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,11 +58,11 @@ public class UserMainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private ActionBarDrawerToggle mToggle;
     private DocumentReference userReference;
-    private Query mQuery;
     private Game game;
     private TextView profile_username;
     private CircularImageView profile_avatar;
     private Fragment selectedFragment = null;
+    private Button searchButton;
 
     private void init() {
         mViewPager2 = findViewById(R.id.user_main_viewPager2);
@@ -70,6 +71,8 @@ public class UserMainActivity extends AppCompatActivity {
         mDrawer = findViewById(R.id.user_main_drawerLayout);
         mNav = findViewById(R.id.user_main_navigationView);
         mToolbar = findViewById(R.id.user_main_toolBar);
+
+        searchButton = findViewById(R.id.user_main_searchButton);
 
         mViewPagerFragmentAdapter = new ViewPagerFragmentAdapter(this);
 
@@ -105,17 +108,24 @@ public class UserMainActivity extends AppCompatActivity {
         userReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value.exists()){
+                if (value.exists()) {
                     AppGlobals.currentUser = value.toObject(User.class);
                     AppGlobals.currentUser.setId(value.getId());
                     profile_username.setText(AppGlobals.currentUser.getUsername());
-                    if(AppGlobals.currentUser.getAvatar().equals("default")){
+                    if (AppGlobals.currentUser.getAvatar().equals("default")) {
                         profile_avatar.setImageResource(R.mipmap.ic_launcher);
-                    }
-                    else{
-                        Picasso.get().load(AppGlobals.currentUser.getAvatar()).resize(80,80).into(profile_avatar);
+                    } else {
+                        Picasso.get().load(AppGlobals.currentUser.getAvatar()).resize(80, 80).into(profile_avatar);
                     }
                 }
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedFragment = new SearchFragment();
+                setFragment(selectedFragment, "searchFragment");
             }
         });
 
@@ -126,12 +136,11 @@ public class UserMainActivity extends AppCompatActivity {
                     case R.id.nav_menu_popular:
                         mDrawer.closeDrawer(GravityCompat.START);
                         return true;
-                    /*
                     case R.id.nav_menu_search:
                         selectedFragment = new SearchFragment();
                         setFragment(selectedFragment, "searchFragment");
                         mDrawer.closeDrawer(GravityCompat.START);
-                        return true;*/
+                        return true;
                     case R.id.nav_menu_profile:
                         selectedFragment = new ProfileFragment(AppGlobals.mAuth.getUid());
                         setFragment(selectedFragment, "profileFragment");
