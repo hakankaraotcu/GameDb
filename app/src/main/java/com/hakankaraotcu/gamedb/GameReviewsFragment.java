@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class GameReviewsFragment extends Fragment {
     private Query mQuery;
     private Game selectedGame;
     private TextView gameName;
+    private Button backButton;
 
     public GameReviewsFragment(Game selectedGame) {
         this.selectedGame = selectedGame;
@@ -42,6 +44,7 @@ public class GameReviewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_reviews, container, false);
 
         gameName = view.findViewById(R.id.game_reviews_gameName);
+        backButton = view.findViewById(R.id.game_reviews_backButton);
 
         reviews = new ArrayList<>();
 
@@ -72,6 +75,13 @@ public class GameReviewsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         gameName.setText("Reviews of " + selectedGame.getName());
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

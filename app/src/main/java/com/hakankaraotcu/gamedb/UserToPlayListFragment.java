@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ public class UserToPlayListFragment extends Fragment {
     private ArrayList<Game> games;
     private ArrayList<Object> gamesIDs;
     private User user;
+    private Button backButton;
 
     private TextView profile_username;
 
@@ -45,6 +47,7 @@ public class UserToPlayListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_to_play_list, container, false);
 
+        backButton = view.findViewById(R.id.user_to_playList_backButton);
         profile_username = view.findViewById(R.id.user_to_playList_username);
 
         games = new ArrayList<>();
@@ -85,6 +88,13 @@ public class UserToPlayListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         profile_username.setText(user.getUsername() + "'s to-Playlist");
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         gameFragment = new GameFragment();
 

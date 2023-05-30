@@ -47,7 +47,7 @@ public class LoginActivity extends GuestDrawerBaseActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, GuestMainActivity.class));
+                finish();
             }
         });
 
@@ -93,6 +93,7 @@ public class LoginActivity extends GuestDrawerBaseActivity {
                     Intent intent = new Intent(LoginActivity.this, UserMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     finish();
+                    AppGlobals.mUser = AppGlobals.mAuth.getCurrentUser();
                     startActivity(intent);
                 } else {
                     progressSet();

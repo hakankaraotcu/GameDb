@@ -33,7 +33,7 @@ import java.util.Map;
 public class AddtoListsFragment extends Fragment {
     private ListView listView;
     private String gameID;
-    private Button confirmBtn;
+    private Button cancelButton, confirmButton;
     private Query mQuery;
     private CollectionReference gamesInListsReference;
     private DocumentReference gameReference, listReference;
@@ -51,11 +51,13 @@ public class AddtoListsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addto_lists, container, false);
 
+        cancelButton = view.findViewById(R.id.add_to_lists_cancel);
+        confirmButton = view.findViewById(R.id.add_to_lists_confirm);
+        listView = view.findViewById(R.id.add_to_lists_listView);
+
         lists = new ArrayList<>();
         listsNames = new ArrayList<>();
         selectedLists = new ArrayList<>();
-
-        listView = view.findViewById(R.id.add_to_lists_listView);
 
         mQuery = AppGlobals.db.collection("Lists");
         mQuery.whereEqualTo("userID", AppGlobals.mUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -104,8 +106,6 @@ public class AddtoListsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        confirmBtn = view.findViewById(R.id.add_to_lists_confirm);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -118,7 +118,14 @@ public class AddtoListsFragment extends Fragment {
             }
         });
 
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 for (List selectedList : selectedLists) {

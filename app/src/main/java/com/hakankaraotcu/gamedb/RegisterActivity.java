@@ -63,7 +63,7 @@ public class RegisterActivity extends GuestDrawerBaseActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(RegisterActivity.this, GuestMainActivity.class));
+                finish();
             }
         });
     }

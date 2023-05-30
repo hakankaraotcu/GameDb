@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,6 +37,7 @@ public class GameListsFragment extends Fragment {
     private Query mQuery;
     private Game selectedGame;
     private TextView gameName;
+    private Button backButton;
 
     public GameListsFragment(Game selectedGame) {
         this.selectedGame = selectedGame;
@@ -47,6 +49,7 @@ public class GameListsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_lists, container, false);
 
         gameName = view.findViewById(R.id.game_lists_gameName);
+        backButton = view.findViewById(R.id.game_lists_backButton);
 
         lists = new ArrayList<>();
         listsIDs = new ArrayList<>();
@@ -135,5 +138,12 @@ public class GameListsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         gameName.setText("Lists with " + selectedGame.getName());
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
     }
 }

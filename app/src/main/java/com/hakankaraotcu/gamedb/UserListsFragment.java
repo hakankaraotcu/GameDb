@@ -31,7 +31,7 @@ import java.util.HashMap;
 public class UserListsFragment extends Fragment {
     private UserListAdapter userListAdapter;
     private RecyclerView recyclerView;
-    private Button createButton;
+    private Button backButton, createButton;
     private ArrayList<List> lists;
     private HashMap<String, ArrayList<Game>> gamesInList;
     private Query mQuery, mQuery2;
@@ -53,7 +53,9 @@ public class UserListsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_lists, container, false);
 
+        backButton = view.findViewById(R.id.user_lists_backButton);
         profile_username = view.findViewById(R.id.user_lists_username);
+        createButton = view.findViewById(R.id.user_lists_createButton);
 
         lists = new ArrayList<>();
         gamesInList = new HashMap<>();
@@ -128,7 +130,12 @@ public class UserListsFragment extends Fragment {
 
         profile_username.setText(user.getUsername() + "'s Lists");
 
-        createButton = view.findViewById(R.id.user_lists_createButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override

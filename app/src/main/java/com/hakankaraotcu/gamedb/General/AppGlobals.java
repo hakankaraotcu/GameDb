@@ -7,7 +7,7 @@ import com.hakankaraotcu.gamedb.Model.User;
 
 public class AppGlobals {
     public static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    public static FirebaseUser mUser = mAuth.getCurrentUser();
+    public static FirebaseUser mUser;
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static User currentUser;
     public static final String[] mainTitles = {"GAMES", "REVIEWS", "LISTS", "NEWS"};

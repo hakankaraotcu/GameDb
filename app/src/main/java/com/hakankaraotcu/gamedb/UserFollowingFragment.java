@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ public class UserFollowingFragment extends Fragment {
     private String[] usernames = {"John", "Mike", "Kelly", "Ashe", "Jake"};
     private User user;
     private String userID;
+    private Button backButton;
 
     private TextView profile_username;
 
@@ -37,6 +39,8 @@ public class UserFollowingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_following, container, false);
+
+        backButton = view.findViewById(R.id.user_following_backButton);
         listView = view.findViewById(R.id.user_following_listView);
         profile_username = view.findViewById(R.id.user_following_username);
         return view;
@@ -45,6 +49,13 @@ public class UserFollowingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         adapter = new FollowingFollowersAdapter(usernames, images, getContext());
         listView.setAdapter(adapter);

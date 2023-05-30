@@ -183,6 +183,7 @@ public class UserMainActivity extends AppCompatActivity {
                     case R.id.nav_menu_signOut:
                         selectedFragment = null;
                         AppGlobals.mAuth.signOut();
+                        AppGlobals.mUser = null;
                         startActivity(new Intent(UserMainActivity.this, GuestMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                         return true;

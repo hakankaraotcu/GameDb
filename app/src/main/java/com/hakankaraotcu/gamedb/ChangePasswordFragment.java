@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class ChangePasswordFragment extends Fragment {
     private EditText currentPassword, newPassword, confirmPassword;
     private TextView changePassword;
     private String txtCurrentPassword, txtNewPassword, txtConfirmPassword;
+    private Button cancelButton;
     private DocumentReference userReference;
 
     @Override
@@ -36,8 +38,16 @@ public class ChangePasswordFragment extends Fragment {
         newPassword = view.findViewById(R.id.change_password_newPassword);
         confirmPassword = view.findViewById(R.id.change_password_confirmPassword);
         changePassword = view.findViewById(R.id.change_password_changePassword);
+        cancelButton = view.findViewById(R.id.change_password_cancel);
 
         userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override

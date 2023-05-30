@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +32,7 @@ public class UserReviewsFragment extends Fragment {
     private UserReviewAdapter adapter;
     private User user;
     private String userID;
+    private Button backButton;
 
     private TextView profile_username;
 
@@ -47,6 +49,7 @@ public class UserReviewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user_reviews, container, false);
 
+        backButton = view.findViewById(R.id.user_reviews_backButton);
         profile_username = view.findViewById(R.id.user_reviews_username);
 
         reviews = new ArrayList<>();
@@ -86,6 +89,13 @@ public class UserReviewsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         profile_username.setText(user.getUsername() + "'s Reviews");
     }

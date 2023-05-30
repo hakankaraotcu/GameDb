@@ -43,7 +43,7 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
         switch (item.getItemId()) {
             case R.id.nav_menu_popular:
                 if (!item.isChecked()) {
-                    startActivity(new Intent(this, GuestMainActivity.class));
+                    startActivity(new Intent(this, GuestMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -52,13 +52,13 @@ public class GuestDrawerBaseActivity extends AppCompatActivity implements Naviga
                 return true;
             case R.id.nav_menu_signIn:
                 if (!item.isChecked()) {
-                    startActivity(new Intent(this, LoginActivity.class));
+                    startActivity(new Intent(this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
                 return true;
             case R.id.nav_menu_createAccount:
                 if (!item.isChecked()) {
-                    startActivity(new Intent(this, RegisterActivity.class));
+                    startActivity(new Intent(this, RegisterActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
                 mDrawer.closeDrawer(GravityCompat.START);
                 return true;

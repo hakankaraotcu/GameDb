@@ -33,7 +33,7 @@ public class AddReviewFragment extends Fragment {
     private EditText reviewContent;
     private ImageView gameImage;
     private RatingBar gameRating;
-    private Button confirmButton;
+    private Button cancelButton, confirmButton;
     private String txtReviewContent, txtReviewDate;
 
     public AddReviewFragment(Game game) {
@@ -51,6 +51,7 @@ public class AddReviewFragment extends Fragment {
         gameRating = view.findViewById(R.id.add_review_rating);
         reviewContent = view.findViewById(R.id.add_review_content);
         reviewDate = view.findViewById(R.id.add_review_dateDescription);
+        cancelButton = view.findViewById(R.id.add_review_cancel);
         confirmButton = view.findViewById(R.id.add_review_confirm);
 
         return view;
@@ -64,6 +65,13 @@ public class AddReviewFragment extends Fragment {
         gameReleaseDate.setText(game.getReleaseDate().substring(game.getReleaseDate().length() - 4));
         Glide.with(view.getContext()).load(game.getImage()).into(gameImage);
         gameRating.setRating(0);
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override

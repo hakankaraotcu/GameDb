@@ -14,6 +14,12 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#445566">
 
+        <Button
+            android:id="@+id/search_backButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_back" />
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_searchView"
             android:layout_width="match_parent"

@@ -144,7 +144,7 @@ public class GameFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), GuestMainActivity.class));
+                getParentFragmentManager().popBackStack();
             }
         });
 

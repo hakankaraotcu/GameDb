@@ -41,7 +41,7 @@ public class SettingsFragment extends Fragment {
     private TextView changePassword, avatarChange;
     private CircularImageView editAvatar;
     private DocumentReference userReference;
-    private Button confirm;
+    private Button cancelButton, confirmButton;
     private ChangePasswordFragment changePasswordFragment;
     private Uri selectedImageUri;
     private StorageTask uploadTask;
@@ -69,7 +69,8 @@ public class SettingsFragment extends Fragment {
         editBio = view.findViewById(R.id.settings_bio);
         editAvatar = view.findViewById(R.id.settings_avatar);
         avatarChange = view.findViewById(R.id.settings_avatar_change);
-        confirm = view.findViewById(R.id.settings_confirm);
+        cancelButton = view.findViewById(R.id.settings_cancel);
+        confirmButton = view.findViewById(R.id.settings_confirm);
 
         userReference = AppGlobals.db.collection("Users").document(AppGlobals.mUser.getUid());
 
@@ -107,7 +108,14 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        confirm.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
+            }
+        });
+
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateProfile(editUsername.getText().toString(), editEmail.getText().toString(), editWebsite.getText().toString(), editBio.getText().toString());

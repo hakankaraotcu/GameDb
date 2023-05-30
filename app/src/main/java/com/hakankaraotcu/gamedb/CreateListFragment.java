@@ -31,7 +31,7 @@ import java.util.Map;
 public class CreateListFragment extends Fragment {
     private EditText editListName, editListDescription;
     private String txtListName, txtListDescription;
-    private Button confirmButton;
+    private Button cancelButton, confirmButton;
     private LinearLayout linearLayout;
     private GridView mGridView;
     private GameAdapter adapter;
@@ -54,6 +54,7 @@ public class CreateListFragment extends Fragment {
 
         editListName = view.findViewById(R.id.create_list_listName);
         editListDescription = view.findViewById(R.id.create_list_listDescription);
+        cancelButton = view.findViewById(R.id.create_list_cancel);
         confirmButton = view.findViewById(R.id.create_list_confirm);
 
         mGridView = view.findViewById(R.id.create_list_gridView);
@@ -67,6 +68,13 @@ public class CreateListFragment extends Fragment {
             public void onClick(View view) {
                 AddGameToListFragment addGameToListFragment = new AddGameToListFragment();
                 getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, addGameToListFragment, null).addToBackStack(null).commit();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().popBackStack();
             }
         });
 
