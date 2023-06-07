@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:background="#14181C"
     android:orientation="vertical"
-    tools:context=".CreateListFragment">
+    tools:context=".EditListFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/create_list_toolBar"
+        android:id="@+id/edit_list_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#445566">
 
         <Button
-            android:id="@+id/create_list_cancel"
+            android:id="@+id/edit_list_cancel"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/ic_cancel" />
@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="New List"
+            android:text="Edit List"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/create_list_confirm"
+            android:id="@+id/edit_list_confirm"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="end"
@@ -37,30 +37,44 @@
             android:background="@drawable/ic_confirm" />
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/create_list_listName"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#2C3440"
-        android:hint="List name"
-        android:textColorHint="#99AABB"
-        android:textSize="16dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="List name"
+        android:textColor="#99AABB"
+        android:layout_marginTop="16dp"/>
 
     <EditText
-        android:id="@+id/create_list_listDescription"
+        android:id="@+id/edit_list_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#2C3440"
-        android:hint="Add description..."
-        android:textColorHint="#99AABB"
-        android:textSize="16dp" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:backgroundTint="#99AABB"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:text="List description"
+        android:textColor="#99AABB"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edit_list_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:backgroundTint="#99AABB"
+        android:textColor="@color/white" />
 
     <LinearLayout
-        android:id="@+id/create_list_linearLayout"
+        android:id="@+id/edit_list_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
@@ -72,12 +86,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:hint="Add games..."
+            android:hint="Edit games..."
             android:textColorHint="@color/white"
             android:textSize="16dp" />
 
         <GridView
-            android:id="@+id/create_list_gridView"
+            android:id="@+id/edit_list_gridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="80dp"
@@ -86,7 +100,6 @@
             android:paddingTop="2dp"
             android:stretchMode="spacingWidthUniform"
             android:verticalSpacing="4dp" />
-
     </LinearLayout>
 
 </LinearLayout>

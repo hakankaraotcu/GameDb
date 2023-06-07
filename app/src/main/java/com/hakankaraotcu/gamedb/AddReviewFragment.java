@@ -93,12 +93,12 @@ public class AddReviewFragment extends Fragment {
         txtReviewDate = reviewDate.getText().toString();
 
         if (txtReviewContent.isEmpty()) {
-            reviewContent.setError("List name is required");
+            reviewContent.setError("Review content is required");
             reviewContent.requestFocus();
             return;
         }
         if (txtReviewDate.isEmpty()) {
-            reviewDate.setError("List description is required");
+            reviewDate.setError("Review date is required");
             reviewDate.requestFocus();
             return;
         }

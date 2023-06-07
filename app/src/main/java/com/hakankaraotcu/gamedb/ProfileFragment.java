@@ -139,11 +139,11 @@ public class ProfileFragment extends Fragment {
                         UserListsFragment userListsFragment = new UserListsFragment(user);
                         // for guest
                         if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
-                            getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, userListsFragment, null).addToBackStack(null).commit();
+                            getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, userListsFragment, "userListsFragment").addToBackStack(null).commit();
                         }
                         // for user
                         if (getActivity().getLocalClassName().equals("UserMainActivity")) {
-                            getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, userListsFragment, null).addToBackStack(null).commit();
+                            getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, userListsFragment, "userListsFragment").addToBackStack(null).commit();
                         }
                         break;
                     case "Reviews":

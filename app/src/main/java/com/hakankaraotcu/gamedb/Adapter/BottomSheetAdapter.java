@@ -13,15 +13,15 @@ import androidx.annotation.Nullable;
 
 import com.hakankaraotcu.gamedb.R;
 
-public class GameActivityAdapter extends ArrayAdapter<String> {
+public class BottomSheetAdapter extends ArrayAdapter<String> {
     private String[] titles;
     private int[] images;
     private Context context;
     private TextView title;
     private ImageView image;
 
-    public GameActivityAdapter(String[] titles, int[] images, Context context) {
-        super(context, R.layout.game_activity_item, titles);
+    public BottomSheetAdapter(String[] titles, int[] images, Context context) {
+        super(context, R.layout.bottom_sheet_item, titles);
         this.titles = titles;
         this.images = images;
         this.context = context;
@@ -30,11 +30,11 @@ public class GameActivityAdapter extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View view = LayoutInflater.from(context).inflate(R.layout.game_activity_item, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_item, null);
 
         if (view != null) {
-            image = view.findViewById(R.id.add_review_image);
-            title = view.findViewById(R.id.add_review_title);
+            image = view.findViewById(R.id.bottom_sheet_item_image);
+            title = view.findViewById(R.id.bottom_sheet_item_title);
 
             image.setBackgroundResource(images[position]);
             title.setText(titles[position]);

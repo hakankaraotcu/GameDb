@@ -1,6 +1,5 @@
 package com.hakankaraotcu.gamedb;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,7 +31,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.hakankaraotcu.gamedb.Adapter.GameActivityAdapter;
+import com.hakankaraotcu.gamedb.Adapter.BottomSheetAdapter;
 import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -55,7 +53,7 @@ public class GameFragment extends Fragment {
     private ImageView gameImage;
     private CardView gamePlayersCardView, gameReviewsCardView, gameListsCardView;
     private ListView listView;
-    private GameActivityAdapter adapter;
+    private BottomSheetAdapter adapter;
     private String[] titles = {"Reviews", "Add to lists"};
     private int[] images = {R.drawable.ic_add_circle, R.drawable.ic_addtolist};
     private String id;
@@ -188,7 +186,7 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getActivity(), R.style.BottomSheetDialogTheme);
-                View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.bottom_sheet, (LinearLayout) view.findViewById(R.id.bottomSheetContainer));
+                View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.bottom_sheet, view.findViewById(R.id.bottomSheetContainer));
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
 
@@ -241,7 +239,7 @@ public class GameFragment extends Fragment {
                     }
                 });
 
-                adapter = new GameActivityAdapter(titles, images, getContext());
+                adapter = new BottomSheetAdapter(titles, images, getContext());
                 listView.setAdapter(adapter);
 
                 playButton.setOnClickListener(new View.OnClickListener() {

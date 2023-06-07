@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#14181C"
     tools:context=".GamesFragment">
 
     <GridView
         android:id="@+id/games_gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#14181C"
         android:columnWidth="86dp"
         android:numColumns="4"
         android:paddingTop="2dp"

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakankaraotcu.gamedb.Model.Game;
 import com.hakankaraotcu.gamedb.Model.List;
+import com.hakankaraotcu.gamedb.Model.Review;
 import com.hakankaraotcu.gamedb.R;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
     private HashMap<String, ArrayList<Game>> gamesInList;
     private Context context;
     private ImageAdapter imageAdapter;
+    private OnItemClickListener listener;
 
     public UserListAdapter(ArrayList<List> lists, HashMap<String, ArrayList<Game>> gamesInList, Context context) {
         this.lists = lists;
@@ -61,6 +63,17 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
             gameCount = itemView.findViewById(R.id.user_lists_item_gameCount);
             content = itemView.findViewById(R.id.user_lists_item_content);
             recyclerView = itemView.findViewById(R.id.user_lists_item_recyclerView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(lists.get(position), gamesInList.get(lists.get(position).getId()), position);
+                    }
+                }
+            });
         }
 
         public void setData(List list) {
@@ -68,5 +81,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ListVi
             this.gameCount.setText(String.valueOf(list.getNumberOfGames()));
             this.content.setText(list.getDescription());
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(List list, ArrayList<Game> gamesInList, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

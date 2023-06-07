@@ -104,6 +104,14 @@ public class UserListsFragment extends Fragment {
                                                 userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
                                                 recyclerView.setAdapter(userListAdapter);
                                                 recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+                                                userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
+                                                    @Override
+                                                    public void onItemClick(List list, ArrayList<Game> gamesInList, int position) {
+                                                        ListFragment listFragment = new ListFragment(list, gamesInList);
+                                                        getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, listFragment, "listFragment").addToBackStack(null).commit();
+                                                    }
+                                                });
                                             }
                                         }
                                     });
@@ -115,6 +123,14 @@ public class UserListsFragment extends Fragment {
                                 userListAdapter = new UserListAdapter(lists, gamesInList, getContext());
                                 recyclerView.setAdapter(userListAdapter);
                                 recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+
+                                userListAdapter.setOnItemClickListener(new UserListAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(List list, ArrayList<Game> gamesInList, int position) {
+                                        ListFragment listFragment = new ListFragment(list, gamesInList);
+                                        getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, listFragment, null).addToBackStack(null).commit();
+                                    }
+                                });
                             }
                         }
                     });
@@ -144,13 +160,5 @@ public class UserListsFragment extends Fragment {
                 getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, createListFragment, "createListFragment").addToBackStack(null).commit();
             }
         });
-    }
-
-    public void setLists(ArrayList<List> lists) {
-        this.lists = lists;
-    }
-
-    public ArrayList<List> getLists() {
-        return lists;
     }
 }

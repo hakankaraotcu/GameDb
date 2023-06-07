@@ -36,6 +36,8 @@ public class GuestMainActivity extends GuestDrawerBaseActivity {
 
         init();
 
+        AppGlobals.mUser = AppGlobals.mAuth.getCurrentUser();
+
         if (AppGlobals.mUser != null) {
             finish();
             startActivity(new Intent(GuestMainActivity.this, UserMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

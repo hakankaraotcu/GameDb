@@ -24,7 +24,6 @@ public class UserFollowersFragment extends Fragment {
     private User user;
     private String userID;
     private Button backButton;
-
     private TextView profile_username;
 
     public UserFollowersFragment(User user) {

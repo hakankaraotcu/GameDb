@@ -33,6 +33,15 @@ public class AddGameToListFragment extends Fragment {
     private ArrayList<Game> games;
     private SearchAdapter searchAdapter;
     private Button backButton;
+    private ArrayList<Game> oldGames;
+
+    public AddGameToListFragment(){
+
+    }
+
+    public AddGameToListFragment(ArrayList<Game> games){
+        oldGames = games;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +115,6 @@ public class AddGameToListFragment extends Fragment {
                     }
 
                     searchAdapter = new SearchAdapter(games, getContext());
-                    searchAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(searchAdapter);
                     recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
@@ -114,18 +122,32 @@ public class AddGameToListFragment extends Fragment {
                         @Override
                         public void onItemClick(Game game, int position) {
                             Fragment fragment = getParentFragmentManager().findFragmentByTag("createListFragment");
-                            CreateListFragment createListFragment = (CreateListFragment) fragment;
-                            boolean flag = true;
-                            for (Game addedGame : createListFragment.getGames()) {
-                                if (addedGame.getName().equals(game.getName())) {
-                                    flag = false;
-                                    break;
+                            if(fragment != null){
+                                CreateListFragment createListFragment = (CreateListFragment) fragment;
+                                boolean flag = true;
+                                for (Game addedGame : createListFragment.getGames()) {
+                                    if (addedGame.getName().equals(game.getName())) {
+                                        flag = false;
+                                        break;
+                                    }
+                                }
+                                if (flag) {
+                                    createListFragment.setGames(game);
                                 }
                             }
-                            if (flag) {
-                                createListFragment.setGames(game);
+                            else{
+                                boolean flag = true;
+                                for (Game addedGame : oldGames) {
+                                    if (addedGame.getName().equals(game.getName())) {
+                                        flag = false;
+                                        break;
+                                    }
+                                }
+                                if (flag) {
+                                    oldGames.add(game);
+                                }
                             }
-                            getActivity().getSupportFragmentManager().popBackStack();
+                            getParentFragmentManager().popBackStack();
                         }
                     });
                 }

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#14181C"
+    android:orientation="vertical"
+    tools:context=".EditReviewFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_review_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#445566">
+
+        <Button
+            android:id="@+id/edit_review_cancel"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_cancel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Review"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/edit_review_confirm"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_confirm" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/edit_review_gameName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Game Name"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_review_gameImage"
+            app:layout_constraintEnd_toStartOf="@+id/edit_review_gameReleaseDate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_review_gameImage" />
+
+        <TextView
+            android:id="@+id/edit_review_gameReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2022"
+            android:textColor="#99AABB"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_review_gameImage"
+            app:layout_constraintEnd_toStartOf="@id/edit_review_gameReleaseDate"
+            app:layout_constraintTop_toTopOf="@+id/edit_review_gameImage" />
+
+        <ImageView
+            android:id="@+id/edit_review_gameImage"
+            android:layout_width="32dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/spiderman"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/edit_review_gameReleaseDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="#2C3440"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_review_gameImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/edit_review_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Date"
+            android:textColor="#99AABB"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/edit_review_dateDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/edit_review_dateDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="28 March 2023 Tuesday"
+            android:textColor="#99AABB"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="@id/edit_review_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/edit_review_date"
+            app:layout_constraintTop_toTopOf="@id/edit_review_date" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#2C3440"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_review_dateDescription" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RatingBar
+            android:id="@+id/edit_review_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:rating="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/edit_review_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rate"
+            android:textColor="#99AABB"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@id/edit_review_rating"
+            app:layout_constraintTop_toBottomOf="@id/edit_review_rating" />
+
+        <ImageButton
+            android:id="@+id/edit_review_like"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginEnd="16dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_review_rating" />
+
+        <TextView
+            android:id="@+id/edit_review_likeDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Like"
+            android:textColor="#99AABB"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="@id/edit_review_like"
+            app:layout_constraintStart_toStartOf="@id/edit_review_like"
+            app:layout_constraintTop_toBottomOf="@id/edit_review_like" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#2C3440"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_review_rate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <EditText
+        android:id="@+id/edit_review_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#14181C"
+        android:hint="Add review..."
+        android:textColorHint="#99AABB"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+</LinearLayout>
