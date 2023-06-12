@@ -112,11 +112,11 @@ public class GameFragment extends Fragment {
                 Color.parseColor("#d36259")};
 
         int raters[] = new int[]{
-                new Random().nextInt(100),
-                new Random().nextInt(100),
-                new Random().nextInt(100),
-                new Random().nextInt(100),
-                new Random().nextInt(100)
+                new Random().nextInt(10),
+                new Random().nextInt(10),
+                new Random().nextInt(10),
+                new Random().nextInt(10),
+                new Random().nextInt(10)
         };
 
         double avg = Math.round(avgValue(raters) * 10) / 10.0;

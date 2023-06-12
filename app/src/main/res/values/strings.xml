@@ -9,7 +9,7 @@
     <string name="tab_text_2">Tab 2</string>
 
     <!-- Youtube trailer video -->
-    <string name="hyperlink"><a href="https://www.youtube.com/watch?v=q4GdJVvdxss">TRAILER</a></string>
+    <string name="hyperlink"><a href="https://www.youtube.com/watch?v=1INU3FOJsTw">TRAILER</a></string>
     <string name="title_activity_register">RegisterActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

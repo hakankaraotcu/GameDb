@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakankaraotcu.gamedb.Model.News;
 import com.hakankaraotcu.gamedb.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
-
     private ArrayList<News> newsList;
     private Context context;
+    private OnItemClickListener listener;
 
     public NewsAdapter(ArrayList<News> newsList, Context context) {
         this.newsList = newsList;
@@ -44,21 +45,38 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     }
 
     class NewsHolder extends RecyclerView.ViewHolder {
-
-        TextView newsTitle, newsContent;
+        TextView newsTitle;
         ImageView newsImage;
 
         public NewsHolder(@NonNull View itemView) {
             super(itemView);
             newsTitle = itemView.findViewById(R.id.news_item_title);
-            newsContent = itemView.findViewById(R.id.news_item_content);
             newsImage = itemView.findViewById(R.id.news_item_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(newsList.get(position), position);
+                    }
+                }
+            });
         }
 
         public void setData(News news) {
             this.newsTitle.setText(news.getNewsTitle());
-            this.newsContent.setText(news.getNewsContent());
-            this.newsImage.setBackgroundResource(news.getNewsImage());
+            Picasso.get().load(news.getNewsImage()).into(newsImage);
         }
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(News news, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

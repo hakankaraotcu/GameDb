@@ -240,7 +240,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < names.size(); i++) {
                 game = new Game(names.get(i), releaseDates.get(i), contents.get(i), metacritics.get(i), images.get(i), 0, 0, 0);
                 AppGlobals.db.collection("Games").add(game);
             }

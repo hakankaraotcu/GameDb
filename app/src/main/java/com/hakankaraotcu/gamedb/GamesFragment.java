@@ -52,6 +52,7 @@ public class GamesFragment extends Fragment {
                 }
                 adapter = new GameAdapter(games, getActivity());
                 mGridView.setAdapter(adapter);
+                mGridView.setOverScrollMode(GridView.OVER_SCROLL_NEVER);
             }
         });
 

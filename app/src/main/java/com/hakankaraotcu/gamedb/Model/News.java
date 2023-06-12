@@ -1,20 +1,26 @@
 package com.hakankaraotcu.gamedb.Model;
 
-import com.hakankaraotcu.gamedb.R;
-
-import java.util.ArrayList;
-
 public class News {
-    private String newsTitle, newsContent;
-    private int newsImage;
+    private String id, newsTitle;
+    private String newsImage;
+    private String url;
 
     public News(){
 
     }
 
-    public News(String newsTitle, String newsContent){
+    public News(String newsTitle, String newsImage, String url){
         this.newsTitle = newsTitle;
-        this.newsContent = newsContent;
+        this.newsImage = newsImage;
+        this.url = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNewsTitle() {
@@ -25,37 +31,19 @@ public class News {
         this.newsTitle = newsTitle;
     }
 
-    public String getNewsContent() {
-        return newsContent;
-    }
-
-    public void setNewsContent(String newsContent) {
-        this.newsContent = newsContent;
-    }
-
-    public int getNewsImage() {
+    public String getNewsImage() {
         return newsImage;
     }
 
-    public void setNewsImage(int newsImage) {
+    public void setNewsImage(String newsImage) {
         this.newsImage = newsImage;
     }
 
-    static public ArrayList<News> getData(){
-        ArrayList<News> newsList = new ArrayList<News>();
-        String[] titles = {"News1", "News2", "News3", "News4", "News5", "News6", "News7"};
-        String[] contents = {"Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra", "Overwatch 2 Announces New Tank Hero, Ramattra"};
-        int[] images = {R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal, R.drawable.journal,};
+    public String getUrl() {
+        return url;
+    }
 
-        for(int i = 0;i < titles.length;i++){
-            News news = new News();
-            news.setNewsTitle(titles[i]);
-            news.setNewsContent(contents[i]);
-            news.setNewsImage(images[i]);
-
-            newsList.add((news));
-        }
-
-        return newsList;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

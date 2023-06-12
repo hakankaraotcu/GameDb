@@ -34,7 +34,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/spidermanbanner" />
+                    android:background="@drawable/banner" />
 
                 <ImageView
                     android:layout_width="match_parent"

@@ -53,6 +53,7 @@ public class ReviewsFragment extends Fragment {
                 }
                 adapter = new ReviewsAdapter(reviews, getContext());
                 recyclerView.setAdapter(adapter);
+                recyclerView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
 
                 adapter.setOnItemClickListener(new ReviewsAdapter.OnItemClickListener() {
                     @Override
