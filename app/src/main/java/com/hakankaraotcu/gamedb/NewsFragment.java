@@ -110,17 +110,20 @@ public class NewsFragment extends Fragment {
                 Document document = Jsoup.connect("https://www.ign.com/pc?filter=articles").get();
                 Elements elementsSummary = document.select("div.item-details");
                 Elements elementsImage = document.select("div.item-thumbnail");
+                Elements elementsUrl = document.select("a.item-body");
 
                 for (Element element : elementsSummary) {
                     String title = element.select("span").text();
                     titles.add(title);
-                    title = title.replace(":", "");
-                    title = title.replace("'", "");
-                    title = title.replace(" ", "-");
-                    title = title.toLowerCase(Locale.ROOT);
-                    String url  = "https://www.ign.com/articles/" + title;
-                    urls.add(url);
                     if(titles.size() == 10){
+                        break;
+                    }
+                }
+
+                for(Element element : elementsUrl){
+                    String url = "https://www.ign.com" + element.attr("href");
+                    urls.add(url);
+                    if(urls.size() == 10){
                         break;
                     }
                 }
