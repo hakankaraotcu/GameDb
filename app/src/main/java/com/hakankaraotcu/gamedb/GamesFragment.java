@@ -52,7 +52,6 @@ public class GamesFragment extends Fragment {
                 }
                 adapter = new GameAdapter(games, getActivity());
                 mGridView.setAdapter(adapter);
-                mGridView.setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
             }
         });
 

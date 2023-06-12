@@ -10,20 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.hakankaraotcu.gamedb.Model.User;
 import com.hakankaraotcu.gamedb.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
-public class FollowingFollowersAdapter extends ArrayAdapter<String> {
+import java.util.ArrayList;
+
+public class FollowingFollowersAdapter extends ArrayAdapter<User> {
     private int[] images;
     private String[] usernameList;
     private Context context;
     private CircularImageView image;
     private TextView username;
+    private ArrayList<User> users;
 
-    public FollowingFollowersAdapter(String[] usernameList, int[] images, Context context) {
-        super(context, R.layout.following_followers, usernameList);
-        this.usernameList = usernameList;
-        this.images = images;
+    public FollowingFollowersAdapter(ArrayList<User> users, Context context) {
+        super(context, R.layout.following_followers, users);
+        this.users = users;
         this.context = context;
     }
 
@@ -36,8 +40,13 @@ public class FollowingFollowersAdapter extends ArrayAdapter<String> {
             image = view.findViewById(R.id.following_followers_image);
             username = view.findViewById(R.id.following_followers_username);
 
-            image.setImageResource(images[position]);
-            username.setText(usernameList[position]);
+            if (users.get(position).getAvatar().equals("default")) {
+                image.setImageResource(com.taufiqrahman.reviewratings.R.drawable.ic_person);
+            } else {
+                Picasso.get().load(users.get(position).getAvatar()).resize(24,24).into(image);
+            }
+
+            username.setText(users.get(position).getUsername());
         }
         return view;
     }

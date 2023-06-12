@@ -38,7 +38,8 @@
         app:civ_border="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lists_username"
-        app:layout_constraintTop_toTopOf="@id/lists_username" />
+        app:layout_constraintTop_toTopOf="@id/lists_username"
+        app:layout_constraintBottom_toBottomOf="@+id/lists_username"/>
 
     <LinearLayout
         android:id="@+id/lists_item_linearLayout"

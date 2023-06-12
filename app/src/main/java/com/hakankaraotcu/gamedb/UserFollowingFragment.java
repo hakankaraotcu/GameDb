@@ -9,12 +9,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.hakankaraotcu.gamedb.Adapter.FollowingFollowersAdapter;
+import com.hakankaraotcu.gamedb.General.AppGlobals;
 import com.hakankaraotcu.gamedb.Model.User;
+
+import java.util.ArrayList;
 
 public class UserFollowingFragment extends Fragment {
     private ListView listView;
@@ -24,6 +32,10 @@ public class UserFollowingFragment extends Fragment {
     private User user;
     private String userID;
     private Button backButton;
+    private Query mQuery, mQuery2;
+    private ArrayList<Object> userIDs;
+    private ArrayList<User> following;
+    private ProfileFragment profileFragment;
 
     private TextView profile_username;
 
@@ -43,6 +55,35 @@ public class UserFollowingFragment extends Fragment {
         backButton = view.findViewById(R.id.user_following_backButton);
         listView = view.findViewById(R.id.user_following_listView);
         profile_username = view.findViewById(R.id.user_following_username);
+
+        userIDs = new ArrayList<>();
+        following = new ArrayList<>();
+
+        mQuery = AppGlobals.db.collection("Users").document(user.getId()).collection("Following");
+        mQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                    userIDs.add(documentSnapshot.getId());
+                }
+                mQuery2 = AppGlobals.db.collection("Users");
+                for(Object followingUserID : userIDs){
+                    mQuery2.whereEqualTo("id", followingUserID).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                                User user = documentSnapshot.toObject(User.class);
+
+                                assert user != null;
+                                following.add(user);
+                            }
+                            adapter = new FollowingFollowersAdapter(following, getContext());
+                            listView.setAdapter(adapter);
+                        }
+                    });
+                }
+            }
+        });
         return view;
     }
 
@@ -57,8 +98,20 @@ public class UserFollowingFragment extends Fragment {
             }
         });
 
-        adapter = new FollowingFollowersAdapter(usernames, images, getContext());
-        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                profileFragment = new ProfileFragment(userIDs.get(i).toString());
+                // for guest
+                if (getActivity().getLocalClassName().equals("GuestMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.guest_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+                // for user
+                if (getActivity().getLocalClassName().equals("UserMainActivity")) {
+                    getParentFragmentManager().beginTransaction().replace(R.id.user_main_RelativeLayout, profileFragment, null).addToBackStack(null).commit();
+                }
+            }
+        });
 
         profile_username.setText("Followed By " + user.getUsername());
     }

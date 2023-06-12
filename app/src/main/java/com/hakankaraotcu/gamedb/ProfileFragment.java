@@ -1,5 +1,7 @@
 package com.hakankaraotcu.gamedb;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +15,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,13 +36,17 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
     private TextView profile_username, profile_bio;
+    private MaterialButton profile_follow;
     private CircularImageView profile_avatar;
     private ListView listView;
     private ProfileListAdapter adapter;
     private ArrayList<Integer> count;
+    private CollectionReference followingReference, followersReference;
     private DocumentReference userReference;
     private User user;
     private String userID;
@@ -58,40 +70,63 @@ public class ProfileFragment extends Fragment {
         profile_avatar = view.findViewById(R.id.profile_avatar);
         profile_username = view.findViewById(R.id.profile_username);
         profile_bio = view.findViewById(R.id.profile_bio);
+        profile_follow = view.findViewById(R.id.profile_follow);
+
+        followingReference = AppGlobals.db.collection("Users").document(AppGlobals.currentUser.getId()).collection("Following");
+        followersReference = AppGlobals.db.collection("Users").document(userID).collection("Followers");
 
         userReference = AppGlobals.db.collection("Users").document(userID);
-        userReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        userReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if(value.exists()){
-                    user = value.toObject(User.class);
-                    count.add(user.getPlayedCount());
-                    count.add(user.getDiaryCount());
-                    count.add(user.getListsCount());
-                    count.add(user.getReviewsCount());
-                    count.add(user.getToPlayCount());
-                    count.add(user.getLikedCount());
-                    count.add(user.getFollowingCount());
-                    count.add(user.getFollowersCount());
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                user = documentSnapshot.toObject(User.class);
+                count.add(user.getPlayedCount());
+                count.add(user.getDiaryCount());
+                count.add(user.getListsCount());
+                count.add(user.getReviewsCount());
+                count.add(user.getToPlayCount());
+                count.add(user.getLikedCount());
+                count.add(user.getFollowingCount());
+                count.add(user.getFollowersCount());
 
-                    profile_username.setText(user.getUsername());
-                    profile_bio.setText(user.getBio());
+                System.out.println(count);
+                profile_username.setText(user.getUsername());
+                profile_bio.setText(user.getBio());
 
-                    if(user.getBio().equals("")){
-                        profile_bio.setVisibility(View.GONE);
-                    }
-                    else{
-                        profile_bio.setVisibility(View.VISIBLE);
-                    }
+                if(user.getBio().equals("")){
+                    profile_bio.setVisibility(View.GONE);
+                }
+                else{
+                    profile_bio.setVisibility(View.VISIBLE);
+                }
 
-                    if (user.getAvatar().equals("default")) {
-                        profile_avatar.setImageResource(R.mipmap.ic_launcher);
-                    } else {
-                        Picasso.get().load(user.getAvatar()).resize(120, 120).into(profile_avatar);
-                    }
+                if (user.getAvatar().equals("default")) {
+                    profile_avatar.setImageResource(com.taufiqrahman.reviewratings.R.drawable.ic_person);
+                } else {
+                    Picasso.get().load(user.getAvatar()).resize(120, 120).into(profile_avatar);
+                }
 
-                    adapter = new ProfileListAdapter(AppGlobals.profileTitles, count, getContext());
-                    listView.setAdapter(adapter);
+                System.out.println("work");
+                adapter = new ProfileListAdapter(AppGlobals.profileTitles, count, getContext());
+                listView.setAdapter(adapter);
+            }
+        });
+        if(userID.equals(AppGlobals.mAuth.getUid())){
+            profile_follow.setVisibility(View.GONE);
+        }
+        else{
+            profile_follow.setVisibility(View.VISIBLE);
+        }
+        followingReference.document(userID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    profile_follow.setText("Following");
+                    profile_follow.setBackgroundTintList(ColorStateList.valueOf(Color.argb(255, 21, 187, 50)));
+                }
+                else{
+                    profile_follow.setText("Follow");
+                    profile_follow.setBackgroundTintList(ColorStateList.valueOf(Color.argb(255, 68, 85, 102)));
                 }
             }
         });
@@ -101,6 +136,33 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        profile_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(profile_follow.getText().toString().equals("Follow")){
+                    Map<String, Object> followingData = new HashMap<>();
+                    followingData.put("followingData", userID);
+                    Map<String, Object> followerData = new HashMap<>();
+
+                    followerData.put("followerData", AppGlobals.currentUser.getId());
+                    followingReference.document(userID).set(followingData);
+                    followingReference.getParent().update("followingCount", FieldValue.increment(1));
+                    followersReference.document(AppGlobals.currentUser.getId()).set(followerData);
+                    followersReference.getParent().update("followersCount", FieldValue.increment(1));
+                    profile_follow.setText("Following");
+                    profile_follow.setBackgroundTintList(ColorStateList.valueOf(Color.argb(255, 21, 187, 50)));
+                }
+                else if(profile_follow.getText().toString().equals("Following")){
+                    followingReference.getParent().update("followingCount", FieldValue.increment(-1));
+                    followingReference.document(userID).delete();
+                    followersReference.getParent().update("followersCount", FieldValue.increment(-1));
+                    followersReference.document(AppGlobals.currentUser.getId()).delete();
+                    profile_follow.setText("Follow");
+                    profile_follow.setBackgroundTintList(ColorStateList.valueOf(Color.argb(255, 68, 85, 102)));
+                }
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

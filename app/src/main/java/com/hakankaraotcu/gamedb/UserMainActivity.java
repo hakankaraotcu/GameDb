@@ -110,7 +110,7 @@ public class UserMainActivity extends AppCompatActivity {
                     AppGlobals.currentUser.setId(value.getId());
                     profile_username.setText(AppGlobals.currentUser.getUsername());
                     if (AppGlobals.currentUser.getAvatar().equals("default")) {
-                        profile_avatar.setImageResource(R.mipmap.ic_launcher);
+                        profile_avatar.setImageResource(com.taufiqrahman.reviewratings.R.drawable.ic_person);
                     } else {
                         Picasso.get().load(AppGlobals.currentUser.getAvatar()).resize(80, 80).into(profile_avatar);
                     }
